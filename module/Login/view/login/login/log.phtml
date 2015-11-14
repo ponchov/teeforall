@@ -1,0 +1,36 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="col-md-4 col-md-push-3">
+			<h2>Login</h2>
+			<br><br>
+			<?php echo $this->escapeHtml($this->messages); ?>
+		</div>
+		
+		<div class="col-md-4 col-md-pull-2">
+			<?php 
+				  $this->form->setAttribute('action', $this->url('login', array('action' => 'log')));
+				  $this->form->prepare();
+				  
+				  echo $this->form()->openTag($this->form);
+				  echo $this->formRow($this->form->get('username'));
+				  echo $this->formRow($this->form->get('password'));
+				  echo '<br>';
+				  echo $this->formSubmit($this->form->get('submit'));
+				  echo $this->form()->closeTag();
+			?>
+			<br><br>
+			<?php 
+			     if ($user = $this->identity()) {
+					 echo 'Welcome ' . $this->escapeHtml($user->username);
+				 
+			?>
+			
+			| <a href="<?php echo $this->url('login', array('action' => 'logout')); ?>"><?php echo $this->translate('Logout'); ?></a>
+			<?php 
+				  } else {
+					  echo '<br>You\'re not logged in';
+                  }
+			?>
+		</div>
+	</div>
+</div>

@@ -1,17 +1,19 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/Login for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+/*
+ * DO NOT EDIT (unless you know what you are doing) - Jimmy :)
+ * 
  */
-
 namespace Login;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
+
+use Login\Model\LoginModel;
+use Login\Model\Login;
+
 
 class Module implements AutoloaderProviderInterface
 {
@@ -37,10 +39,28 @@ class Module implements AutoloaderProviderInterface
 
     public function onBootstrap(MvcEvent $e)
     {
-        // You may not need to do this if you're doing it elsewhere in your
-        // application
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+    }
+    
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'Login\Model\LoginModel' => function($sm) {
+                    $table_gateway = $sm->get('LoginTableGateway');
+                    $table = new LoginModel($table_gateway);
+                    return $table;
+                },
+                 
+                'LoginTableGateway' => function($sm) {
+                    $db_adapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $result_set_prototype = new ResultSet();
+                    $result_set_prototype->setArrayObjectPrototype(new Login());
+                    return new TableGateway('admins', $db_adapter, null, $result_set_prototype);
+                }
+            ),
+        );
     }
 }
