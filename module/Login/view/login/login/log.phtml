@@ -1,36 +1,48 @@
-<div class="container-fluid">
-	<div class="row-fluid">
-		<div class="col-md-4 col-md-push-3">
-			<h2>Login</h2>
-			<br><br>
-			<?php echo $this->escapeHtml($this->messages); ?>
-		</div>
-		
-		<div class="col-md-4 col-md-pull-2">
-			<?php 
-				  $this->form->setAttribute('action', $this->url('login', array('action' => 'log')));
-				  $this->form->prepare();
-				  
-				  echo $this->form()->openTag($this->form);
-				  echo $this->formRow($this->form->get('username'));
-				  echo $this->formRow($this->form->get('password'));
-				  echo '<br>';
-				  echo $this->formSubmit($this->form->get('submit'));
-				  echo $this->form()->closeTag();
-			?>
-			<br><br>
-			<?php 
-			     if ($user = $this->identity()) {
-					 echo 'Welcome ' . $this->escapeHtml($user->username);
-				 
-			?>
+<div id="mws-login-wrapper">
+    <div id="mws-login">
+        <h1>Login</h1>
+         
+        <div class="mws-login-lock">
+            <img src="<?php echo $this->basePath(); ?>/admin/css/icons/24/locked-2.png" alt="">
+        </div>
+            
+        <div id="mws-login-form">
+        
+		 <?php
+		    if ($user = $this->identity()) {
+		 ?>
+		     <div class="mws-form-message success" style="text-align: center; border-radius: 8px;">
+					<?php echo 'Welcome ' . $this->escapeHtml($user->username); ?>
+			 </div>	
 			
-			| <a href="<?php echo $this->url('login', array('action' => 'logout')); ?>"><?php echo $this->translate('Logout'); ?></a>
-			<?php 
-				  } else {
-					  echo '<br>You\'re not logged in';
-                  }
-			?>
+			<?php } else { ?>
+				<div class="mws-form-message error" style=" text-align: center; border-radius: 8px;">
+					<?php echo "Please login."; ?></div>
+				      
+			    <?php 
+			         $this->form->setAttribute('action', $this->url('login', array('action' => 'log')));
+			         $this->form->prepare();
+			         
+			         echo $this->form()->openTag($this->form);
+			    ?>
+			        <div class="mws-form-row">
+			        	<div class="mws-form-item large">
+			        		<?php echo $this->formRow($this->form->get('admin_username')); ?>
+			        	</div>
+			        </div>
+			        
+			        <div class="mws-form-row">
+			        	<div class="mws-form-item large">
+			        		<?php echo $this->formRow($this->form->get('admin_password')); ?>
+			        	</div>
+			        </div>
+			        
+			        <div class="mws-form-row">
+			        	<?php echo $this->formSubmit($this->form->get('submit')); ?>
+			        </div>
+			        
+			        <?php echo $this->form()->closeTag(); ?>
+			<?php } ?>
 		</div>
-	</div>
+	 </div>
 </div>

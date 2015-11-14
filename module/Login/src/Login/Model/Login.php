@@ -23,8 +23,8 @@ class Login implements InputFilterAwareInterface
 	
 	public function exchangeArray($data)
 	{
-		$this->username = (!empty($data['username'])) ? $data['username'] : null;
-		$this->password = (!empty($data['password'])) ? $data['password'] : null;
+		$this->username = (!empty($data['admin_username'])) ? $data['admin_username'] : null;
+		$this->password = (!empty($data['admin_password'])) ? $data['admin_password'] : null;
 	}
 	
 	
@@ -42,7 +42,7 @@ class Login implements InputFilterAwareInterface
 			
 			
 			$input_filter->add($factory->createInput(array(
-				'name'     => 'username',
+				'name'     => 'admin_username',
 				'required' => true,
 				'filters'  => array(
 					array('name' => 'StripTags'),
@@ -63,7 +63,7 @@ class Login implements InputFilterAwareInterface
 			
 			
 			$input_filter->add($factory->createInput(array(
-				'name'     => 'password',
+				'name'     => 'admin_password',
 				'required' => true,
 				'filters'  => array(
 					array('name' => 'StripTags'),

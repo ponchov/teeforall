@@ -30,6 +30,9 @@ class LoginController extends AbstractActionController
     
     public function logAction()
     {
+        $layout = $this->layout();
+        $layout->setTemplate('login/login/layout');
+        
         $form = new LoginForm();
         
         $form->get('submit')->setValue('Login');
@@ -69,8 +72,8 @@ class LoginController extends AbstractActionController
                 
                 $auth_adapter = new AuthAdapter($db_adapter, 'admins', 'username', 'password');
                 
-                $auth_adapter->setIdentity($data['username'])
-                    ->setCredential(hash('sha512', $data['password']));
+                $auth_adapter->setIdentity($data['admin_username'])
+                    ->setCredential(hash('sha512', $data['admin_password']));
                 
                 $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
                 

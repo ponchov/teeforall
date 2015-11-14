@@ -16,32 +16,34 @@ class LoginForm extends Form
 	{
 		parent::__construct('login');
 		
-		$this->setAttribute('method', 'post');
+		$this->setAttribute('method', 'post')
+		->setAttribute('class', 'mws-form')
+		->setAttribute('id', 'myform');
 		
 		
 		// add the fields required (username & password)
 		$this->add(array(
-			'name'    => 'username',
+			'name'    => 'admin_username',
 			'type'    => 'Text',
 			'options' => array(
-				'label' => 'Username',
+				'label' => 'Admin Username',
 			),
 				
-			'attributes' => array('id' => 'username', 
-			    'class' => 'form-control', 
-			    'placeholder' => 'Username'),
+			'attributes' => array('id' => 'admin_username', 
+			    'class' => 'mws-login-username mws-textinput required', 
+			    'placeholder' => 'Admin Username'),
 		));
 		
 		
 		$this->add(array(
-			'name'    => 'password',
+			'name'    => 'admin_password',
 			'type'    => 'Password',
 			'options' => array(
-				'label' => 'Password',
+				'label' => 'Admin Password',
 			),
 				
-			'attributes' => array('id' => 'password',
-			    'class' => 'form-control', 
+			'attributes' => array('id' => 'admin_password',
+			    'class' => 'mws-login-password mws-textinput required', 
 			    'placeholder' => 'Password'),
 		));
 		
@@ -53,7 +55,7 @@ class LoginForm extends Form
 			'attributes' => array(
 				'id'     => 'submit',
 				'value'  => 'Login',
-				'class'  => 'btn btn-default',
+				'class'  => 'mws-button green mws-login-button',
 			),
 		));
 	}
