@@ -1,75 +1,4 @@
-<?php
-global $mySession;
-$myControllerName = Zend_Controller_Front::getInstance()->getRequest()->getControllerName();		
-$myActionName = Zend_Controller_Front::getInstance()->getRequest()->getActionName();
-$myPG = $myControllerName.'.'.$myActionName;
-$SystemDisplay="none";$DashboardDisplay="none";$PagesDisplay="none";$UsersDisplay="none";$LocationDisplay="none";$SubscriptionDisplay="none";$SubadminDisplay="none";
-$ManageDisplay="none";$AlbumDisplay="none";$CategoryDisplay="none";$TshirtDisplay="none";$TshirtSizeDisplay="none";$CampaignDisplay="none";$TestimonialDisplay="none";
-$CsvDisplay="none";
-$SystemClass="class='closed'";
-$LocationClass="class='closed'";
-$UsersClass="class='closed'";
-$ManageClass="class='closed'";
-$AlbumClass="class='closed'";
-$CategoryClass="class='closed'";
-$TshirtClass="class='closed'";
-$TshirtSizeClass="class='closed'";
-$CampaignClass="class='closed'";
-$TestimonialClass="class='closed'";
-$PaymentClass="class='closed'";
-$CsvClass="class='closed'";
-if($myControllerName=="system" ||  ($myControllerName=="pages" && $myActionName == "index"))
-{
-	$SystemDisplay="block";
-	$SystemClass=" ";
-}
-if($myControllerName=="pages" && $myActionName == "managecategory")
-{
-    $CategoryDisplay="block";
-    $CategoryClass=" ";
-}
-if($myControllerName=="tshirt" && $myActionName != "size")
-{
-    $TshirtDisplay="block";
-    $TshirtClass=" ";
-}
-if($myControllerName=="tshirt" && $myActionName == "size")
-{
-    $TshirtSizeDisplay="block";
-    $TshirtSizeClass=" ";
-}
-if($myControllerName=="package" ||  $myControllerName=="genre")
-{
-	$ManageDisplay="block";$ManageClass=" ";
-}
-if($myControllerName=="campaign")
-{
-    $CampaignDisplay="block";$CampaignClass=" ";
-}
-if($myControllerName=="testimonials")
-{
-    $TestimonialDisplay="block";$TestimonialClass=" ";
-}
-if($myControllerName=="users")
-{
-	$UsersDisplay="block";$UsersClass=" ";
-}
-if($myControllerName=="location")
-{
-	$LocationDisplay="block";$LocationClass=" ";
-}
-if($myControllerName=="payment")
-{
-	$PaymentDisplay="block";$PaymentClass=" ";
-}
-if($myControllerName=="export")
-{
-	$CsvDisplay="block";$CsvClass=" ";
-}
-
- 
-?>
- <div id="mws-navigation">
+<div id="mws-navigation">
      <ul>
         <li>
            <a href="/admin" class="mws-i-24 i-list">Dashboard</a>
@@ -78,16 +7,16 @@ if($myControllerName=="export")
         <li>
            <a href="#" class="mws-i-24 i-list1">System</a>
            
-           <ul <?=$SystemClass;?> style="display:<?=$SystemDisplay;?>">
-               <li class="<?php echo $myPG == 'system.configuration' ? 'active' : ''; ?>">
+           <ul class="closed" style="display: none;">
+               <li class="active">
                    <a class="mws-i-24 i-cog" href="/admin/configuration">Configurations</a>
                </li>
                
-               <li class="<?php echo $myPG == 'system.emailtemplates' ? 'active': ''; ?>">
+               <li class="active">
                	   <a class="mws-i-24 i-email" href="/admin/emailtemplates">Email Templates</a>
                </li>
                
-               <li class="<?php echo $myPG == 'pages.index' ? 'active' : ''; ?>">
+               <li class="active">
                	   <a class="mws-i-24 i-page" href="/admin/pages">Static Pages</a>
                </li>
            </ul>
@@ -96,8 +25,8 @@ if($myControllerName=="export")
         <li>
            <a href="#" class="mws-i-24 i-tspringcatg">Category</a>
            
-           <ul <?=$CategoryClass;?> style="display:<?=$CategoryDisplay;?>">
-               <li class="<?php echo $myPG == 'pages.managecategory' ? 'active' : ''; ?>">
+           <ul class="closed" style="display:none;">
+               <li class="active">
                	   <a class="mws-i-24 i-tspringcatg" href="/admin/managecategory">Manage Category</a>
                </li>
            </ul>
@@ -106,16 +35,16 @@ if($myControllerName=="export")
         <li>
            <a href="#" class="mws-i-24 i-list2">Users</a>
                         
-           <ul <?=$UsersClass;?> style="display:<?=$UsersDisplay;?>">
-              <li class="<?php echo $myPG == 'users.index' ? 'active' : ''; ?>">
+           <ul class="closed" style="display: none;">
+              <li class="active">
                   <a class="mws-i-24 i-list2" href="/admin/users">Manage Users</a>
               </li>
 				            
-		      <li class="<?php echo $myPG == 'users.contact' ? 'active ': ''; ?>">
+		      <li class="active">
 		          <a class="mws-i-24 i-email" href="/admin/sellers">Contact Sellers</a>
 		      </li>
 				            
-			  <li class="<?php echo $myPG == 'users.buyers' ? 'active' : ''; ?>">
+			  <li class="active">
 			  	  <a class="mws-i-24 i-email" href="/admin/buyers">Contact Buyers</a>
 			  </li>
            </ul>
@@ -124,16 +53,16 @@ if($myControllerName=="export")
                
         <li>
            <a href="#" class="mws-i-24 i-tspringcatg">T-Shirt</a>
-              <ul <?=$TshirtClass;?> style="display:<?=$TshirtDisplay;?>">
-				  <li class="<?php echo $myPG == 'tshirt.discount' ? 'active' : ''; ?>">
+              <ul class="closed" style="display: none;">
+				  <li class="active">
 				      <a class="mws-i-24 i-tspringcatg" href="/admin/discount">Manage Discount</a>
 				  </li>
                         
-                  <li class="<?php echo $myPG == 'tshirt.icons' ? 'active' : ''; ?>">
+                  <li class="active">
                       <a class="mws-i-24 i-tspringcatg" href="/admin/icons">Manage Icons</a>
                   </li>
                               
-                  <li class="<?php echo $myPG == 'tshirt.products' ? 'active' : ''; ?>">
+                  <li class="active">
                       <a class="mws-i-24 i-tspringcatg" href="/admin/products">Tshirt Products</a>
                   </li>
               </ul>
@@ -141,8 +70,8 @@ if($myControllerName=="export")
                     
         <li>
            <a href="#" class="mws-i-24 i-tspringcatg">T-Shirt Size</a>
-              <ul <?=$TshirtSizeClass;?> style="display:<?=$TshirtSizeDisplay;?>">
-                  <li class="<?php echo $myPG == 'tshirt.size' ? 'active' : ''; ?>">
+              <ul class="closed" style="display: none;">
+                  <li class="active">
                       <a class="mws-i-24 i-tspringcatg" href="/admin/size">Manage Sizes</a>
                   </li>
               </ul>
@@ -150,20 +79,20 @@ if($myControllerName=="export")
                                           
         <li>
            <a href="#" class="mws-i-24 i-tspringcatg">Campaigns</a>
-              <ul <?=$CampaignClass;?> style="display:<?=$CampaignDisplay;?>">
-                  <li class="<?php echo $myPG == 'campaign.live' ? 'active' : ''; ?>">
+              <ul class="closed" style="display: none;">
+                  <li class="active">
                       <a class="mws-i-24 i-tspringcatg" href="/admin/live">Live Campaigns</a>
                   </li>
                   
-                  <li class="<?php echo $myPG == 'campaign.success' ? 'active' : ''; ?>">
+                  <li class="active">
                       <a class="mws-i-24 i-tspringcatg" href="/admin/success">Successful Campaigns</a>
                   </li>
                   
-                  <li class="<?php echo $myPG == 'campaign.unsuccess' ? 'active' : ''; ?>">
+                  <li class="active">
                       <a class="mws-i-24 i-tspringcatg" href="/admin/unsuccessful">Unsuccessful Campaigns</a>
                   </li>
                   
-                  <li class="<?php echo $myPG == 'campaign.instructions' ? 'active' : ''; ?>">
+                  <li class="active">
                       <a class="mws-i-24 i-tspringcatg" href="/admin/instructions">Instructions</a>
                   </li>
               </ul>
@@ -171,20 +100,20 @@ if($myControllerName=="export")
                    
         <li>
            <a href="#" class="mws-i-24 i-tspringcatg">Payment Details</a>
-              <ul <?=$PaymentClass;?> style="display:<?=$PaymentDisplay;?>">
-                  <li class="<?php echo $myPG == 'payment.index' ? 'active' : ''; ?>">
+              <ul class="closed" style="display: none;">
+                  <li class="active">
                   	  <a class="mws-i-24 i-tspringcatg" href="/admin/payment">All Payment</a>
                   </li>
                   
-                  <li class="<?php echo $myPG == 'payment.expire' ? 'active' : ''; ?>">
+                  <li class="active">
                       <a class="mws-i-24 i-tspringcatg" href="/admin/expire">Expired Payment</a>
                   </li>
                   
-                  <li class="<?php echo $myPG == 'payment.active' ? 'active' : ''; ?>">
+                  <li class="active">
                       <a class="mws-i-24 i-tspringcatg" href="/admin/active">Active Payment</a>
                   </li>
                   
-                  <li class="<?php echo $myPG == 'payment.charged' ? 'active':''; ?>">
+                  <li class="active">
                       <a class="mws-i-24 i-tspringcatg" href="/admin/charged">Charged Payment</a>
                   </li>
 			  </ul>
@@ -192,8 +121,8 @@ if($myControllerName=="export")
                    
         <li>
            <a href="#" class="mws-i-24 i-tspringcatg">Export Reports</a>
-              <ul <?=$CsvClass;?> style="display:<?=$CsvClass;?>">
-                  <li class="<?php echo $myPG == 'export.index' ? 'active' : ''; ?>">
+              <ul class="closed" style="display: none;">
+                  <li class="active">
                       <a class="mws-i-24 i-tspringcatg" href="/admin/export">Shipping Report</a>
                   </li>
               </ul>
@@ -201,8 +130,8 @@ if($myControllerName=="export")
                   
         <li>
            <a href="#" class="mws-i-24 i-tspringcatg">Testimonials</a>
-              <ul <?=$TestimonialClass;?> style="display:<?=$TestimonialDisplay;?>">
-                  <li class="<?php echo $myPG == 'testimonials.index' ? 'active' : ''; ?>">
+              <ul class="closed" style="display: none;">
+                  <li class="active">
                   	  <a class="mws-i-24 i-tspringcatg" href="/admin/testimonials">Manage Testimonials</a>
                    </li>
               </ul>
