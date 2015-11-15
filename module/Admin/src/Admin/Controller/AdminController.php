@@ -13,7 +13,9 @@ class AdminController extends AbstractActionController
 {
     public function indexAction()
     {
-        return array();
+        // set the layout to be the admin layout
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
     }
 
     
