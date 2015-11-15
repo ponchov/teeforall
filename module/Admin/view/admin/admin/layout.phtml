@@ -228,31 +228,7 @@
                 
                 
             	<div class="mws-panel grid_8">
-                	<?php
-						if(isset($mySession->errorMsg))
-						{
-							?><div class="mws-form-message error"><?=$mySession->errorMsg;?></div><?php
-							unset($mySession->errorMsg); 
-						}
-						
-						if(isset($mySession->sucessMsg))
-						{
-							?><div class="mws-form-message success"><?=$mySession->sucessMsg;?></div><?php
-							unset($mySession->sucessMsg); 
-						}
-						if(isset($mySession->InfoMsg))
-						{
-							?><div class="mws-form-message info"><?=$mySession->InfoMsg;?></div><?php
-							unset($mySession->InfoMsg); 
-						}
-						if(isset($mySession->warningMsg))
-						{
-							?><div class="mws-form-message warning"><?=$mySession->warningMsg;?></div><?php
-							unset($mySession->warningMsg); 
-						}
-					echo $this->content; 
-					
-					?>
+                	<?php echo $this->content; ?>
                 <!-- Panels End -->
             	</div>
             <!-- Inner Container End -->
