@@ -38,7 +38,7 @@ class LoginModel
 		$row = $rowset->current();
 		
 		if (!$row) {
-			throw new \Exception("Invalid login credentials");
+			throw new \ErrorException("Invalid login credentials");
 		}
 		
 		return $row;
@@ -73,7 +73,7 @@ class LoginModel
 			       'active' => 1, 'session_id' => $session_id));
 		
 		$adapter->query(
-			$this->sql->getSqlStringForSqlObject($insert),
+			$this->sql->buildSqlString($insert),
 			$adapter::QUERY_MODE_EXECUTE
 		);
 		
@@ -91,7 +91,7 @@ class LoginModel
 		->where(array('username' => $username, 'session_id' => session_id()));
 		
 		$adapter->query(
-			$this->sql->getSqlStringForSqlObject($delete),
+			$this->sql->buildSqlString($delete),
 			$adapter::QUERY_MODE_EXECUTE
 		);
 		

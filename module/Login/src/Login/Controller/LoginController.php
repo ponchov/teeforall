@@ -98,7 +98,7 @@ class LoginController extends AbstractActionController
                 
                         try {
                             $this->getLoginTable()->insertSession($data['username'], hash('sha512', $data['password']), session_id());
-                        } catch (\Exception $e) {
+                        } catch (\ErrorException $e) {
                             return $this->redirect()->toUrl('/login/login-failure');
                         }
                 
