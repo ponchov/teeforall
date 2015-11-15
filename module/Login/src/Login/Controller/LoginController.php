@@ -30,6 +30,8 @@ class LoginController extends AbstractActionController
     
     public function logAction()
     {
+        // set the layout to use the login layout
+        // (don't want to have the wrong layout being displayed) 
         $layout = $this->layout();
         $layout->setTemplate('login/login/layout');
         
