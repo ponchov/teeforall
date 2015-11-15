@@ -211,7 +211,7 @@
         <!-- Sidebar Wrapper -->
         <div id="mws-sidebar">
             <!-- Main Navigation -->
-            <?php $this->layout()->setTemplate('template/left'); ?>
+            <?php include('templates/left.phtml'); ?>
             
         </div>
         
@@ -250,7 +250,9 @@
 							?><div class="mws-form-message warning"><?=$mySession->warningMsg;?></div><?php
 							unset($mySession->warningMsg); 
 						}
-					echo $this->content; ?>
+					echo $this->content; 
+					
+					?>
                 <!-- Panels End -->
             	</div>
             <!-- Inner Container End -->
