@@ -57,12 +57,21 @@ class AdminController extends AbstractActionController
                 $config->exchangeArray($form->getData());
                 
                 if ($this->getConfigurationService()->handleConfiguration($config) === true) {
-                    
+                    // the configuration data was inserted into the database successfully
+                    // redirect back to configuration success
+                    return $this->redirect()->toUrl('/admin/configuration-success');
                 }
             }
         }
         
         return new ViewModel(array('form' => $form, 'messages' => $messages));
+    }
+    
+    
+    public function configurationsuccessAction()
+    {
+        // don't really need to do anything here
+        // just here so we can call the view
     }
     
     

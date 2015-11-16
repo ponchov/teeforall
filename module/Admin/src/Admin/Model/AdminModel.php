@@ -35,7 +35,9 @@ class AdminModel
         );
         
         try {
-            
+            if ($this->table_gateway->insert(array($fields)) > 0) {
+                return true;
+            }
         } catch (\ErrorException $e) {
             // log the message to the error file
             ErrorHandler::errorWriter($e->getMessage());

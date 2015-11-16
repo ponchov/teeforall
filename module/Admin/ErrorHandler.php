@@ -21,5 +21,7 @@ class ErrorHandler
         $logger->addWriter($writer);
          
         $logger->info($message . "\r\r");
+        
+        return false;
     }
 }
