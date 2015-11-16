@@ -6,9 +6,6 @@
  */
 namespace Admin\Model;
 
-use Zend\Log\Logger;
-use Zend\Log\Writer\Stream;
-
 use Zend\Db\TableGateway\TableGateway;
 
 use Error\ErrorHandler;
@@ -41,13 +38,7 @@ class AdminModel
             
         } catch (\ErrorException $e) {
             // log the message to the error file
-            $writer = new Stream(ErrorHandler::ERROR_PATH);
-            $logger = new Logger();
-            $logger->addWriter($writer);
-             
-            $logger->info($e->getMessage() . "\r\r");
-             
-            return false;
+            ErrorHandler::errorWriter($e->getMessage());
         }
     }
 }
