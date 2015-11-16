@@ -58,8 +58,13 @@ class AdminController extends AbstractActionController
                 
                 if ($this->getConfigurationService()->handleConfiguration($config) === true) {
                     // the configuration data was inserted into the database successfully
-                    // redirect back to configuration success
+                    // redirect to configuration success view
                     return $this->redirect()->toUrl('/admin/configuration-success');
+                } else {
+                    // error occured..
+                    // the error is logged automatically
+                    // redirect to configuration failure view
+                    return $this->redirect()->toUrl('/admin/configuration-failure');
                 }
             }
         }
@@ -75,6 +80,11 @@ class AdminController extends AbstractActionController
     }
     
     
+    public function configurationfailureAction()
+    {
+        // don't really need to do anything here
+        // just here so we can call the view
+    }
     public function getConfigurationService()
     {
         if (!$this->configuration_service) {
