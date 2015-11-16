@@ -19,4 +19,7 @@ class AdminModel
         // if $gateway is a valid instanceof TableGateway
         $this->table_gateway = $gateway instanceof TableGateway ? $gateway : null;    
     }
+    
+    
+    
 }
