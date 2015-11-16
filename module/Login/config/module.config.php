@@ -21,25 +21,6 @@ return array(
                         'action'        => 'index',
                     ),
                 ),
-            	
-            	'may_terminate' => true,
-            	'child_routes' => array(
-            		'log' => array(
-            			'type'    => 'Segment',
-            			'options' => array(
-            			'route'    => '/login/log',
-            				'constraints' => array(
-            					'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-            					'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-            				),
-            				'defaults' => array(
-            					'__NAMESPACE__' => 'Login\Controller',
-            					'controller'    => 'Login',
-            					'action'        => 'log',
-            				),
-            			),
-            		),
-            	),
             ),
         ),
     ),
