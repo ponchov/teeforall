@@ -43,4 +43,9 @@ class AdminModel
             ErrorHandler::errorWriter($e->getMessage());
         }
     }
+    
+    public function saveEmailTemplate()
+    {
+        
+    }
 }
