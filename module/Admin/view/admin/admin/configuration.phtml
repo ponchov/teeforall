@@ -4,12 +4,13 @@
     </div>
     
     <div class="mws-panel-body">
+    <!-- fix the form to not use html but the ConfigurationForm class -->
          <form name="myform" id="mws-validate" action="<?php echo $this->url(array('controller'=>'system', 'action'=>'saveconfiguration'), 'default', true)?>" method="post" novalidate="novalidate" class="mws-form">
                          
-                        	<div style="display:none;" class="mws-form-message error" id="mws-validate-error"></div>
-                        	<div class="mws-form-inline">
-                            	<div class="mws-form-row">
-                                	<label>Site Title :</label>
+         <div style="display:none;" class="mws-form-message error" id="mws-validate-error"></div>
+                        	
+         <div class="mws-form-inline">
+             <div class="mws-form-row">
                                 	<div class="mws-form-item large">
                                     	<?=$this->myform->site_title?><!--<input type="text" class="mws-textinput required" name="reqField">-->
                                     </div>
