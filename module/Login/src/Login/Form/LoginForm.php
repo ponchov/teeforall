@@ -31,7 +31,8 @@ class LoginForm extends Form
 				
 			'attributes' => array('id' => 'admin_username', 
 			    'class' => 'mws-login-username mws-textinput required', 
-			    'placeholder' => 'Admin Username'),
+			    'placeholder' => 'Admin Username'
+			),
 		));
 		
 		
@@ -44,7 +45,8 @@ class LoginForm extends Form
 				
 			'attributes' => array('id' => 'admin_password',
 			    'class' => 'mws-login-password mws-textinput required', 
-			    'placeholder' => 'Password'),
+			    'placeholder' => 'Password'
+			),
 		));
 		
 		

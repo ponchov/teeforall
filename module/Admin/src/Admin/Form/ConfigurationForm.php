@@ -38,7 +38,7 @@ class ConfigurationForm extends Form
         
         $this->add(array(
             'name'     => 'site_description',
-            'type'     => 'Textarea',
+            'type'     => 'Text',
             'options'  => array(
                 'label' => 'Site Description',  
             ),
