@@ -30,7 +30,7 @@ class Login implements InputFilterAwareInterface
 	
 	public function setInputFilter(InputFilterInterface $input_filter)
 	{
-		throw new \Exception("Not used.");
+		throw new \ErrorException("Not used.");
 	}
 	
 	

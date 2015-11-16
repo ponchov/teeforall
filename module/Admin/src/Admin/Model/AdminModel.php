@@ -21,5 +21,8 @@ class AdminModel
     }
     
     
-    
+    public function handleConfiguration(Configuration $config)
+    {
+        
+    }
 }

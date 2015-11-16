@@ -22,6 +22,9 @@ use Login\Model\Login;
 
 class LoginController extends AbstractActionController
 {
+    protected $login_table;
+    
+    
     public function indexAction() 
     {
         return $this->redirect()->toUrl('/login/log');
