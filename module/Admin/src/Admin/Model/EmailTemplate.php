@@ -14,20 +14,16 @@ use Zend\InputFilter\InputFilterInterface;
 
 class EmailTemplate implements InputFilterAwareInterface
 {
-    public $site_title;
-    public $site_description;
-    public $site_keywords;
-    public $admin_email;
+    public $email_subject;
+    public $email_body;
 
     protected $input_filter;
 
 
     public function exchangeArray($data)
     {
-        $this->site_title       = (!empty($data['site_title']))       ? $data['site_title']       : null;
-        $this->site_description = (!empty($data['site_description'])) ? $data['site_description'] : null;
-        $this->site_keywords    = (!empty($data['site_keywords']))    ? $data['site_keywords']    : null;
-        $this->admin_email      = (!empty($data['admin_email']))      ? $data['admin_email']      : null;
+        $this->email_subject  = (!empty($data['email_subject'])) ? $data['email_subject'] : null;
+        $this->email_body     = (!empty($data['email_body']))    ? $data['email_body']    : null;
     }
 
 
@@ -45,27 +41,7 @@ class EmailTemplate implements InputFilterAwareInterface
              
              
             $input_filter->add($factory->createInput(array(
-                'name'     => 'site_title',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                ),
-                 
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 6,
-                            'max'      => 30,
-                        ),
-                    ),
-                ),
-            )));
-             
-             
-            $input_filter->add($factory->createInput(array(
-                'name'     => 'site_description',
+                'name'     => 'email_subject',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'StripTags'),
@@ -78,6 +54,26 @@ class EmailTemplate implements InputFilterAwareInterface
                             'encoding' => 'UTF-8',
                             'min'      => 6,
                             'max'      => 75,
+                        ),
+                    ),
+                ),
+            )));
+             
+             
+            $input_filter->add($factory->createInput(array(
+                'name'     => 'email_body',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                ),
+                 
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 6,
+                            'max'      => 5000,
                         ),
                     ),
                 ),
