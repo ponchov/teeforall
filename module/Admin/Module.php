@@ -13,10 +13,9 @@ use Zend\Mvc\MvcEvent;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
-
-use Admin\Model\AdminModel;
 use Admin\Model\Configuration;
 use Admin\Model\ConfigurationModel;
+
 
 class Module implements AutoloaderProviderInterface
 {
