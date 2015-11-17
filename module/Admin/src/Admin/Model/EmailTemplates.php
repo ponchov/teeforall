@@ -12,7 +12,7 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
 
-class EditEmailTemplate implements InputFilterAwareInterface
+class EmailTemplates implements InputFilterAwareInterface
 {
     public $email_subject;
     public $email_body;
