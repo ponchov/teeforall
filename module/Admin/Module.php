@@ -16,6 +16,7 @@ use Zend\Db\TableGateway\TableGateway;
 
 use Admin\Model\AdminModel;
 use Admin\Model\Configuration;
+use Admin\Model\ConfigurationModel;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -52,9 +53,9 @@ class Module implements AutoloaderProviderInterface
     {
         return array(
             'factories' => array(
-                'Admin\Model\AdminModel' => function($sm) {
+                'Admin\Model\ConfigurationModel' => function($sm) {
                     $table_gateway = $sm->get('ConfigurationService');
-                    $table = new AdminModel($table_gateway);
+                    $table = new ConfigurationModel($table_gateway);
                     return $table;
                 },
                  
@@ -62,8 +63,10 @@ class Module implements AutoloaderProviderInterface
                     $db_adapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $result_set_prototype = new ResultSet();
                     $result_set_prototype->setArrayObjectPrototype(new Configuration());
-                    return new TableGateway('configurations', $db_adapter, null, $result_set_prototype);
-                }
+                    return new TableGateway('admin_configurations', $db_adapter, null, $result_set_prototype);
+                },
+                
+                ''
              ),
          );
     }

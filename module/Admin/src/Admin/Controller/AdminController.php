@@ -85,6 +85,17 @@ class AdminController extends AbstractActionController
         // don't really need to do anything here
         // just here so we can call the view
     }
+    
+    
+    public function emailtemplatesAction()
+    {
+        
+    }
+    
+    
+    
+    
+    /* DO NOT CHANGE THE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!! */
     public function getConfigurationService()
     {
         if (!$this->configuration_service) {
