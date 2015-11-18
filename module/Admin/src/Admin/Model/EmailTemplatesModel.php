@@ -36,10 +36,12 @@ class EmailTemplatesModel
             // record was not found
             // insert the template
             try {
-                $insert = $this->table_gateway->insert(array(
+                $data = array(
                     'email_subject' => $email_tpls->email_subject,
                     'email_body'    => $email_tpls->email_body,
-                ));
+                );
+                
+                $insert = $this->table_gateway->insert($data);
             
                 if ($insert > 0) {
                     return true;
@@ -48,10 +50,50 @@ class EmailTemplatesModel
                 // log the message to the error file
                 ErrorHandler::errorWriter($e->getMessage());
             }
-        } else {
-            // looks like a row was found
-            // return false
-            return false;
         }
+            
+        // looks like a row was found
+        // return false
+        return false;
     }
+    
+    
+    public function modifyEmailTemplate(EmailTemplates $email_tpls)
+    {
+        // first we need to check if the email template exist (can't update a non-existent one right ;)?)
+        // if it does, update the template with the supplied values
+        // if it doesn't, bail out (admin should use the saveEmailTemplate method instead)
+        $select = $this->table_gateway->select(array(
+            'email_subject' => $email_tpls->email_subject
+        ));
+        
+        $row = $select->current();
+        
+        if (null !== $row) {
+            // record was found
+            // update it now
+            try {
+                $data = array(
+                    'email_subject' => $email_tpls->email_subject,
+                    'email_body'    => $email_tpls->email_body,
+                );
+            
+                $update = $this->table_gateway->update($data, array('id' => $row['id']));
+                
+                if ($update > 0) {
+                    return true;
+                }
+            } catch (\ErrorException $e) {
+                // log the message to the error file
+                ErrorHandler::errorWriter($e->getMessage());
+            }
+        } 
+        
+        // no record was found
+        // return false
+        return false;
+    }
+    
+    
+    
 }
