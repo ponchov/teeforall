@@ -97,10 +97,58 @@ class AdminController extends AbstractActionController
     }
     
     
+    public function edittemplateAction()
+    {
+        // set the form to be used in the edit template view
+        $form = new EmailTemplateForm();
+    
+        return new ViewModel(array('form' => $form, 'id' => $this->params()->fromPost('eID')));
+    }
+    
     public function updatetemplatesAction()
     {
+        // set the form to be used in the update templates view
+        $form = new EmailTemplateForm();
         
+        // gets the form method request (usually post)
+        $request = $this->getRequest();
+        
+        // check to see if the request was a POST form request
+        if ($request->isPost()) {
+            // good to go
+            // filter the form values now
+            $email = new EmailTemplates();
+        
+            $form->setInputFilter($email->getInputFilter());
+        
+            // set the form data to hold all the values supplied by the form
+            // via $request->getPost()
+            $form->setData($request->getPost());
+             
+            // now we will see if the form is valid
+            // we check if it is valid by the ConfigurationForm class we created
+            if ($form->isValid()) {
+                // it is valid
+                // pass the form to data to the filter class via exchangeArray()
+                $email->exchangeArray($form->getData());
+        
+                if ($this->getEmailTemplatesService()->modifyEmailTemplate($email,
+                    $this->params()->fromPost('eID')) === true) {
+                        // the updated email template was inserted into the database successfully
+                        // redirect to email template view
+                        return $this->redirect()->toUrl('/admin/email-template');
+                    } else {
+                        // error occured..
+                        // the error is logged automatically
+                        // redirect to email template view
+                        return $this->redirect()->toUrl('/email-template');
+                    }
+            }
+        }
+        
+        return new ViewModel(array('template_id' => $this->params()->fromPost('eID')));
     }
+
     
     
     public function deletetemplatesAction()
@@ -118,21 +166,7 @@ class AdminController extends AbstractActionController
     }
     
     
-    public function edittemplateAction()
-    {
-        // set the form tobe used in the edit templates view
-        $form = new EmailTemplateForm();
-        
-        $messages = null;
-        
-        // gets the form method request (usually post)
-        $request = $this->getRequest();
-        
-        // check to see if the request was a POST form request
-        if ($request->isPost()) {
-            
-        }
-    }
+   
     
     
     
