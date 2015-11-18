@@ -7,6 +7,7 @@
 namespace Admin\Model;
 
 use Zend\Db\TableGateway\TableGateway;
+
 use Error\ErrorHandler;
 
 
@@ -41,11 +42,9 @@ class EmailTemplatesModel
                     'email_body'    => $email_tpls->email_body,
                 );
                 
-                $insert = $this->table_gateway->insert($data);
+                $this->table_gateway->insert($data);
             
-                if ($insert > 0) {
-                    return true;
-                }
+                return true;
             } catch (\ErrorException $e) {
                 // log the message to the error file
                 ErrorHandler::errorWriter($e->getMessage());
@@ -78,11 +77,9 @@ class EmailTemplatesModel
                     'email_body'    => $email_tpls->email_body,
                 );
             
-                $update = $this->table_gateway->update($data, array('id' => $row['id']));
+                $this->table_gateway->update($data, array('id' => $row['id']));
                 
-                if ($update > 0) {
-                    return true;
-                }
+                return true;
             } catch (\ErrorException $e) {
                 // log the message to the error file
                 ErrorHandler::errorWriter($e->getMessage());
@@ -95,5 +92,28 @@ class EmailTemplatesModel
     }
     
     
-    
+    public function deleteEmailTemplate(EmailTemplates $email_tpls)
+    {
+        // first we need to make sure the email template exists
+        // before we can begin to delete it
+        // if the template does exist, destroy all data (id, template_title, email_subject, email_body)
+        // if the template does not exist, bail out
+        $select = $this->table_gateway->select(array(
+            'email_subject' => $email_tpls->email_subject,
+        ));
+        
+        $row = $select->current();
+        
+        if (null !== $row) {
+            // record was found
+            // delete it now
+            try {
+                $this->table_gateway->delete(array('id' => $row['id']));
+                
+                return true;
+            } catch (\ErrorException $e) {
+                ErrorHandler::errorWriter($e->getMessage());
+            }
+        }
+    }
 }
