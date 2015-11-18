@@ -91,7 +91,7 @@ class AdminController extends AbstractActionController
     
     public function emailtemplatesAction()
     {
-        
+        return new ViewModel(array('email_tpls' => $this->getEmailTemplatesService()->getEmailTemplates()));
     }
     
     

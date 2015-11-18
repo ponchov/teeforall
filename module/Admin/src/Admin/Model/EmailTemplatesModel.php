@@ -23,6 +23,15 @@ class EmailTemplatesModel
     }
     
     
+    public function getEmailTemplates()
+    {
+        // gets all the email templates
+        $get_all = $this->table_gateway->select();
+        
+        return $get_all;
+    }
+    
+    
     public function saveEmailTemplate(EmailTemplates $email_tpls)
     {
         // first let's check if the template already exists
