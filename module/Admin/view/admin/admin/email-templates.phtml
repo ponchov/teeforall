@@ -68,12 +68,12 @@ function deleteRecord() {
 	}
 
 	if (eIds == "") {
-		alert("Please select atleast one record.");
+		alert("Please select at least one record.");
 		return;
 	}
 
 
-	if (confirm("Are you sure to delete these records?")) {
+	if (confirm("Are you sure you want to delete these records?")) {
    		$.ajax({ 
     		type: "POST", 
     		url: "/admin/delete-template/" + eIds,
