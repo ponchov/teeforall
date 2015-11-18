@@ -141,7 +141,7 @@ class AdminController extends AbstractActionController
                         // error occured..
                         // the error is logged automatically
                         // redirect to email template view
-                        return $this->redirect()->toUrl('/email-template');
+                        return $this->redirect()->toUrl('/admin/email-template');
                     }
             }
         }
