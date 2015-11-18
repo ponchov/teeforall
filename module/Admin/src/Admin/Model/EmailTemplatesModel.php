@@ -57,7 +57,7 @@ class EmailTemplatesModel
     }
     
     
-    public function modifyEmailTemplate(EmailTemplates $email_tpls)
+    public function modifyEmailTemplate(EmailTemplates $email_tpls, $id)
     {
         // first we need to check if the email template exist (can't update a non-existent one right ;)?)
         // if it does, update the template with the supplied values
@@ -77,7 +77,7 @@ class EmailTemplatesModel
                     'email_body'    => $email_tpls->email_body,
                 );
             
-                $this->table_gateway->update($data, array('id' => $row['id']));
+                $this->table_gateway->update($data, array('id' => (int)$id));
                 
                 return true;
             } catch (\ErrorException $e) {
@@ -92,7 +92,7 @@ class EmailTemplatesModel
     }
     
     
-    public function deleteEmailTemplate(EmailTemplates $email_tpls)
+    public function deleteEmailTemplate(EmailTemplates $email_tpls, $id)
     {
         // first we need to make sure the email template exists
         // before we can begin to delete it
@@ -108,7 +108,7 @@ class EmailTemplatesModel
             // record was found
             // delete it now
             try {
-                $this->table_gateway->delete(array('id' => $row['id']));
+                $this->table_gateway->delete(array('id' => (int)$id));
                 
                 return true;
             } catch (\ErrorException $e) {
