@@ -15,6 +15,8 @@ use Zend\Db\TableGateway\TableGateway;
 
 use Admin\Model\Configuration;
 use Admin\Model\ConfigurationModel;
+use Admin\Model\EmailTemplatesModel;
+use Admin\Model\EmailTemplates;
 
 
 class Module implements AutoloaderProviderInterface
@@ -65,7 +67,18 @@ class Module implements AutoloaderProviderInterface
                     return new TableGateway('admin_configurations', $db_adapter, null, $result_set_prototype);
                 },
                 
-                ''
+                'Admin\Model\EmailTemplatesModel' => function($sm) {
+                    $table_gateway = $sm->get('EmailTemplatesService');
+                    $table = new EmailTemplatesModel($table_gateway);
+                    return $table;
+                },
+                
+                'EmailTemplatesService' => function($sm) {
+                    $db_adapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $result_set_prototype = new ResultSet();
+                    $result_set_prototype->setArrayObjectPrototype(new EmailTemplates());
+                    return new TableGateway('email_templates', $db_adapter, null, $result_set_prototype);
+                }
              ),
          );
     }

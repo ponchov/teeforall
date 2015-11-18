@@ -18,6 +18,8 @@ use Admin\Model\Configuration;
 class AdminController extends AbstractActionController
 {
     protected $configuration_service;
+    protected $email_tpl_service;
+    
     
     public function indexAction()
     {
@@ -93,9 +95,22 @@ class AdminController extends AbstractActionController
     }
     
     
+    public function updatetemplatesAction()
+    {
+        
+    }
+    
+    
+    public function deletetemplatesAction()
+    {
+        
+    }
+    
+    
     
     
     /* DO NOT CHANGE THE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!! */
+    
     public function getConfigurationService()
     {
         if (!$this->configuration_service) {
@@ -105,5 +120,17 @@ class AdminController extends AbstractActionController
         }
         
         return $this->configuration_service;
+    }
+    
+    
+    public function getEmailTemplatesService()
+    {
+        if (!$this->email_tpl_service) {
+            $sm = $this->getServiceLocator();
+            
+            $this->email_tpl_service = $sm->get('Admin\Model\EmailTemplatesModel');
+        }
+        
+        return $this->email_tpl_service;
     }
 }
