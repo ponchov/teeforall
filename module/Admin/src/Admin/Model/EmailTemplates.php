@@ -79,45 +79,7 @@ class EmailTemplates implements InputFilterAwareInterface
                 ),
             )));
 
-            $input_filter->add($factory->createInput(array(
-                'name'     => 'site_keywords',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                ),
-                 
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 6,
-                            'max'      => 50,
-                        ),
-                    ),
-                ),
-            )));
-
-            $input_filter->add($factory->createInput(array(
-                'name'     => 'admin_email',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                 
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 6,
-                            'max'      => 75,
-                        ),
-                    ),
-                ),
-            )));
-             
+            
             $this->input_filter = $input_filter;
         }
 

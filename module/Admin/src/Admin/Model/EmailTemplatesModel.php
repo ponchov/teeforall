@@ -1,6 +1,8 @@
 <?php
 /*
- * Handles all the email template
+ * Handles all the email template functions
+ * 
+ * @author Jimmy
  */
 namespace Admin\Model;
 
@@ -16,5 +18,11 @@ class EmailTemplatesModel
         // only assign the class TableGateway to $this->table_gateway
         // if $gateway is a valid instanceof TableGateway
         $this->table_gateway = $gateway instanceof TableGateway ? $gateway : null;
+    }
+    
+    
+    public function saveEmailTemplate(EmailTemplates $email_tpls)
+    {
+        
     }
 }
