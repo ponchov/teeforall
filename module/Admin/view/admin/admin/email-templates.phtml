@@ -15,7 +15,7 @@
              <table class="mws-datatable-fn mws-table">
                  <thead>
                      <tr>
-                         <th width="5%">Template ID #</th>
+                         <th width="5%">Number</th>
                          <th width="45%">Template Name</th>
                          <th width="45%">Subject</th>
                          <th width="5%" class="">Edit</th>
@@ -29,7 +29,9 @@
 					       foreach ($this->email_tpls as $email_templates) {
 					 ?>
 						<tr class="gradeX">
-                            <td><?php echo $email_templates->template_id; ?></td>
+						  <?php for ($i=0; $i<count($email_templates); $i++) { ?>
+                            <td><?php echo $i + 1; ?></td>
+                         <?php } ?>
                             <td><?php echo $email_templates->template_title; ?></td>
                             <td><?php echo $email_templates->email_subject; ?></td>
                             <td class="center">

@@ -12,6 +12,8 @@ use Zend\View\Model\ViewModel;
 
 use Admin\Form\ConfigurationForm;
 use Admin\Model\Configuration;
+use Admin\Model\EmailTemplates;
+use Admin\Form\EmailTemplateForm;
 
 
 
@@ -103,7 +105,33 @@ class AdminController extends AbstractActionController
     
     public function deletetemplatesAction()
     {
+        $e_id = $this->params()->fromPost('eID');
         
+        if (!empty($e_id)) {
+            // delete the template
+            $email = new EmailTemplates();
+            
+            if (false !== $this->getEmailTemplatesService()->deleteEmailTemplate($email, $e_id)) {
+                // don't do anything, ajax call will handle redirect 
+            }
+        }
+    }
+    
+    
+    public function edittemplateAction()
+    {
+        // set the form tobe used in the edit templates view
+        $form = new EmailTemplateForm();
+        
+        $messages = null;
+        
+        // gets the form method request (usually post)
+        $request = $this->getRequest();
+        
+        // check to see if the request was a POST form request
+        if ($request->isPost()) {
+            
+        }
     }
     
     
