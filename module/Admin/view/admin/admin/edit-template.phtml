@@ -7,8 +7,8 @@
     
     <div class="mws-panel-body">
        <form name="myform" id="mws-validate" 
-        action="<?php echo $this->url('admin', array('action' => 'updatetemplate', 'id' => $this->id),
-            'default', true); ?>"  method="post" novalidate="novalidate" class="mws-form">
+        action="<?php echo $this->url('admin', array('action' => 'updatetemplate', 'id' => $this->id)); ?>"  
+        method="post" novalidate="novalidate" class="mws-form">
           <input type="hidden" name="save_or_send" id="save_or_send" value="1" />
             <div style="display:none;" class="mws-form-message error" id="mws-validate-error"></div>
             
