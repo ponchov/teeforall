@@ -7,7 +7,7 @@
     
     <div class="mws-panel-body">
        <form name="myform" id="mws-validate" 
-        action="<?php echo $this->url('admin', array('action' => 'updatetemplate', 'templateId' => $this->templateId),
+        action="<?php echo $this->url('admin', array('action' => 'updatetemplate', 'id' => $this->id),
             'default', true); ?>"  method="post" novalidate="novalidate" class="mws-form">
           <input type="hidden" name="save_or_send" id="save_or_send" value="1" />
             <div style="display:none;" class="mws-form-message error" id="mws-validate-error"></div>
@@ -16,15 +16,17 @@
                 <div class="mws-form-row">
                     <label>Subject:</label>
                     <div class="mws-form-item large">
-                        <input type="text" class="mws-textinput required" name="email_subject" value="">
+                        <input type="text" class="textInput" name="email_subject" 
+                        value="<?php echo $this->subject; ?>" style="width: 400px; padding: 3px;">
                     </div>
                 </div>
                 
                 <div class="mws-form-row">
                 	<label>Message Body</label>
                 	<div class="mws-form-item">
-                        <!--<textarea id="elrte" cols="auto" rows="auto"></textarea>-->
-                    	<?php echo $this->form->get('email_body'); ?>
+                        <textarea id="elrte" class="textInput" style="width: 90%; height: 400px;" cols="auto">
+                        	<?php echo $this->body; ?>
+                        </textarea>
                 	</div>
             	</div>
             </div>
@@ -32,8 +34,9 @@
             <div class="mws-button-row">
                  <input type="submit" value="Update Template" class="mws-button red">
             </div>
-	</form>
-</div>    	
+	  </form>
+   </div>  
+</div>  	
 
 <script type="text/javascript">
 	function deleteRecord() { 

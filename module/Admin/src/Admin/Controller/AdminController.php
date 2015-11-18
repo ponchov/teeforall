@@ -102,7 +102,13 @@ class AdminController extends AbstractActionController
         // set the form to be used in the edit template view
         $form = new EmailTemplateForm();
     
-        return new ViewModel(array('form' => $form, 'id' => $this->params()->fromPost('eID')));
+        $tpl_id = !empty($this->getRequest()->getParam('id')) 
+        ? $this->getRequest()->getParam('id') : null;
+        
+        $get_tpl = $this->getEmailTemplatesService()->getEmailTemplate($tpl_id);
+        
+        return new ViewModel(array('form' => $form, 'id' => $get_tpl['template_id'], 
+            'subject' => $get_tpl['email_subject'], 'body' => $get_tpl['email_body']));
     }
     
     public function updatetemplatesAction()
@@ -126,23 +132,25 @@ class AdminController extends AbstractActionController
             $form->setData($request->getPost());
              
             // now we will see if the form is valid
-            // we check if it is valid by the ConfigurationForm class we created
+            // we check if it is valid by the email form class we created
             if ($form->isValid()) {
                 // it is valid
                 // pass the form to data to the filter class via exchangeArray()
                 $email->exchangeArray($form->getData());
         
-                if ($this->getEmailTemplatesService()->modifyEmailTemplate($email,
-                    $this->params()->fromPost('eID')) === true) {
-                        // the updated email template was inserted into the database successfully
-                        // redirect to email template view
-                        return $this->redirect()->toUrl('/admin/email-template');
-                    } else {
-                        // error occured..
-                        // the error is logged automatically
-                        // redirect to email template view
-                        return $this->redirect()->toUrl('/admin/email-template');
-                    }
+                $tpl_id = !empty($this->getRequest()->getParam('id'))
+                ? $this->getRequest()->getParam('id') : null;
+                
+                if ($this->getEmailTemplatesService()->modifyEmailTemplate($email, $tpl_id) === true) {
+                    // the updated email template was inserted into the database successfully
+                    // redirect to email template view
+                    return $this->redirect()->toUrl('/admin/email-template');
+                } else {
+                    // error occured..
+                    // the error is logged automatically
+                    // redirect to email template view
+                    return $this->redirect()->toUrl('/admin/email-template/' . $tpl_id);
+                }
             }
         }
         

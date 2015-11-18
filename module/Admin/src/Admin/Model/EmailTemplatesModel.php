@@ -31,6 +31,20 @@ class EmailTemplatesModel
         return $get_all;
     }
     
+    public function getEmailTemplate($id)
+    {
+        // get one email template
+        $get_one = $this->table_gateway->select(array('id' => $id));
+        
+        $row = $get_one->current();
+        
+        if ($row) {
+            return $row;
+        }
+        
+        return false;
+    }
+    
     
     public function saveEmailTemplate(EmailTemplates $email_tpls)
     {
