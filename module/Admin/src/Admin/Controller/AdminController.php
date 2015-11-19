@@ -171,7 +171,10 @@ class AdminController extends AbstractActionController
     }
     
     
-    
+    public function pagesAction()
+    {
+        
+    }
     
     
     

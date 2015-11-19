@@ -17,6 +17,7 @@ use Admin\Model\Configuration;
 use Admin\Model\ConfigurationModel;
 use Admin\Model\EmailTemplatesModel;
 use Admin\Model\EmailTemplates;
+use Admin\Model\PagesModel;
 
 
 class Module implements AutoloaderProviderInterface
@@ -78,6 +79,19 @@ class Module implements AutoloaderProviderInterface
                     $result_set_prototype = new ResultSet();
                     $result_set_prototype->setArrayObjectPrototype(new EmailTemplates());
                     return new TableGateway('email_templates', $db_adapter, null, $result_set_prototype);
+                },
+                
+                'Admin\Model\PagesModel' => function($sm) {
+                    $table_gateway = $sm->get('PagesService');
+                    $table = new PagesModel($table_gateway);
+                    return $table;
+                },
+                
+                'PagesService' => function($sm) {
+                    $db_adapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $result_set_prototype = new ResultSet();
+                    $result_set_prototype->setArrayObjectPrototype(new Pages());
+                    return new TableGateway('pages', $db_adapter, null, $result_set_prototype);
                 }
              ),
          );
