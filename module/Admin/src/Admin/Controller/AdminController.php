@@ -177,6 +177,105 @@ class AdminController extends AbstractActionController
     }
     
     
+    public function editpageAction()
+    {
+        
+    }
+    
+    
+    public function addpageAction()
+    {
+        
+    }
+    
+    
+    public function deletepageAction()
+    {
+        
+    }
+    
+    
+    public function addcategoryAction()
+    {
+        
+    }
+    
+    
+    public function addquestionsAction()
+    {
+        
+    }
+    
+    
+    public function savepageAction()
+    {
+        
+    }
+    
+    
+    public function savecategoryAction()
+    {
+        
+    }
+    
+    
+    public function savequestionAction()
+    {
+        
+    }
+    
+    
+    public function listquestionsAction()
+    {
+        
+    }
+    
+    
+    public function updatecategoryAction()
+    {
+        
+    }
+    
+    
+    public function updatequestionAction()
+    {
+        
+    }
+    
+    
+    public function managecategoryAction()
+    {
+        
+    }
+    
+    
+    public function deletecategoryAction()
+    {
+        
+    }
+    
+    
+    public function deletequestionAction()
+    {
+        
+    }
+    
+    
+    public function editcategoryAction()
+    {
+        
+    }
+    
+    
+    public function editquestionAction()
+    {
+        
+    }
+    
+    
+    
+    
+    
     
     
     /* DO NOT CHANGE THE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!! */

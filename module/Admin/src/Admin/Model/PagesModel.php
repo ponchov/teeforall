@@ -20,5 +20,62 @@ class PagesModel
     }
     
     
+    public function getPages()
+    {
+        $get_all = $this->table_gateway->select();
+        
+        return $get_all;
+    }
+    
+    
+    public function savePage() 
+    {
+        
+    }
+    
+    
+    public function updatePage()
+    {
+        
+    }
+    
+    
+    public function updateCategory()
+    {
+        
+    }
+    
+    
+    public function updateTestimonals()
+    {
+        
+    }
+    
+    
+    public function updateQuestion()
+    {
+        
+    }
+    
+    
+    public function saveCategory()
+    {
+        
+    }
+    
+    
+    public function saveTestimonals()
+    {
+        
+    }
+    
+    
+    public function saveQuestion()
+    {
+        
+    }
+    
+    
+    
 }
 
