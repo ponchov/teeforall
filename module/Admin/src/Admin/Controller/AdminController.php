@@ -21,6 +21,7 @@ class AdminController extends AbstractActionController
 {
     protected $configuration_service;
     protected $email_tpl_service;
+    protected $pages_service;
     
     
     public function indexAction()
@@ -110,6 +111,7 @@ class AdminController extends AbstractActionController
         return new ViewModel(array('form' => $form, 'id' => $get_tpl['template_id'], 
             'subject' => $get_tpl['email_subject'], 'body' => $get_tpl['email_body']));
     }
+
     
     public function updatetemplatesAction()
     {
@@ -173,7 +175,7 @@ class AdminController extends AbstractActionController
     
     public function pagesAction()
     {
-        
+        return new ViewModel(array('pages' => $this->getPagesService()->getPages()));
     }
     
     
@@ -301,5 +303,17 @@ class AdminController extends AbstractActionController
         }
         
         return $this->email_tpl_service;
+    }
+    
+    
+    public function getPagesService() 
+    {
+        if (!$this->pages_service) {
+            $sm = $this->getServiceLocator();
+            
+            $this->pages_service = $sm->get('Admin\Model\PagesModel');
+        }
+        
+        return $this->pages_service;
     }
 }
