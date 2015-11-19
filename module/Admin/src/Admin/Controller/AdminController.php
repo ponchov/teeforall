@@ -152,22 +152,19 @@ class AdminController extends AbstractActionController
                     return $this->redirect()->toUrl('/admin/email-template/' . $tpl_id);
                 }
             }
-        }
-        
-        return new ViewModel(array('template_id' => $this->params()->fromPost('eID')));
+        } 
     }
 
     
-    
     public function deletetemplatesAction()
     {
-        $e_id = $this->params()->fromPost('eID');
+        $id = $this->getRequest()->getParam('id');
         
         if (!empty($e_id)) {
             // delete the template
             $email = new EmailTemplates();
             
-            if (false !== $this->getEmailTemplatesService()->deleteEmailTemplate($email, $e_id)) {
+            if (false !== $this->getEmailTemplatesService()->deleteEmailTemplate($email, $id)) {
                 // don't do anything, ajax call will handle redirect 
             }
         }
