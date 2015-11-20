@@ -15,9 +15,14 @@ use Zend\Db\TableGateway\TableGateway;
 
 use Admin\Model\Configuration;
 use Admin\Model\ConfigurationModel;
+
 use Admin\Model\EmailTemplatesModel;
 use Admin\Model\EmailTemplates;
+
+use Admin\Model\Pages;
 use Admin\Model\PagesModel;
+use Admin\Model\CategoriesModel;
+use Admin\Model\Categories;
 
 
 class Module implements AutoloaderProviderInterface
@@ -92,7 +97,20 @@ class Module implements AutoloaderProviderInterface
                     $result_set_prototype = new ResultSet();
                     $result_set_prototype->setArrayObjectPrototype(new Pages());
                     return new TableGateway('pages', $db_adapter, null, $result_set_prototype);
-                }
+                },
+                
+                'Admin\Model\CategoriesModel' => function($sm) {
+                    $table_gateway = $sm->get('CategoriesService');
+                    $table = new CategoriesModel($table_gateway);
+                    return $table;
+                },
+                
+                'CategoriesService' => function($sm) {
+                    $db_adapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $result_set_prototype = new ResultSet();
+                    $result_set_prototype->setArrayObjectPrototype(new Categories());
+                    return new TableGateway('categories', $db_adapter, null, $result_set_prototype);
+                },
              ),
          );
     }

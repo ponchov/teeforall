@@ -26,13 +26,16 @@ class CategoriesModel
     
     public function listCategories()
     {
-    
+        // get all the categories from the database
+        $get_all = $this->table_gateway->select();
+        
+        return $get_all;
     }
     
     
     public function updateCategory()
     {
-    
+        
     }
     
     
