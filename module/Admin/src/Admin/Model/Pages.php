@@ -22,8 +22,8 @@ class Pages implements InputFilterAwareInterface
 
     public function exchangeArray($data)
     {
-        $this->page_title      = (!empty($data['site_title']))       ? $data['site_title']       : null;
-        $this->page_content    = (!empty($data['site_description'])) ? $data['site_description'] : null;
+        $this->page_title      = (!empty($data['page_title']))   ? $data['page_title']   : null;
+        $this->page_content    = (!empty($data['page_content'])) ? $data['page_content'] : null;
     }
 
 

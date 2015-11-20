@@ -1,0 +1,90 @@
+<form method="post" name="myform" id="myform" 
+     action="<?php echo $this->url(array('controller' => 'admin', 'action' => 'pages'), 'default', true)?>" >
+	<div class="mws-panel grid_8">
+        <div class="mws-panel-header">
+             <span class="mws-i-24 i-table-1">Manage Pages</span>
+        </div>
+                    
+        <div class="mws-panel-body">
+            <div class="mws-panel-toolbar top clearfix">
+                <ul>
+                   <li></li>
+                </ul>           
+            </div>
+                        
+            <table class="mws-datatable-fn mws-table">
+                <thead>
+                    <tr>
+                       <th width="5%">S.No.</th>
+                       <th width="45%">Page Title</th>
+                       <th width="5%" class="">Edit</th>
+                       <th width="3%"></th>
+                    </tr>
+                </thead>
+                            
+                <tbody>
+                    <?php
+						foreach ($this->pages as $page) {
+					?>
+						<tr class="gradeX">
+						   <?php 
+						         for ($i=0; $i<count($this->page); $i++) {
+						   ?>
+                           <td><?php echo $i + 1; ?></td>
+                           <?php } ?>
+                           <td><?php echo $page->page_title; ?></td>
+                                       
+                           <td class="center">
+                               <a href="/admin/pages/<?php echo $page->page_id; ?>">
+            					   <img src="<?php echo $this->basePath() ;?>/admin/css/icons/16/edit.png" border='0' />
+            				   </a>
+           				   </td> 
+                                        
+                           <td>
+                               <input type="checkbox" name="checkbox[]" id="checkbox[]" value="<?php echo $page->page_id; ?>"  onClick="return check1();"/>
+                           </td>
+	                    </tr>
+						<?php
+							}
+						?>
+                    </tbody>
+             </table>
+          </div>
+   </div>
+</form>
+            
+<script type="text/javascript">
+function deleteRecord() { 
+    var pIds = '';
+    var userrows = new Array();
+    var cboxes = document.getElementsByName("checkbox[]");
+
+	for (i=0; i<cboxes.length; i++) { 
+		if(cboxes[i].checked == true) {
+			pIds += cboxes[i].value + ','; 
+	        userrows[i] = cboxes[i].value;
+	    }
+    }
+    
+	if (pIds == "") {
+		alert("Please select at least one record.");
+		return;
+	}
+
+
+	if (confirm("Are you sure you want to delete these records?")) {
+		$.ajax({ 
+    		type: "POST", 
+    		url: "/admin/delete-page/" + pIds,
+    		data: { userId : pIds },
+    		cache: false, 
+
+    		success: function(data){
+   				window.location ="/admin/pages";		
+	        }
+   		}); 
+	}
+}
+</script>
+
+            
