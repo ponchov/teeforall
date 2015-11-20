@@ -31,7 +31,9 @@ class AdminController extends AbstractActionController
         $layout->setTemplate('admin/admin/layout');
     }
 
-    
+    /////////////////////////////////////////////
+    // configuration actions
+    /////////////////////////////////////////////
     public function configurationAction()
     {
         // set the form to be displayed in the configuration view
@@ -92,6 +94,9 @@ class AdminController extends AbstractActionController
     }
     
     
+    /////////////////////////////////////////////
+    // email template actions
+    /////////////////////////////////////////////
     public function emailtemplatesAction()
     {
         return new ViewModel(array('email_tpls' => $this->getEmailTemplatesService()->getEmailTemplates()));
@@ -173,6 +178,9 @@ class AdminController extends AbstractActionController
     }
     
     
+    /////////////////////////////////////////////
+    // pages actions
+    /////////////////////////////////////////////
     public function pagesAction()
     {
         return new ViewModel(array('pages' => $this->getPagesService()->getPages()));
@@ -197,19 +205,16 @@ class AdminController extends AbstractActionController
     }
     
     
-    public function addcategoryAction()
-    {
-        
-    }
-    
-    
-    public function addquestionsAction()
-    {
-        
-    }
-    
-    
     public function savepageAction()
+    {
+    
+    }
+    
+    
+    /////////////////////////////////////////////
+    // category actions
+    /////////////////////////////////////////////
+    public function addcategoryAction()
     {
         
     }
@@ -217,7 +222,39 @@ class AdminController extends AbstractActionController
     
     public function savecategoryAction()
     {
-        
+    
+    }
+    
+   
+    public function updatecategoryAction()
+    {
+    
+    }
+    
+    
+    public function managecategoryAction()
+    {
+    
+    }
+    
+    
+    public function deletecategoryAction()
+    {
+    
+    }
+    
+    
+    public function editcategoryAction()
+    {
+    
+    }
+    
+    /////////////////////////////////////////////
+    // question actions
+    ///////////////////////////////////////////// 
+    public function addquestionsAction()
+    {
+    
     }
     
     
@@ -233,25 +270,7 @@ class AdminController extends AbstractActionController
     }
     
     
-    public function updatecategoryAction()
-    {
-        
-    }
-    
-    
     public function updatequestionAction()
-    {
-        
-    }
-    
-    
-    public function managecategoryAction()
-    {
-        
-    }
-    
-    
-    public function deletecategoryAction()
     {
         
     }
@@ -263,21 +282,12 @@ class AdminController extends AbstractActionController
     }
     
     
-    public function editcategoryAction()
-    {
-        
-    }
-    
-    
     public function editquestionAction()
     {
         
     }
     
-    
-    
-    
-    
+  
     
     
     /* DO NOT CHANGE THE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!! */

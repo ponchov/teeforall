@@ -39,26 +39,42 @@ class PagesModel
         
     }
     
+    public function deletePage()
+    {
+        
+    }
     
+    
+    
+    
+    // category methods
     public function updateCategory()
     {
         
     }
     
     
-    public function updateTestimonals()
+    public function saveCategory()
     {
-        
+    
+    }
+    
+    
+    // question methods
+    public function saveQuestion()
+    {
+    
     }
     
     
     public function updateQuestion()
     {
-        
+    
     }
     
     
-    public function saveCategory()
+    // testimonal methods
+    public function updateTestimonals()
     {
         
     }
@@ -68,14 +84,5 @@ class PagesModel
     {
         
     }
-    
-    
-    public function saveQuestion()
-    {
-        
-    }
-    
-    
-    
 }
 
