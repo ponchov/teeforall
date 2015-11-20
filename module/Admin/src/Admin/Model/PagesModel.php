@@ -9,6 +9,7 @@ namespace Admin\Model;
 use Zend\Db\TableGateway\TableGateway;
 
 use Error\ErrorHandler;
+use Admin\Form\PagesForm;
 
 
 class PagesModel
@@ -45,9 +46,31 @@ class PagesModel
     }
     
     
-    public function savePage() 
+    public function savePage(Pages $pages) 
     {
+        // first make sure the page doesn't exist
+        // don't want to overwrite a page
+        // admin should user updatePage instead
+        $get_page = $this->table_gateway->select(array('page_title' => $pages->page_title));
         
+        $row = $get_page->current();
+        
+        if (!$row) {
+            // page not found
+            // proceed to save the page
+            $data = array(
+                'page_title'    => $pages->page_title,
+                'page_content'  => $pages->page_content
+            );
+            
+            $insert = $this->table_gateway->insert($data);
+            
+            if ($insert > 0) {
+                return true;
+            }
+        }
+        
+        return false;
     }
     
     
@@ -70,9 +93,17 @@ class PagesModel
         }
     }
     
-    public function deletePage()
+    public function deletePage($id)
     {
-        
+        try {
+            // remove the page from the database based on $id
+            $this->table_gateway->delete(array('id' => (int)$id));
+            
+            return true;
+        } catch (\ErrorException $e) {
+            // log the message to the error file
+            ErrorHandler::errorWriter($e->getMessage());
+        }
     }
     
     

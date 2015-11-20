@@ -7,14 +7,14 @@
     
     <div class="mws-panel-body">
         <form name="myform" id="mws-validate" 
-        action="<?php echo $this->url('admin', array('action' => 'updatepage', 'id' => $this->pageId), 'default', true)?>" method="post" novalidate="novalidate" class="mws-form">
+        action="<?php echo $this->url('admin', array('action' => 'updatepage', 'id' => $this->id), 'default', true)?>" method="post" novalidate="novalidate" class="mws-form">
             <div style="display:none;" class="mws-form-message error" id="mws-validate-error"></div>
             
             <div class="mws-form-inline">
                 <div class="mws-form-row">
                     <label>Title :</label>
                     <div class="mws-form-item large">
-                        <?php echo $this>formRow($this->form->get($this->page_title)); ?>
+                        <?php echo $this->formRow($this->form->get($this->page_title)); ?>
                     </div>
                 </div>
                 

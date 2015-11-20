@@ -15,6 +15,7 @@ use Admin\Model\Configuration;
 use Admin\Model\EmailTemplates;
 use Admin\Form\EmailTemplateForm;
 use Admin\Form\PagesForm;
+use Admin\Model\Pages;
 
 
 
@@ -188,6 +189,14 @@ class AdminController extends AbstractActionController
     }
     
     
+    public function addpageAction()
+    {
+        $form = new PagesForm();
+        
+        return new ViewModel(array('form' => $form));
+    }
+    
+    
     public function editpageAction()
     {
         // set the form to be used in the view
@@ -208,26 +217,106 @@ class AdminController extends AbstractActionController
     
     public function updatepageAction()
     {
+        // set the form to be used in the pages view
+        $form = new PagesForm();
         
-    }
-    
-    
-    public function addpageAction()
-    {
+        // gets the form method request (usually post)
+        $request = $this->getRequest();
         
+        // check to see if the request was a POST form request
+        if ($request->isPost()) {
+            // good to go
+            // filter the form values now
+            $page = new Pages();
+        
+            $form->setInputFilter($page->getInputFilter());
+        
+            // set the form data to hold all the values supplied by the form
+            // via $request->getPost()
+            $form->setData($request->getPost());
+             
+            // now we will see if the form is valid
+            // we check if it is valid by the email form class we created
+            if ($form->isValid()) {
+                // it is valid
+                // pass the form to data to the filter class via exchangeArray()
+                $page->exchangeArray($form->getData());
+        
+                $p_id = !empty($this->getRequest()->getParam('id'))
+                ? $this->getRequest()->getParam('id') : null;
+        
+                if ($this->getPagesService()->updatePage($page, $p_id) === true) {
+                    // the updated page was inserted into the database successfully
+                    // redirect to page view
+                    return $this->redirect()->toUrl('/admin/pages');
+                } else {
+                    // error occured..
+                    // the error is logged automatically
+                    // redirect to page view
+                    return $this->redirect()->toUrl('/admin/pages/' . $p_id);
+                }
+            }
+        }
     }
     
     
     public function deletepageAction()
     {
+        $page_id = $this->getRequest()->getParam('id');
         
+        if (false !== $this->getPagesService()->deletePage($page_id)) {
+            return $this->redirect()->toUrl('/admin/pages');
+        } else {
+            return $this->redirect()->toUrl('/admin/pages/' . $page_id);
+        }
     }
     
     
     public function savepageAction()
     {
-    
+        // set the form to be used in the save page view
+        $form = new PagesForm();
+        
+        // gets the form method request (usually post)
+        $request = $this->getRequest();
+        
+        // check to see if the request was a POST form request
+        if ($request->isPost()) {
+            // good to go
+            // filter the form values now
+            $pages  = new Pages();
+        
+            $form->setInputFilter($pages->getInputFilter());
+        
+            // set the form data to hold all the values supplied by the form
+            // via $request->getPost()
+            $form->setData($request->getPost());
+             
+            // now we will see if the form is valid
+            // we check if it is valid by the email form class we created
+            if ($form->isValid()) {
+                // it is valid
+                // pass the form to data to the filter class via exchangeArray()
+                $pages->exchangeArray($form->getData());
+        
+                $p_id = !empty($this->getRequest()->getParam('id'))
+                ? $this->getRequest()->getParam('id') : null;
+                
+                if ($this->getPagesService()->savePage($pages) === true) {
+                    // the page  was inserted into the database successfully
+                    // redirect to pages view
+                    return $this->redirect()->toUrl('/admin/pages');
+                } else {
+                    // error occured..
+                    // the error is logged automatically
+                    // redirect to pages view
+                    return $this->redirect()->toUrl('/admin/pages/' . $p_id);
+                }
+            }
+        }    
     }
+    
+   
     
     
     /////////////////////////////////////////////
@@ -274,6 +363,8 @@ class AdminController extends AbstractActionController
     
     }
     
+    
+    
     /////////////////////////////////////////////
     // question actions
     ///////////////////////////////////////////// 
@@ -311,6 +402,7 @@ class AdminController extends AbstractActionController
     {
         
     }
+    
     
   
     
