@@ -14,6 +14,7 @@ use Admin\Form\ConfigurationForm;
 use Admin\Model\Configuration;
 use Admin\Model\EmailTemplates;
 use Admin\Form\EmailTemplateForm;
+use Admin\Form\PagesForm;
 
 
 
@@ -189,6 +190,24 @@ class AdminController extends AbstractActionController
     
     public function editpageAction()
     {
+        // set the form to be used in the view
+        $form = new PagesForm();
+        
+        $p_id = !empty($this->getRequest()->getParam('id')) ? $this->getRequest()->getParam('id') : null;
+        
+        $get_page = $this->getPagesService()->getPage($p_id);
+        
+        $form->get('page_title')->setValue($get_page['page_title']);
+        $form->get('page_content')->setValue($get_page['page_content']);
+        
+        return new ViewModel(array('form' => $form, 'id' => $get_page['id'],
+            'page_title' => $get_page['page_title'], 'page_content' => $get_page['page_content'],
+        ));
+    }
+    
+    
+    public function updatepageAction()
+    {
         
     }
     
@@ -214,6 +233,12 @@ class AdminController extends AbstractActionController
     /////////////////////////////////////////////
     // category actions
     /////////////////////////////////////////////
+    public function listcategoriesAction()
+    {
+        
+    }
+    
+    
     public function addcategoryAction()
     {
         
