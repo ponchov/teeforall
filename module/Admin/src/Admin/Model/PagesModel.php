@@ -93,6 +93,7 @@ class PagesModel
         }
     }
     
+    
     public function deletePage($id)
     {
         try {
