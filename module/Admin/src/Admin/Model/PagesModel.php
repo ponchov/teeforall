@@ -9,7 +9,6 @@ namespace Admin\Model;
 use Zend\Db\TableGateway\TableGateway;
 
 use Error\ErrorHandler;
-use Admin\Form\PagesForm;
 
 
 class PagesModel
