@@ -24,6 +24,7 @@ class AdminController extends AbstractActionController
     protected $configuration_service;
     protected $email_tpl_service;
     protected $pages_service;
+    protected $categories_service;
     
     
     public function indexAction()
@@ -324,7 +325,7 @@ class AdminController extends AbstractActionController
     /////////////////////////////////////////////
     public function listcategoriesAction()
     {
-        
+        return new ViewModel(array('categories' => $this->getCategoriesService()->listCategories()));
     }
     
     
@@ -348,7 +349,7 @@ class AdminController extends AbstractActionController
     
     public function managecategoryAction()
     {
-    
+        
     }
     
     
@@ -442,5 +443,17 @@ class AdminController extends AbstractActionController
         }
         
         return $this->pages_service;
+    }
+    
+    
+    public function getCategoriesService()
+    {
+        if (!$this->categories_service) {
+            $sm = $this->getServiceLocator();
+            
+            $this->categories_service = $sm->get('Admin\Model\CategoriesModel');
+        }
+        
+        return $this->categories_service;
     }
 }

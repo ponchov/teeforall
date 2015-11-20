@@ -44,7 +44,21 @@ class CategoriesForm extends Form
         ));
         
         $this->add(array(
-           'name' => '', 
+            'name' => 'answer', 
+            'type' => 'Textarea',
+            
+            'attributes' => array(
+                'class' => 'mws-textinput required',  
+            ),
+        ));
+        
+        $this->add(array(
+            'name' => 'submit',
+            'type' => 'Submit',
+            
+            'attributes' => array(
+                'class' => 'mws-button red'  
+            ),
         ));
     }
 }
