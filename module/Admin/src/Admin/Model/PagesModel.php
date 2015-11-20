@@ -15,7 +15,8 @@ class PagesModel
 {
     protected $table_gateway;
     
-    public function __construct(TableGateway $gateway) {
+    public function __construct(TableGateway $gateway)
+    {
         // only assign the class TableGateway to $this->table_gateway
         // if $gateway is a valid instanceof TableGateway
         $this->table_gateway = $gateway instanceof TableGateway ? $gateway : null;
@@ -105,46 +106,6 @@ class PagesModel
             ErrorHandler::errorWriter($e->getMessage());
         }
     }
-    
-    
-    
-    
-    // category methods
-    public function updateCategory()
-    {
-        
-    }
-    
-    
-    public function saveCategory()
-    {
-    
-    }
-    
-    
-    // question methods
-    public function saveQuestion()
-    {
-    
-    }
-    
-    
-    public function updateQuestion()
-    {
-    
-    }
-    
-    
-    // testimonal methods
-    public function updateTestimonals()
-    {
-        
-    }
-    
-    
-    public function saveTestimonals()
-    {
-        
-    }
+   
 }
 
