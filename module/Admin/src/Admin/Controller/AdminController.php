@@ -17,6 +17,9 @@ use Admin\Form\EmailTemplateForm;
 use Admin\Form\PagesForm;
 use Admin\Model\Pages;
 
+use Categories\Categories;
+use Admin\Form\CategoriesForm;
+
 
 
 class AdminController extends AbstractActionController
@@ -323,12 +326,6 @@ class AdminController extends AbstractActionController
     /////////////////////////////////////////////
     // category actions
     /////////////////////////////////////////////
-    public function listcategoriesAction()
-    {
-        return new ViewModel(array('categories' => $this->getCategoriesService()->listCategories()));
-    }
-    
-    
     public function addcategoryAction()
     {
         
@@ -349,7 +346,10 @@ class AdminController extends AbstractActionController
     
     public function managecategoryAction()
     {
+        $form = new CategoriesForm();
         
+        return new ViewModel(array('form' => $form,
+            'categories' => $this->getCategoriesService()->listCategories()));
     }
     
     

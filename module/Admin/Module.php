@@ -111,6 +111,8 @@ class Module implements AutoloaderProviderInterface
                     $result_set_prototype->setArrayObjectPrototype(new Categories());
                     return new TableGateway('categories', $db_adapter, null, $result_set_prototype);
                 },
+                
+                
              ),
          );
     }

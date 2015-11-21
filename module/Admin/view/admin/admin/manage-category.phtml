@@ -1,8 +1,13 @@
 <div class="mws-panel grid_8">
     <div class="mws-panel-header">
-        <span class="mws-i-24 i-check"><?=$this->pageHeading?></span>
+        <span class="mws-i-24 i-check">Manage Categories</span>
     </div>
     <div class="mws-panel-body">
+    <?php 
+         $this->form->setAttribute('action', $this->url('admin', array('action' => 'updatequestion', 'id' => '')));
+         $this->form->prepare(); 
+         
+    ?>
         <form name="myform" id="mws-validate" action="<?php echo $this->url(array('controller'=>'pages', 'action'=>'updatequestion','quesId'=>$this->quesId,'catId'=>$this->catId), 'default', true)?>" method="post" novalidate="novalidate" class="mws-form">
             <div style="display:none;" class="mws-form-message error" id="mws-validate-error"></div>
             <div class="mws-form-inline">

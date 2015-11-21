@@ -9,7 +9,7 @@ namespace Admin\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 
-use Error\ErrorHandler;
+
 
 
 class CategoriesModel 
