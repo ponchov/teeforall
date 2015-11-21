@@ -323,89 +323,6 @@ class AdminController extends AbstractActionController
    
     
     
-    /////////////////////////////////////////////
-    // category actions
-    /////////////////////////////////////////////
-    public function addcategoryAction()
-    {
-        
-    }
-    
-    
-    public function savecategoryAction()
-    {
-    
-    }
-    
-   
-    public function updatecategoryAction()
-    {
-    
-    }
-    
-    
-    public function managecategoryAction()
-    {
-        $form = new CategoriesForm();
-        
-        return new ViewModel(array('form' => $form,
-            'categories' => $this->getCategoriesService()->listCategories()));
-    }
-    
-    
-    public function deletecategoryAction()
-    {
-    
-    }
-    
-    
-    public function editcategoryAction()
-    {
-    
-    }
-    
-    
-    
-    /////////////////////////////////////////////
-    // question actions
-    ///////////////////////////////////////////// 
-    public function addquestionsAction()
-    {
-    
-    }
-    
-    
-    public function savequestionAction()
-    {
-        
-    }
-    
-    
-    public function listquestionsAction()
-    {
-        
-    }
-    
-    
-    public function updatequestionAction()
-    {
-        
-    }
-    
-    
-    public function deletequestionAction()
-    {
-        
-    }
-    
-    
-    public function editquestionAction()
-    {
-        
-    }
-    
-    
-  
     
     
     /* DO NOT CHANGE THE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!! */
@@ -443,17 +360,5 @@ class AdminController extends AbstractActionController
         }
         
         return $this->pages_service;
-    }
-    
-    
-    public function getCategoriesService()
-    {
-        if (!$this->categories_service) {
-            $sm = $this->getServiceLocator();
-            
-            $this->categories_service = $sm->get('Admin\Model\CategoriesModel');
-        }
-        
-        return $this->categories_service;
     }
 }
