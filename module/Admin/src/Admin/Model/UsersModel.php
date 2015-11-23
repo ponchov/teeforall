@@ -27,12 +27,21 @@ class UsersModel
     }
     
     
+    public function getAllUsers()
+    {
+        $get_all = $this->table_gateway->select();
+        
+        return $get_all;
+    }
+    
+    
     public function getUserIds()
     {
         return $this->table_gateway->select();
     }
     
     
+   
     public function updateUser(array $details)
     {
         if (count($details) > 0) {
@@ -45,17 +54,13 @@ class UsersModel
             }
             
             try {
-                // the admin should not be able to manipulate user data other than mark as active and the status
+                // the admin should not be able to manipulate user data other than status update
                 // update ONLY this data now
                 $data = array(
-                    'user_status'    => $user_info['user_status'] == 0   || $user_info['user_status'] == 1
-                    ? (int)$user_info['user_status']   : null,
-                    
-                    'active_status'  => $user_info['active_status'] == 0 || $user_info['user_status'] == 1
-                    ? (int)$user_info['active_status'] : null
+                    'user_status' => $user_info['user_status']
                 );
                 
-                $this->table_gateway->update($data, array('id' => $this->getUserIds()->id));
+                $this->table_gateway->update($data, array('id' => $user_info['user_id']));
                 
                 return true;
             } catch (\ErrorException $e) {
@@ -78,10 +83,10 @@ class UsersModel
             }
             
             try {
-                // get the user id based on the username supplied
-                $username = (!empty($user_info['username'])) ? $username : null;
+                // get the user id based on the id supplied
+                $user_id = (!empty($user_info['user_id'])) ? $user_info['user_id'] : null;
                 
-                $select = $this->table_gateway->select(array('username' => $username));
+                $select = $this->table_gateway->select(array('user_id' => $user_id));
                 
                 $row = $select->current();
                 

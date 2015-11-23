@@ -321,13 +321,28 @@ class AdminController extends AbstractActionController
    
     public function usersAction()
     {
-        
+        return new ViewModel(array('users' => $this->getUsersService()->getAllUsers()));
     }
     
     
-    public function editusersAction()
+    public function changeuserstatusAction()
     {
+        $user_id = $this->getRequest()->getParam('id');
+        $status  = $this->getRequest()->getParam('status');
         
+        if ($this->getUsersService()->updateUser(array('user_id' => $user_id, 'user_status' => $status))) {
+            return $this->redirect()->toUrl('/admin/users');
+        } else {
+            return new ViewModel(array('error' => 'Error changing the status of the user.'));
+        }
+    }
+    
+    
+    public function deleteuserAction()
+    {
+        if (!empty($_REQUEST['id'])) {
+            $this->getUsersService()->removeUser(array('user_id' => $_REQUEST['id'])); 
+        }
     }
     
     
