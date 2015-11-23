@@ -21,8 +21,7 @@ use Admin\Model\EmailTemplates;
 
 use Admin\Model\Pages;
 use Admin\Model\PagesModel;
-use Admin\Model\CategoriesModel;
-use Admin\Model\Categories;
+
 use Admin\Model\UsersModel;
 use Admin\Model\Users;
 
