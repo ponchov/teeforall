@@ -140,7 +140,9 @@ MESSAGE;
         }
     }
     
-    
+    /* 
+     * honestly I don't think these methods should be in the admin panel 
+     * they should be in the user panel
     public function saveCountry(array $details)
     {
         if (count($details) > 0) {
@@ -192,5 +194,5 @@ MESSAGE;
     public function saveCity(array $details)
     {
         
-    }
+    } */
 }
