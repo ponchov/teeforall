@@ -25,6 +25,7 @@ class AdminController extends AbstractActionController
     protected $configuration_service;
     protected $email_tpl_service;
     protected $pages_service;
+    protected $users_service;
     
     
     public function indexAction()
@@ -318,7 +319,28 @@ class AdminController extends AbstractActionController
     }
     
    
+    public function usersAction()
+    {
+        
+    }
     
+    
+    public function editusersAction()
+    {
+        
+    }
+    
+    
+    public function contactuserAction()
+    {
+        
+    }
+    
+    
+    public function contactbuyersAction()
+    {
+        
+    }
     
     
     
@@ -357,5 +379,17 @@ class AdminController extends AbstractActionController
         }
         
         return $this->pages_service;
+    }
+    
+    
+    public function getUsersService()
+    {
+        if (!$this->users_service) {
+            $sm = $this->getServiceLocator();
+            
+            $this->users_service = $sm->get('Admin\Model\UsersModel');
+        }
+        
+        return $this->users_service;
     }
 }

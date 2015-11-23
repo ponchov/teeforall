@@ -23,6 +23,8 @@ use Admin\Model\Pages;
 use Admin\Model\PagesModel;
 use Admin\Model\CategoriesModel;
 use Admin\Model\Categories;
+use Admin\Model\UsersModel;
+use Admin\Model\Users;
 
 
 class Module implements AutoloaderProviderInterface
@@ -99,20 +101,18 @@ class Module implements AutoloaderProviderInterface
                     return new TableGateway('pages', $db_adapter, null, $result_set_prototype);
                 },
                 
-                'Admin\Model\CategoriesModel' => function($sm) {
-                    $table_gateway = $sm->get('CategoriesService');
-                    $table = new CategoriesModel($table_gateway);
+                'Admin\Model\UsersModel' => function($sm) {
+                    $table_gateway = $sm->get('UsersService');
+                    $table = new UsersModel($table_gateway);
                     return $table;
                 },
                 
-                'CategoriesService' => function($sm) {
+                'UsersService' => function($sm) {
                     $db_adapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $result_set_prototype = new ResultSet();
-                    $result_set_prototype->setArrayObjectPrototype(new Categories());
-                    return new TableGateway('categories', $db_adapter, null, $result_set_prototype);
+                    $result_set_prototype->setArrayObjectPrototype(new Users());
+                    return new TableGateway('users', $db_adapter, null, $result_set_prototype);
                 },
-                
-                
              ),
          );
     }
