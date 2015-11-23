@@ -7,6 +7,8 @@
 namespace Admin\Model;
 
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Mail;
+use Zend\Mime;
 
 use Error\ErrorHandler;
 
@@ -92,7 +94,37 @@ class UsersModel
                     if (false !== $message) {
                         // admin would like to send the user a message
                         // about why he/she were removed
+                        $sorry = <<<MESSAGE
+                            We're sorry, but your account was removed. If you would like to know more, 
+                            please contact us and we will be glad to help resolve any issues.
+                        <br>
+                        Thank You,
+                        <br>
+                        TeeForAll.com
+MESSAGE;
+                       
+                        // make the content html and not text
+                        $mime = new Mime\Part($sorry);
+                        $mime->type = "text/html";
+                                
+                        $mime_msg = new Mime\Message();
+                        $mime_msg->setParts(array($mime));
                         
+                        $mail = new Mail\Message();
+                        
+                        $mail->addFrom("support@teeforall.com")
+                             ->addTo($row['username']) // username is the email address
+                             ->setSubject("Removal of account with TeeForAll.com")
+                             ->setBody($mime_msg);
+                        
+                        // send the email now
+                        $send = new Mail\Transport\Sendmail();
+                        
+                        $send->send($mail);
+                        
+                        $this->table_gateway->delete(array('user_id' => $row['user_id']));
+                        
+                        return true;
                     } 
                     
                     // guess the admin didn't want to send a message
