@@ -20,13 +20,11 @@ use Admin\Model\Pages;
 
 
 
-
 class AdminController extends AbstractActionController
 {
     protected $configuration_service;
     protected $email_tpl_service;
     protected $pages_service;
-    protected $categories_service;
     
     
     public function indexAction()
