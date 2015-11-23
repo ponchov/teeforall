@@ -1,36 +1,37 @@
 <div class="mws-panel grid_10">
     <div class="mws-panel-header">
-        <span class="mws-i-24 i-table-1"><?=$this->pageHeading?></span>
+        <span class="mws-i-24 i-table-1">Contact Sellers [Who launched the campaign]</span>
     </div>
-   <script>
-function validformdata()
-{ 
+
+<script type="text/javascript">
+function validformdata() { 
 	var x = document.getElementById("allusers").checked;
+	
 	if (!x) {
-		if(document.getElementById('rightValues').value == '')
-              {
-			alert("Please select atleast one user for sending mails");
-			
+		if (document.getElementById('rightValues').value == '') {
+			alert("Please select at least one user for sending mails");	
 		} else {
-			
 			return true;
 		}
-    	} else {
+    } else {
 		return true;
 	}
+
 	return false;
 }
-
-
-	</script>	
+</script>	
     <div class="mws-panel-body">
-	 <form name="myform" id="myform" class="mws-form" action="<?php echo $this->url(array('controller'=>'users', 'action'=>'sendmail'), 'default', true)?>" method="post" onsubmit="return validformdata();">
+	 <form name="myform" id="myform" class="mws-form" 
+	 action="<?php echo $this->url('admin', array('action'=>'sendmail')); ?>" method="post" onsubmit="return validformdata();">
 
         <section >
     		<div>
        		<select id="leftValues" size="15" multiple>
-				 <?php for($i=0;$i<count($this->sql);$i++) {	?>
-					<option value="<?=$this->sql[$i]['emailid']?>::<?=$this->sql[$i]['user_id']?>::<?=$this->sql[$i]['public_name']?>" style="margin:2px 0px" ><?=$this->sql[$i]['emailid']?></option>
+				 <?php foreach ($this->contact_users as $cusers) {	?>
+					<option value="<?php echo $cusers['username']; ?>
+					::<?php echo $cusers['user_id']; ?>::
+					<?php echo $cusers['public_name']?>" style="margin:2px 0px">
+					<?php echo $cusers['username']; ?></option>
 				<?php } ?>
 
 			</select>
@@ -43,33 +44,40 @@ function validformdata()
        	 <select id="rightValues" size="13" name="rightValues[]" multiple>
 	           
        	 </select>
-		 <div style="margin-top: 10px; width: 307px;"><input type="checkbox" value="1" id="allusers" name="allusers" />Send Mail To All Users <input type="submit" id="sendmail" name="sendmail" value="Send Mail" style="float: right; margin-left: 81px;" /></div>
+		 <div style="margin-top: 10px; width: 307px;">
+		 	<input type="checkbox" value="1" id="allusers" name="allusers" >Send Mail To All Users 
+		 	<input type="submit" id="sendmail" name="sendmail" value="Send Mail" style="float: right; margin-left: 81px;">
+		 </div>
 	    </div>
 	</section>
 	</form>
 	</div>    	
 </div>
-</div>
-<style>
-SELECT {
+
+<style type="text/css">
+select {
     width: 200px;
     box-sizing: border-box;
 }
-SECTION {
+
+section {
     padding: 8px;
     background-color: #f0f0f0;
     overflow: auto;
 }
-SECTION > DIV {
+
+section > div {
     float: left;
     padding: 4px;
 }
-SECTION > DIV + DIV {
+
+section > div + div {
     width: 40px;
     text-align: center;
 }
 </style>
-<script>
+
+<script type="text/javascript">
 $("#btnLeft").click(function () {
     var selectedItem = $("#rightValues option:selected");
     $("#leftValues").append(selectedItem);

@@ -332,9 +332,7 @@ class AdminController extends AbstractActionController
         
         if ($this->getUsersService()->updateUser(array('user_id' => $user_id, 'user_status' => $status))) {
             return $this->redirect()->toUrl('/admin/users');
-        } else {
-            return new ViewModel(array('error' => 'Error changing the status of the user.'));
-        }
+        } 
     }
     
     
@@ -348,15 +346,30 @@ class AdminController extends AbstractActionController
     
     public function contactuserAction()
     {
-        
+        return new ViewModel(array('contact_users' => $this->getUsersService()->getUsersToContact()));
     }
     
     
     public function contactbuyersAction()
     {
-        
+        return new ViewModel(array('contact_buyers' => $this->getUsersService()->getBuyersToContact()));
     }
     
+    
+    public function userssendmailAction()
+    {
+        $this->getUsersService()->sendMailtoUsers(array('allusers' => $_REQUEST['allusers'],
+            'rightValues' => $_REQUEST['rightValues']
+        ));
+    }
+    
+    
+    public function buyersendmailAction()
+    {
+        $this->getUsersService()->sendMailToBuyers(array('allusers' => $_REQUEST['allusers'],
+            'rightValues' => $_REQUEST['rightValues']
+        ));
+    }
     
     
     /* DO NOT CHANGE THE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!! */
