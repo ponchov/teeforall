@@ -18,7 +18,7 @@ class ConfigurationForm extends Form
         
         // set the form attributes
         $this->setAttribute('method', 'post')
-        ->setAttribute('class', 'mw-form')
+        ->setAttribute('class', 'mws-form')
         ->setAttribute('id', 'mws-validate')
         ->setAttribute('novalidate', 'novalidate');
         

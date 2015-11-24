@@ -72,6 +72,10 @@ class AdminController extends AbstractActionController
         
         $messages = null;
         
+        // set value + attributes of the form
+        $form->get('submit')->setValue('Submit');
+        
+        
         // gets the form method request (usually post)
         $request = $this->getRequest();
         
@@ -256,9 +260,9 @@ class AdminController extends AbstractActionController
         $layout->setTemplate('admin/admin/layout');
          
         $layout->setVariable('user1', $user->username);
-        $id = $this->getRequest()->getParam('id');
+        $id = $this->params('eId');
         
-        if (!empty($e_id)) {
+        if (!empty($id)) {
             // delete the template
             $email = new EmailTemplates();
             
@@ -921,7 +925,7 @@ class AdminController extends AbstractActionController
         if (!$this->configuration_service) {
             $sm = $this->getServiceLocator();
             
-            $this->configuration_service = $sm->get('Admin\Model\AdminModel');
+            $this->configuration_service = $sm->get('Admin\Model\ConfigurationModel');
         }
         
         return $this->configuration_service;

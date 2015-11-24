@@ -15,7 +15,6 @@
              <table class="mws-datatable-fn mws-table">
                  <thead>
                      <tr>
-                         <th width="5%">Number</th>
                          <th width="45%">Template Name</th>
                          <th width="45%">Subject</th>
                          <th width="5%" class="">Edit</th>
@@ -25,24 +24,20 @@
                             
                  <tbody>
                      <?php
-								
-					       foreach ($this->email_tpls as $email_templates) {
+					       foreach ($this->email_tpls as $email_templates) {    
 					 ?>
 						<tr class="gradeX">
-						  <?php for ($i=0; $i<count($email_templates); $i++) { ?>
-                            <td><?php echo $i + 1; ?></td>
-                         <?php } ?>
-                            <td><?php echo $email_templates->template_title; ?></td>
-                            <td><?php echo $email_templates->email_subject; ?></td>
+                            <td><?php echo $email_templates['template_title']; ?></td>
+                            <td><?php echo $email_templates['email_subject']; ?></td>
                             <td class="center">
-                               <a href="/admin/edit-template/<?php echo $email_templates->template_id; ?>">
+                               <a href="/admin/edit-template/<?php echo $email_templates['template_id']; ?>">
            							<img src="<?php echo $this->basePath(); ?>/admin/images/edit.png">
         					   </a>
                             </td>
             		
             		        <td>
             					<input type="checkbox" name="checkbox[]" id="checkbox[]" 
-            					value="<?php echo $email_templates->template_id; ?>" onClick="return check1();">
+            					value="<?php echo $email_templates['template_id']; ?>" onClick="return check1();">
             				</td>
 						</tr>
 					  <?php

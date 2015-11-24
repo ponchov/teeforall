@@ -9,8 +9,9 @@
         $this->form->prepare();
         
         echo $this->form()->openTag($this->form);
-    ?>
-         
+    ?>  
+    <div style="display: none;" class="mws-form-message error" id="mws-validate-error"></div>
+    
     <div class="mws-form-inline">
          <div class="mws-form-row">
               <div class="mws-form-item large">
@@ -47,6 +48,8 @@
          <div class="mws-button-row">
              <?php 
                  echo $this->formSubmit($this->form->get('submit'));
+                 
+                 echo $this->form()->closeTag();
              ?>
          </div>
      </div>    	

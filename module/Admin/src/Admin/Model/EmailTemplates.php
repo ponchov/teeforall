@@ -16,14 +16,18 @@ class EmailTemplates implements InputFilterAwareInterface
 {
     public $email_subject;
     public $email_body;
+    public $template_id;
+    public $template_title;
 
     protected $input_filter;
 
 
     public function exchangeArray($data)
     {
-        $this->email_subject  = (!empty($data['email_subject'])) ? $data['email_subject'] : null;
-        $this->email_body     = (!empty($data['email_body']))    ? $data['email_body']    : null;
+        $this->email_subject  = (!empty($data['email_subject']))  ? $data['email_subject']  : null;
+        $this->email_body     = (!empty($data['email_body']))     ? $data['email_body']     : null;
+        $this->template_id    = (!empty($data['template_id']))    ? $data['template_id']    : null;
+        $this->template_title = (!empty($data['template_title'])) ? $data['template_title'] : null;
     }
 
 

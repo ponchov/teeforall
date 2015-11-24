@@ -32,7 +32,7 @@ class ConfigurationModel
         );
     
         try {
-            if ($this->table_gateway->insert(array($fields)) > 0) {
+            if ($this->table_gateway->insert($fields) > 0) {
                 return true;
             }
         } catch (\ErrorException $e) {

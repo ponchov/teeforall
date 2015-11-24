@@ -7,13 +7,17 @@
 namespace Admin\Model;
 
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\Sql\Sql;
+use Zend\Db\Sql\Select;
 
 use Error\ErrorHandler;
+
 
 
 class EmailTemplatesModel
 {
     protected $table_gateway;
+    protected $sql;
     
     public function __construct(TableGateway $gateway)
     {
@@ -26,9 +30,26 @@ class EmailTemplatesModel
     public function getEmailTemplates()
     {
         // gets all the email templates
-        $get_all = $this->table_gateway->select();
+        //$get_all = $this->table_gateway->select();
         
-        return $get_all;
+        //return $get_all;
+        $this->sql = new Sql($this->table_gateway->getAdapter());
+        
+        $select = new Select('email_templates');
+        
+        $select->columns(array('template_id', 'template_title', 'email_subject', 'email_body'));
+        
+        $adapter = $this->table_gateway->getAdapter();
+       
+        $query = $adapter->query($this->sql->buildSqlString($select), $adapter::QUERY_MODE_EXECUTE);
+        
+        $holder = array();
+        
+        foreach ($query as $key => $row) {
+            $holder[$key] = $row;
+        }
+        
+        return $holder;
     }
     
     public function getEmailTemplate($id)
