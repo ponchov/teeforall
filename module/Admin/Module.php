@@ -25,6 +25,18 @@ use Admin\Model\PagesModel;
 use Admin\Model\UsersModel;
 use Admin\Model\Users;
 
+use Admin\Model\TShirtDiscountModel;
+use Admin\Model\TShirtDiscount;
+
+use Admin\Model\TShirtIconsModel;
+use Admin\Model\TShirtIcons;
+use Admin\Model\TShirtPriceModel;
+use Admin\Model\TShirtPrice;
+use Admin\Model\TShirtProductsModel;
+use Admin\Model\TShirtProducts;
+use Admin\Model\TShirtSizeModel;
+use Admin\Model\TShirtSize;
+
 
 class Module implements AutoloaderProviderInterface
 {
@@ -112,7 +124,72 @@ class Module implements AutoloaderProviderInterface
                     $result_set_prototype->setArrayObjectPrototype(new Users());
                     return new TableGateway('users', $db_adapter, null, $result_set_prototype);
                 },
-             ),
-         );
+                
+                'Admin\Model\TShirtDiscountModel' => function($sm) {
+                    $table_gateway = $sm->get('TShirtDiscountService');
+                    $table = new TShirtDiscountModel($table_gateway);
+                    return $table;
+                },
+                
+                'TShirtDiscountService' => function($sm) {
+                    $db_adapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $result_set_prototype = new ResultSet();
+                    $result_set_prototype->setArrayObjectPrototype(new TShirtDiscount());
+                    return new TableGateway('tshirt_discount', $db_adapter, null, $result_set_prototype);
+                },
+                
+                'Admin\Model\TShirtIconsModel' => function($sm) {
+                    $table_gateway = $sm->get('TShirtIconsService');
+                    $table = new TShirtIconsModel($table_gateway);
+                    return $table;
+                },
+                
+                'TShirtIconsService' => function($sm) {
+                    $db_adapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $result_set_prototype = new ResultSet();
+                    $result_set_prototype->setArrayObjectPrototype(new TShirtIcons());
+                    return new TableGateway('tshirt_icons', $db_adapter, null, $result_set_prototype);
+                },
+                
+                'Admin\Model\TShirtPriceModel' => function($sm) {
+                    $table_gateway = $sm->get('TShirtPriceService');
+                    $table = new TShirtPriceModel($table_gateway);
+                    return $table;
+                },
+                
+                'TShirtPriceService' => function($sm) {
+                    $db_adapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $result_set_prototype = new ResultSet();
+                    $result_set_prototype->setArrayObjectPrototype(new TShirtPrice());
+                    return new TableGateway('tshirt_price', $db_adapter, null, $result_set_prototype);
+                },
+                
+                'Admin\Model\TShirtProductsModel' => function($sm) {
+                    $table_gateway = $sm->get('TShirtProductsService');
+                    $table = new TShirtProductsModel($table_gateway);
+                    return $table;
+                },
+                
+                'TShirtProductsService' => function($sm) {
+                    $db_adapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $result_set_prototype = new ResultSet();
+                    $result_set_prototype->setArrayObjectPrototype(new TShirtProducts());
+                    return new TableGateway('tshirt_products', $db_adapter, null, $result_set_prototype);
+                },
+                
+                'Admin\Model\TShirtSizeModel' => function($sm) {
+                    $table_gateway = $sm->get('TShirtSizeService');
+                    $table = new TShirtSizeModel($table_gateway);
+                    return $table;
+                },
+               
+                'TShirtSizeService' => function($sm) {
+                    $db_adapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $result_set_prototype = new ResultSet();
+                    $result_set_prototype->setArrayObjectPrototype(new TShirtSize());
+                    return new TableGateway('tshirt_sizes', $db_adapter, null, $result_set_prototype);
+                },
+            )
+        );
     }
 }

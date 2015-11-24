@@ -23,9 +23,18 @@ use Admin\Model\Pages;
 class AdminController extends AbstractActionController
 {
     protected $configuration_service;
+    
     protected $email_tpl_service;
+    
     protected $pages_service;
+    
     protected $users_service;
+    
+    protected $tshirt_discount_service;
+    protected $tshirt_icons_service;
+    protected $tshirt_price_service;
+    protected $tshirt_products_service;
+    protected $tshirt_size_service;
     
     
     public function indexAction()
@@ -372,8 +381,145 @@ class AdminController extends AbstractActionController
     }
     
     
+    public function tshirtsizeAction()
+    {
+        
+    }
     
     
+    public function iconsAction()
+    {
+        
+    }
+    
+    
+    public function productsAction()
+    {
+        
+    }
+    
+    
+    public function addnewiconAction()
+    {
+        
+    }
+    
+    
+    public function tshirtproductAction()
+    {
+        
+    }
+    
+    
+    public function saveproductAction()
+    {
+        
+    }
+    
+    
+    public function deletenewproductAction()
+    {
+        
+    }
+    
+    
+    public function changeproductstatusAction()
+    {
+        
+    }
+    
+    
+    public function editiconsAction()
+    {
+        
+    }
+    
+    
+    public function updateiconAction()
+    {
+        
+    }
+    
+    
+    public function deleteiconAction()
+    {
+        
+    }
+    
+    
+    public function changeiconstatusAction()
+    {
+        
+    }
+    
+    
+    public function saveiconAction()
+    {
+        
+    }
+    
+    
+    public function editsizeAction()
+    {
+        
+    }
+    
+    
+    public function updatesizeAction()
+    {
+        
+    }
+    
+    
+    public function deletesizeAction()
+    {
+        
+    }
+    
+    
+    public function priceAction()
+    {
+        
+    }
+    
+    
+    public function discountAction()
+    {
+        
+    }
+    
+    
+    public function editpriceAction()
+    {
+        
+    }
+    
+    
+    public function updatepriceAction()
+    {
+        
+    }
+    
+    
+    public function editdiscountAction()
+    {
+        
+    }
+    
+    
+    public function updatediscountAction()
+    {
+        
+    }
+    
+    
+    public function updaterecordslistingsAction()
+    {
+        
+    }
+    
+    
+  
     
     
     
@@ -424,5 +570,65 @@ class AdminController extends AbstractActionController
         }
         
         return $this->users_service;
+    }
+    
+    
+    public function getTShirtDiscountService()
+    {
+        if (!$this->tshirt_discount_service) {
+            $sm = $this->getServiceLocator();
+            
+            $this->tshirt_discount_service = $sm->get('Admin\Model\TShirtDiscountModel');
+        }
+        
+        return $this->tshirt_discount_service;
+    }
+    
+    
+    public function getTShirtIconsService()
+    {
+        if (!$this->tshirt_icons_service) {
+            $sm = $this->getServiceLocator();
+            
+            $this->tshirt_icons_service = $sm->get('Admin\Model\TShirtIconsModel');
+        }
+        
+        return $this->tshirt_icons_service;
+    }
+    
+    
+    public function getTShirtPriceService()
+    {
+        if (!$this->tshirt_price_service) {
+            $sm = $this->getServiceLocator();
+            
+            $this->tshirt_price_service = $sm->get('Admin\Model\TShirtPriceModel');
+        }
+        
+        return $this->tshirt_price_service;
+    }
+    
+    
+    public function getTShirtProductsService()
+    {
+        if (!$this->tshirt_products_service) {
+            $sm = $this->getServiceLocator();
+            
+            $this->tshirt_products_service = $sm->get('Admin\Model\TShirtProductsModel');
+        }
+        
+        return $this->tshirt_products_service;
+    }
+    
+    
+    public function getTShirtSizeService()
+    {
+        if (!$this->tshirt_size_service) {
+            $sm = $this->getServiceLocator();
+            
+            $this->tshirt_size_service = $sm->get('Admin\Modeel\TShirtSizeModel');
+        }
+        
+        return $this->tshirt_size_service;
     }
 }
