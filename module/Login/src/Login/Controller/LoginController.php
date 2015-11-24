@@ -78,7 +78,7 @@ class LoginController extends AbstractActionController
                 $auth_adapter = new AuthAdapter($db_adapter, 'admins', 'username', 'password');
                 
                 $auth_adapter->setIdentity($data['admin_username'])
-                    ->setCredential(hash('sha512', $data['admin_password']));
+                    ->setCredential($data['admin_password']); // change this back to hash('sha512')
                 
                 $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
                 
@@ -102,13 +102,14 @@ class LoginController extends AbstractActionController
                         $storage->write($auth_adapter->getResultRowObject(null, 'password'));
                 
                         try {
-                            $this->getLoginTable()->insertSession($data['username'], hash('sha512', $data['password']), session_id());
+                            $this->getLoginTable()->insertSession($data['admin_username'], 
+                                hash('sha512', $data['admin_password']), session_id());
                         } catch (\ErrorException $e) {
                             return $this->redirect()->toUrl('/login/login-failure');
                         }
                 
                         if ($result->getCode() == 1) {
-                            return $this->redirect()->toUrl('/admin');
+                            return $this->redirect()->toUrl('/admin/index');
                         }
                 
                 

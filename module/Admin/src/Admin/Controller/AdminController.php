@@ -39,9 +39,17 @@ class AdminController extends AbstractActionController
     
     public function indexAction()
     {
-        // set the layout to be the admin layout
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
         $layout = $this->layout();
         $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+       
+        
     }
 
     /////////////////////////////////////////////
@@ -49,6 +57,16 @@ class AdminController extends AbstractActionController
     /////////////////////////////////////////////
     public function configurationAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
         // set the form to be displayed in the configuration view
         $form = new ConfigurationForm();
         
@@ -92,32 +110,73 @@ class AdminController extends AbstractActionController
         return new ViewModel(array('form' => $form, 'messages' => $messages));
     }
     
-    
+       
     public function configurationsuccessAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
         // don't really need to do anything here
         // just here so we can call the view
     }
     
-    
+     
     public function configurationfailureAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
         // don't really need to do anything here
         // just here so we can call the view
     }
+    
+    
     
     
     /////////////////////////////////////////////
     // email template actions
     /////////////////////////////////////////////
+    
     public function emailtemplatesAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
         return new ViewModel(array('email_tpls' => $this->getEmailTemplatesService()->getEmailTemplates()));
     }
     
     
     public function edittemplateAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
         // set the form to be used in the edit template view
         $form = new EmailTemplateForm();
     
@@ -133,6 +192,16 @@ class AdminController extends AbstractActionController
     
     public function updatetemplatesAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
         // set the form to be used in the update templates view
         $form = new EmailTemplateForm();
         
@@ -178,6 +247,15 @@ class AdminController extends AbstractActionController
     
     public function deletetemplatesAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
         $id = $this->getRequest()->getParam('id');
         
         if (!empty($e_id)) {
@@ -196,12 +274,31 @@ class AdminController extends AbstractActionController
     /////////////////////////////////////////////
     public function pagesAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
         return new ViewModel(array('pages' => $this->getPagesService()->getPages()));
     }
     
     
     public function addpageAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
         $form = new PagesForm();
         
         return new ViewModel(array('form' => $form));
@@ -210,6 +307,16 @@ class AdminController extends AbstractActionController
     
     public function editpageAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
         // set the form to be used in the view
         $form = new PagesForm();
         
@@ -228,6 +335,16 @@ class AdminController extends AbstractActionController
     
     public function updatepageAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
         // set the form to be used in the pages view
         $form = new PagesForm();
         
@@ -273,6 +390,16 @@ class AdminController extends AbstractActionController
     
     public function deletepageAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
         $page_id = $this->getRequest()->getParam('id');
         
         if (false !== $this->getPagesService()->deletePage($page_id)) {
@@ -285,6 +412,16 @@ class AdminController extends AbstractActionController
     
     public function savepageAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
         // set the form to be used in the save page view
         $form = new PagesForm();
         
@@ -330,12 +467,32 @@ class AdminController extends AbstractActionController
    
     public function usersAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
         return new ViewModel(array('users' => $this->getUsersService()->getAllUsers()));
     }
     
     
     public function changeuserstatusAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
         $user_id = $this->getRequest()->getParam('id');
         $status  = $this->getRequest()->getParam('status');
         
@@ -347,6 +504,16 @@ class AdminController extends AbstractActionController
     
     public function deleteuserAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
         if (!empty($_REQUEST['id'])) {
             $this->getUsersService()->removeUser(array('user_id' => $_REQUEST['id'])); 
         }
@@ -355,18 +522,48 @@ class AdminController extends AbstractActionController
     
     public function contactuserAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
         return new ViewModel(array('contact_users' => $this->getUsersService()->getUsersToContact()));
     }
     
     
     public function contactbuyersAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
         return new ViewModel(array('contact_buyers' => $this->getUsersService()->getBuyersToContact()));
     }
     
     
     public function userssendmailAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
         $this->getUsersService()->sendMailtoUsers(array('allusers' => $_REQUEST['allusers'],
             'rightValues' => $_REQUEST['rightValues']
         ));
@@ -375,6 +572,16 @@ class AdminController extends AbstractActionController
     
     public function buyersendmailAction()
     {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
         $this->getUsersService()->sendMailToBuyers(array('allusers' => $_REQUEST['allusers'],
             'rightValues' => $_REQUEST['rightValues']
         ));
@@ -383,139 +590,323 @@ class AdminController extends AbstractActionController
     
     public function tshirtsizeAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function iconsAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function productsAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function addnewiconAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function tshirtproductAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function saveproductAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function deletenewproductAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function changeproductstatusAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function editiconsAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function updateiconAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function deleteiconAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function changeiconstatusAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function saveiconAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function editsizeAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function updatesizeAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function deletesizeAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function priceAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function discountAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function editpriceAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function updatepriceAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function editdiscountAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function updatediscountAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     
     public function updaterecordslistingsAction()
     {
-        
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
     }
     
     

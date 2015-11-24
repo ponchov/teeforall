@@ -54,7 +54,7 @@ class Login implements InputFilterAwareInterface
 						'name'    => 'StringLength',
 						'options' => array(
 							'encoding' => 'UTF-8',
-							'min'      => 6,
+							'min'      => 5,
 							'max'      => 30,
 						),
 					),
@@ -75,7 +75,7 @@ class Login implements InputFilterAwareInterface
 						'name'    => 'StringLength',
 						'options' => array(
 							'encoding' => 'UTF-8',
-							'min'      => 6,
+							'min'      => 5,
 							'max'      => 15,
 						),
 					),

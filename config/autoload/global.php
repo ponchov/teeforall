@@ -17,7 +17,7 @@ set_error_handler("exception_error_handler");
 return array(
     'db' => array(
     	'driver' => 'Pdo',
-    	'dsn'    => 'mysql:dbname=blocka_teeforall2;host=localhost',	
+    	'dsn'    => 'mysql:dbname=blockta_teeforall2;host=127.0.0.1',	
 	),
     
     'service_manager' => array(
@@ -26,7 +26,7 @@ return array(
         ),
         	
         'invokables' => array(
-            'teeforall_auth-_ervice' => 'Zend\Authentication\AuthenticationService',
+            'teeforall_auth_service' => 'Zend\Authentication\AuthenticationService',
         ),
         	
         'factories' => array(
