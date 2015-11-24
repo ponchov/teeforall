@@ -117,13 +117,12 @@ class LoginController extends AbstractActionController
                 foreach ($result->getMessages() as $message) {
                     $messages .= "$message\n";
                 }
-                
-            
-                $view = new ViewModel(array('form' => $form, 'messages' => $messages));
-                
-                return $view;
             }
         }
+        
+        $view = new ViewModel(array('form' => $form, 'messages' => $messages));
+        
+        return $view;
     }
     
     public function loginfailureAction()
