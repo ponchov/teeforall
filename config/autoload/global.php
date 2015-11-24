@@ -22,11 +22,11 @@ return array(
     
     'service_manager' => array(
         'aliases' => array(
-            'Zend\Authentication\AuthenticationService' => 'teeforall-auth-service'
+            'Zend\Authentication\AuthenticationService' => 'teeforall_auth_service'
         ),
         	
         'invokables' => array(
-            'teeforall-auth-service' => 'Zend\Authentication\AuthenticationService',
+            'teeforall_auth-_ervice' => 'Zend\Authentication\AuthenticationService',
         ),
         	
         'factories' => array(
