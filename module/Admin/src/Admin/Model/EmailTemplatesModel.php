@@ -142,22 +142,14 @@ class EmailTemplatesModel
         // before we can begin to delete it
         // if the template does exist, destroy all data (id, template_title, email_subject, email_body)
         // if the template does not exist, bail out
-        $select = $this->table_gateway->select(array(
-            'email_subject' => $email_tpls->email_subject,
-        ));
+        $select = $this->table_gateway->select()->where(array('template_id' => $id));
         
-        $row = $select->current();
-        
-        if (null !== $row) {
-            // record was found
-            // delete it now
-            try {
-                $this->table_gateway->delete(array('id' => (int)$id));
-                
-                return true;
-            } catch (\ErrorException $e) {
-                ErrorHandler::errorWriter($e->getMessage());
+        try {
+            foreach ($select as $value) {
+                $this->table_gateway->delete(array('id' => $value->id));
             }
+        } catch (\ErrorException $e) {
+            ErrorHandler::errorWriter($e->getMessage());
         }
     }
 }
