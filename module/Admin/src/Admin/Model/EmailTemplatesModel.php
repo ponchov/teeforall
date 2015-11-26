@@ -82,8 +82,9 @@ class EmailTemplatesModel
             // insert the template
             try {
                 $data = array(
-                    'email_subject' => $email_tpls->email_subject,
-                    'email_body'    => $email_tpls->email_body,
+                    'template_title' => $email_tpls->email_subject,
+                    'email_subject'  => $email_tpls->email_subject,
+                    'email_body'     => $email_tpls->email_body,
                 );
                 
                 $this->table_gateway->insert($data);

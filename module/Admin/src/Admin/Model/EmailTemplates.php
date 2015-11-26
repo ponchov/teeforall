@@ -56,11 +56,16 @@ class EmailTemplates implements InputFilterAwareInterface
                         'name'    => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min'      => 6,
+                            'min'      => 10,
                             'max'      => 75,
                         ),
                         
-                       
+                        'name' => 'NotEmpty',
+                        'options' => array(
+                            'messages' => array(
+                                'isEmpty' => 'Page Title is Required', 
+                            ), 
+                        ),
                     ),
                 ),
             )));
@@ -78,8 +83,14 @@ class EmailTemplates implements InputFilterAwareInterface
                         'name'    => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min'      => 6,
-                            'max'      => 5000,
+                            'min'      => 50,
+                        ),
+                        
+                        'name' => 'NotEmpty',
+                        'options' => array(
+                            'messages' => array(
+                                'isEmpty' => 'Page Content is Required', 
+                            ),
                         ),
                     ),
                 ),

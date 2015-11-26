@@ -1,0 +1,33 @@
+<div class="mws-panel grid_8">
+    <div class="mws-panel-header">
+        <span class="mws-i-24 i-check">Add New Email Template</span>
+    </div>
+    
+    <div class="mws-panel-body">
+        <form name="myform" id="mws-validate" 
+        action="<?php echo $this->url('admin', array('action' => 'save-template')); ?>"  
+        method="post" novalidate="novalidate" class="mws-form">
+            <div style="display: none;" class="mws-form-message error" id="mws-validate-error"></div>
+            
+            <div class="mws-form-inline">
+                <div class="mws-form-row">
+                    <label>Subject: </label>
+                    <div class="mws-form-item large">
+                    	<?php echo $this->formRow($this->form->get('email_subject')); ?>
+                    </div>
+                </div>
+                
+                <div class="mws-form-row">
+                	<label>Message Body</label>
+                	<div class="mws-form-item">
+                    	<?php echo $this->formTextarea($this->form->get('email_body')); ?>
+                	</div>
+                </div>
+    		</div>
+    		
+    	 <div class="mws-button-row">
+             <?php echo $this->formSubmit($this->form->get('add_template_submit')); ?>
+         </div>
+  	  </form>
+  	</div>
+</div>

@@ -152,6 +152,64 @@ class AdminController extends AbstractActionController
     /////////////////////////////////////////////
     // email template actions
     /////////////////////////////////////////////
+    public function addtemplateAction()
+    {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
+        
+        $form = new EmailTemplateForm();
+        
+        return new ViewModel(array('form' => $form));
+    }
+    
+    public function savetemplateAction()
+    {
+        // set the form to be used in the update templates view
+        $form = new EmailTemplateForm();
+        
+        // gets the form method request (usually post)
+        $request = $this->getRequest();
+        
+        // check to see if the request was a POST form request
+        if ($request->isPost()) {
+            // good to go
+            // filter the form values now
+            $email = new EmailTemplates();
+        
+            $form->setInputFilter($email->getInputFilter());
+        
+            // set the form data to hold all the values supplied by the form
+            // via $request->getPost()
+            $form->setData($request->getPost());
+             
+            // now we will see if the form is valid
+            // we check if it is valid by the email form class we created
+            if ($form->isValid()) {
+                // it is valid
+                // pass the form to data to the filter class via exchangeArray()
+                $email->exchangeArray($form->getData());
+        
+                if ($this->getEmailTemplatesService()->saveEmailTemplate($email) === true) {
+                    // the updated email template was inserted into the database successfully
+                    // redirect to email template view
+                    return $this->redirect()->toUrl('/admin/email-templates');
+                } else {
+                    // error occured..
+                    // the error is logged automatically
+                    // redirect to email template view
+                    return $this->redirect()->toUrl('/admin/add-template');
+                }
+            }
+        }
+    }
     
     public function emailtemplatesAction()
     {
