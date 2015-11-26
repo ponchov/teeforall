@@ -59,6 +59,8 @@ class EmailTemplates implements InputFilterAwareInterface
                             'min'      => 6,
                             'max'      => 75,
                         ),
+                        
+                       
                     ),
                 ),
             )));

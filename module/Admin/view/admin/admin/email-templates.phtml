@@ -6,7 +6,7 @@
     <div class="mws-panel-body">
         <div class="mws-panel-toolbar top clearfix ">
             <ul>
-                <li><a class="mws-ic-16 ic-cross" title="Delete" onclick="deleteRecord();">Delete</a></li>
+                <li><a class="mws-ic-16 ic-cross" title="Delete" id="delete_records">Delete</a></li>
             </ul>
         </div>
            
@@ -37,7 +37,7 @@
             		
             		        <td>
             					<input type="checkbox" name="checkbox[]" id="checkbox[]" 
-            					value="<?php echo $email_templates['template_id']; ?>" onClick="return check1();">
+            					value="<?php echo $email_templates['template_id']; ?>">
             				</td>
 						</tr>
 					  <?php
@@ -51,36 +51,23 @@
             
             
 <script type="text/javascript">
-function deleteRecord() { 
-
-	var eIds = '';
-	var userrows = new Array();
-	var cboxes = document.getElementsByName("checkbox[]");
-
-	for (i=0; i<cboxes.length; i++) { 
-		if (cboxes[i].checked == true) {
-			eIds += cboxes[i].value + ','; 
-	    	userrows[i] = cboxes[i].value;
-		}
-	}
-
-	if (eIds == "") {
-		alert("Please select at least one record.");
-		return;
-	}
-
-
+$('#delete_records').click(function() {
 	if (confirm("Are you sure you want to delete these records?")) {
-   		$.ajax({ 
-    		type: "POST", 
-    		url: "/admin/delete-templates/" + eIds,
-    		data: { eId : eIds },
-        	cache: false, 
+		var checked_items = $('input:checkbox[name="checkbox[]"]:checked')
+		.map(function() { return $(this).val(); })
+		.get()
+		.join(",");
 
-        	success: function(data) {
-            	window.location = "/admin/email-templates";		
-	   		}
-   	    });
-	}
-}
+		$.ajax({
+			type: "POST",
+			url: "/admin/delete-templates",
+			data: "id=" + checked_items,
+			success: function() {
+				window.location = "/admin/email-templates";
+			}
+		});
+
+		return false;
+	} 
+});
 </script>

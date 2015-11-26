@@ -55,7 +55,7 @@ class EmailTemplatesModel
     public function getEmailTemplate($id)
     {
         // get one email template
-        $get_one = $this->table_gateway->select(array('id' => $id));
+        $get_one = $this->table_gateway->select(array('template_id' => $id));
         
         $row = $get_one->current();
         
@@ -107,7 +107,7 @@ class EmailTemplatesModel
         // if it does, update the template with the supplied values
         // if it doesn't, bail out (admin should use the saveEmailTemplate method instead)
         $select = $this->table_gateway->select(array(
-            'email_subject' => $email_tpls->email_subject
+            'template_id' => $id,
         ));
         
         $row = $select->current();
@@ -121,7 +121,7 @@ class EmailTemplatesModel
                     'email_body'    => $email_tpls->email_body,
                 );
             
-                $this->table_gateway->update($data, array('id' => (int)$id));
+                $this->table_gateway->update($data, array('template_id' => $id));
                 
                 return true;
             } catch (\ErrorException $e) {
@@ -136,20 +136,15 @@ class EmailTemplatesModel
     }
     
     
-    public function deleteEmailTemplate(EmailTemplates $email_tpls, $id)
+    public function deleteEmailTemplates($id)
     {
-        // first we need to make sure the email template exists
-        // before we can begin to delete it
-        // if the template does exist, destroy all data (id, template_title, email_subject, email_body)
-        // if the template does not exist, bail out
-        $select = $this->table_gateway->select()->where(array('template_id' => $id));
+        // delete the entrie(s) based on what is checked
+        if (!empty($id)) {
+            $arr_id = explode(",", $id);
         
-        try {
-            foreach ($select as $value) {
-                $this->table_gateway->delete(array('id' => $value->id));
+            foreach ($arr_id as $value) {
+                $this->table_gateway->delete(array('template_id' => $value));
             }
-        } catch (\ErrorException $e) {
-            ErrorHandler::errorWriter($e->getMessage());
         }
     }
 }

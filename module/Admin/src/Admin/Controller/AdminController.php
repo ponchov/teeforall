@@ -184,13 +184,16 @@ class AdminController extends AbstractActionController
         // set the form to be used in the edit template view
         $form = new EmailTemplateForm();
     
-        $tpl_id = !empty($this->getRequest()->getParam('id')) 
-        ? $this->getRequest()->getParam('id') : null;
+        $tpl_id = !empty($this->params('id')) 
+        ? $this->params('id') : null;
         
         $get_tpl = $this->getEmailTemplatesService()->getEmailTemplate($tpl_id);
         
-        return new ViewModel(array('form' => $form, 'id' => $get_tpl['template_id'], 
-            'subject' => $get_tpl['email_subject'], 'body' => $get_tpl['email_body']));
+        //var_dump($get_tpl);
+        //exit;
+        
+        return new ViewModel(array('form' => $form, 'id' => $get_tpl->template_id, 
+            'subject' => $get_tpl->email_subject, 'body' => $get_tpl->email_body));
     }
 
     
@@ -231,20 +234,20 @@ class AdminController extends AbstractActionController
                 // pass the form to data to the filter class via exchangeArray()
                 $email->exchangeArray($form->getData());
         
-                $tpl_id = !empty($this->getRequest()->getParam('id'))
-                ? $this->getRequest()->getParam('id') : null;
+                $tpl_id = !empty($this->params('id'))
+                ? $this->params('id') : null;
                 
                 if ($this->getEmailTemplatesService()->modifyEmailTemplate($email, $tpl_id) === true) {
                     // the updated email template was inserted into the database successfully
                     // redirect to email template view
-                    return $this->redirect()->toUrl('/admin/email-template');
+                    return $this->redirect()->toUrl('/admin/email-templates');
                 } else {
                     // error occured..
                     // the error is logged automatically
                     // redirect to email template view
-                    return $this->redirect()->toUrl('/admin/email-template/' . $tpl_id);
+                    return $this->redirect()->toUrl('/admin/email-templates/' . $tpl_id);
                 }
-            }
+            } 
         } 
     }
 
@@ -260,17 +263,12 @@ class AdminController extends AbstractActionController
         $layout->setTemplate('admin/admin/layout');
          
         $layout->setVariable('user1', $user->username);
-        $id = $this->params('eId');
+        $id = $this->params()->fromPost('id');
         
-        if (!empty($id)) {
-            // delete the template
-            $email = new EmailTemplates();
-            
-            if (false !== $this->getEmailTemplatesService()->deleteEmailTemplate($email, $id)) {
-                // don't do anything, ajax call will handle redirect 
-            }
-        }
+        
+        $this->getEmailTemplatesService()->deleteEmailTemplates($id);
     }
+
     
     
     /////////////////////////////////////////////
@@ -659,6 +657,8 @@ class AdminController extends AbstractActionController
         $layout->setTemplate('admin/admin/layout');
          
         $layout->setVariable('user1', $user->username);
+        
+        
     }
     
     
