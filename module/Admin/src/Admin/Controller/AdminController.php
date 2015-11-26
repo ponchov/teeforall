@@ -169,6 +169,7 @@ class AdminController extends AbstractActionController
         
         return new ViewModel(array('form' => $form));
     }
+ 
     
     public function savetemplateAction()
     {
@@ -210,6 +211,7 @@ class AdminController extends AbstractActionController
             }
         }
     }
+    
     
     public function emailtemplatesAction()
     {
@@ -321,6 +323,8 @@ class AdminController extends AbstractActionController
         $layout->setTemplate('admin/admin/layout');
          
         $layout->setVariable('user1', $user->username);
+        
+        // get the id passed by the ajax request
         $id = $this->params()->fromPost('id');
         
         
@@ -359,6 +363,8 @@ class AdminController extends AbstractActionController
         $layout->setTemplate('admin/admin/layout');
          
         $layout->setVariable('user1', $user->username);
+        
+        // set the form to be used
         $form = new PagesForm();
         
         return new ViewModel(array('form' => $form));

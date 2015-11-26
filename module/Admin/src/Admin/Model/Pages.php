@@ -55,6 +55,13 @@ class Pages implements InputFilterAwareInterface
                             'min'      => 3,
                             'max'      => 50,
                         ),
+                        
+                        'name' => 'NotEmpty',
+                        'options' => array(
+                            'messages' => array(
+                                'isEmpty' => 'Page Title is Required',
+                            ),
+                        ),
                     ),
                 ),
             )));
@@ -70,6 +77,13 @@ class Pages implements InputFilterAwareInterface
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min'      => 50,
+                        ),
+                        
+                        'name' => 'NotEmpty',
+                        'options' => array(
+                            'messages' => array(
+                                'isEmpty' => 'Page Content is Required',
+                            ),
                         ),
                     ),
                 ),
