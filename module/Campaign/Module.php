@@ -43,4 +43,14 @@ class Module implements AutoloaderProviderInterface
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
     }
+    
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'Campaign\Form\TrackOrder' => 'Campaign\Form\Service\TrackOrderFactory',
+                'Campaign\Form\AddDescription' => 'Campaign\Form\Service\AddDescriptionFactory',
+            ),
+        );
+    }
 }
