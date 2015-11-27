@@ -158,7 +158,7 @@ class AddDescriptionFactory implements FactoryInterface
                     ),
                     array(
                         /**
-                         * Adress
+                         * New Adress
                          */
                         'spec' => array(
                             'type' => 'Zend\Form\Element\Text',
@@ -168,6 +168,185 @@ class AddDescriptionFactory implements FactoryInterface
                             ),
                             'attributes' => array(
                                 'class' => 'changepasstextbox',
+                            ),
+                        ),
+                    ),
+                    array(
+                        /**
+                         * New City
+                         */
+                        'spec' => array(
+                            'type' => 'Zend\Form\Element\Text',
+                            'name' => 'newcity',
+                            'options' => array(
+                                'label' => 'City',
+                            ),
+                            'attributes' => array(
+                                'onkeypress' => 'return checkcharonly(event);',
+                                'class' => 'changeaddress',
+                                'style' => 'width:100px; height:30px;',
+                            ),
+                        ),
+                    ),
+                    array(
+                        /**
+                         * State
+                         */
+                        'spec' => array(
+                            'type' => 'Zend\Form\Element\Select',
+                            'name' => 'newstate',
+                            'options' => array(
+                                'label' => 'State',
+                                'value_options' => array(
+                                    /**
+                                     * @todo
+                                     */
+                                ),
+                            ),
+                            'attributes' => array(
+                                'onchange' => 'getneighborhoodcities(this.value);',
+                                'class' => 'changeaddress',
+                                'style' => 'width:100px; height:33px;',
+                            ),
+                        ),
+                    ),
+                    array(
+                        /**
+                         * New Zip code
+                         */
+                        'spec' => array(
+                            'type' => 'Zend\Form\Element\Text',
+                            'name' => 'newzipcode',
+                            'options' => array(
+                                'label' => 'Zip code',
+                            ),
+                            'attributes' => array(
+                                'onkeypress' => 'return checknummsp(event);',
+                                'class' => 'changeaddress',
+                                'style' => 'width:100px; height:30px;',
+                            ),
+                        ),
+                    ),
+                    array(
+                        /**
+                         * Instruction
+                         */
+                        'spec' => array(
+                            'type' => 'Zend\Form\Element\Textarea',
+                            'name' => 'instruction',
+                            'options' => array(
+                                'label' => 'Instruction',
+                            ),
+                            'attributes' => array(
+                                'class' => 'setgoaltxt',
+                                'style' => 'width:450px; height:120px;',
+                            ),
+                        ),
+                    ),
+                    array(
+                        /**
+                         * Address
+                         */
+                        'spec' => array(
+                            'type' => 'Zend\Form\Element\Text',
+                            'name' => 'address',
+                            'options' => array(
+                                'label' => 'Address',
+                            ),
+                            'attributes' => array(
+                                'readonly' => 'readonly',
+                                'class' => 'changepasstextbox',
+                            ),
+                        ),
+                    ),
+                    array(
+                        /**
+                         * Address1
+                         */
+                        'spec' => array(
+                            'type' => 'Zend\Form\Element\Text',
+                            'name' => 'address1',
+                            'options' => array(
+                            ),
+                            'attributes' => array(
+                                'readonly' => 'readonly',
+                                'class' => 'changepasstextbox',
+                            ),
+                        ),
+                    ),
+                    array(
+                        /**
+                         * City
+                         */
+                        'spec' => array(
+                            'type' => 'Zend\Form\Element\Text',
+                            'name' => 'city',
+                            'options' => array(
+                                'label' => 'City',
+                            ),
+                            'attributes' => array(
+                                'readonly' => 'readonly',
+                                'class' => 'changeaddress',
+                                'style' => 'width:100px; height:30px;',
+                            ),
+                        ),
+                    ),
+                    array(
+                        /**
+                         * State
+                         */
+                        'spec' => array(
+                            'type' => 'Zend\Form\Element\Select',
+                            'name' => 'state',
+                            'options' => array(
+                                'label' => 'State',
+                                'value_options' => array(
+                                    /**
+                                     * @todo
+                                     */
+                                ),
+                            ),
+                            'attributes' => array(
+                                'onchange' => 'getneighborhoodcities(this.value);',
+                                'class' => 'changeaddress',
+                                'style' => 'width:100px; height:33px;',
+                            ),
+                        ),
+                    ),
+                    array(
+                        /**
+                         * Zip code
+                         */
+                        'spec' => array(
+                            'type' => 'Zend\Form\Element\Text',
+                            'name' => 'zipcode',
+                            'options' => array(
+                                'label' => 'Zip code',
+                            ),
+                            'attributes' => array(
+                                'readonly' => 'readonly',
+                                'class' => 'changeaddress',
+                                'style' => 'width:100px; height:30px;',
+                            ),
+                        ),
+                    ),
+                    array(
+                        /**
+                         * Campaign category
+                         */
+                        'spec' => array(
+                            'type' => 'Zend\Form\Element\Select',
+                            'name' => 'campaign_category',
+                            'options' => array(
+                                'label' => 'Campaign category',
+                                'value_options' => array(
+                                    1 => 'Discover',
+                                    2 => 'Support',
+                                ),
+                            ),
+                            'attributes' => array(
+                                'class' => 'setgoaltxt',
+                                'style' => 'width:150px; height:30px;',
                             ),
                         ),
                     ),
@@ -223,6 +402,97 @@ class AddDescriptionFactory implements FactoryInterface
                                 'options' => array(
                                     'messages' => array(
                                         'isEmpty' => 'Address is required',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                    'newcity' => array(
+                        'required' => true,
+                        'validators' => array(
+                            array(
+                                'name' => 'NotEmpty',
+                                'options' => array(
+                                    'messages' => array(
+                                        'isEmpty' => 'City is required',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                    'newstate' => array(
+                        'required' => true,
+                        'validators' => array(
+                            array(
+                                'name' => 'NotEmpty',
+                                'options' => array(
+                                    'messages' => array(
+                                        'isEmpty' => 'State is required.',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                    'newzipcode' => array(
+                        'required' => true,
+                        'validators' => array(
+                            array(
+                                'name' => 'NotEmpty',
+                                'options' => array(
+                                    'messages' => array(
+                                        'isEmpty' => 'Zip code is required',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                    'instruction' => array(
+                        'required' => true,
+                        'validators' => array(
+                            array(
+                                'name' => 'NotEmpty',
+                                'options' => array(
+                                    'messages' => array(
+                                        'isEmpty' => 'Instruction is required',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                    'address' => array(
+                        'required' => true,
+                        'validators' => array(
+                            array(
+                                'name' => 'NotEmpty',
+                                'options' => array(
+                                    'messages' => array(
+                                        'isEmpty' => 'Address is required',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                    'city' => array(
+                        'required' => true,
+                        'validators' => array(
+                            array(
+                                'name' => 'NotEmpty',
+                                'options' => array(
+                                    'messages' => array(
+                                        'isEmpty' => 'City is required',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                    'zipcode' => array(
+                        'required' => true,
+                        'validators' => array(
+                            array(
+                                'name' => 'NotEmpty',
+                                'options' => array(
+                                    'messages' => array(
+                                        'isEmpty' => 'Zip code is required',
                                     ),
                                 ),
                             ),
