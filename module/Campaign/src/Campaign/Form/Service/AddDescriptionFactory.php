@@ -498,6 +498,9 @@ class AddDescriptionFactory implements FactoryInterface
                             ),
                         ),
                     ),
+                    'state' => array(
+                        'required' => true,
+                    ),
                 ),
             )
         );
