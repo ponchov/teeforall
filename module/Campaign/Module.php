@@ -51,6 +51,8 @@ class Module implements AutoloaderProviderInterface
             'factories' => array(
                 'Campaign\Form\TrackOrder' => 'Campaign\Form\Service\TrackOrderFactory',
                 'Campaign\Form\AddDescription' => 'Campaign\Form\Service\AddDescriptionFactory',
+                'Campaign\Form\Edit' => 'Campaign\Form\Service\EditFactory',
+                'Campaign\Form\Setgoal' => 'Campaign\Form\Service\SetgoalFactory',
                 'Campaign\Storage\Users' => function($sm) {
                     $factory = new App\Entity\Service\SimpleFactory(new Entity\User());
                     $proto = App\Storage\Table\TableSimpleSet(null, $factory);
