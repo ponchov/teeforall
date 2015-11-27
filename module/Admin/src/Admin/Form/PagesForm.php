@@ -49,8 +49,10 @@ class PagesForm extends Form
             'name'  => 'add_pages_submit',
             'type'  => 'Submit',
             
+            
             'attributes' => array(
-                'class' => 'mws-button red',  
+                'class' => 'mws-button red', 
+                'value' => 'Add Page',
             ),
         ));
     }

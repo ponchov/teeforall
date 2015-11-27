@@ -32,6 +32,7 @@ class UsersModel
     }
     
     
+    // gets a list of all the users in the users table
     public function getAllUsers()
     {
         $get_all = $this->table_gateway->select();
@@ -39,13 +40,8 @@ class UsersModel
         return $get_all;
     }
     
-    
-    public function getUserIds()
-    {
-        return $this->table_gateway->select();
-    }
       
-   
+    // updates a users information
     public function updateUser(array $details)
     {
         if (count($details) > 0) {
@@ -77,6 +73,7 @@ class UsersModel
     }
     
     
+    // removes a user from the users table
     public function removeUser(array $details, $message = false)
     {
         if (count($details) > 0) {
@@ -150,6 +147,7 @@ MESSAGE;
     }
     
     
+    // gets a list of users to contact
     public function getUsersToContact()
     {
         $adapter = $this->sql->getAdapter()->getDriver()->getConnection();
@@ -167,6 +165,7 @@ MESSAGE;
     }
     
     
+    // gets a list of buyers to contact
     public function getBuyersToContact() 
     {
         $select = new Select('buyers');
@@ -190,7 +189,7 @@ MESSAGE;
         }
     }
     
-    
+    // sends the email to the users selected
     public function sendMailtoUsers(array $params)
     {
         if (!empty($params['allusers'])) {
@@ -277,6 +276,7 @@ MESSAGE;
     }
     
     
+    // sends the email to the buyers selected
     public function sendMailToBuyers(array $params)
     {
         if (!empty($params['allusers'])) {

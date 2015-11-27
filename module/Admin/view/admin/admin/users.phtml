@@ -58,7 +58,7 @@
                             <td>
                        <a href="/admin/change-user-status/<?php echo $user->user_id; ?>"> 
                                    <?php 
-		   				if ($user->user_status == 1) {
+		   				if ($this->users->user_status == 1) {
 			   			   $status = $user->user_status;
 						 ?>
               				<img src="<?php echo $this->basePath(); ?>/admin/images/tick.gif" onClick="f1('<?php echo $user->user_id; ?>', '<?php echo $status; ?>');">

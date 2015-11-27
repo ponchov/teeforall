@@ -386,15 +386,15 @@ class AdminController extends AbstractActionController
         // set the form to be used in the view
         $form = new PagesForm();
         
-        $p_id = !empty($this->getRequest()->getParam('id')) ? $this->getRequest()->getParam('id') : null;
+        $p_id = !empty($this->params('id')) ? $this->params('id') : null;
         
         $get_page = $this->getPagesService()->getPage($p_id);
         
-        $form->get('page_title')->setValue($get_page['page_title']);
-        $form->get('page_content')->setValue($get_page['page_content']);
+        $form->get('page_title')->setValue($get_page->page_title);
+        $form->get('page_content')->setValue($get_page->page_content);
         
-        return new ViewModel(array('form' => $form, 'id' => $get_page['id'],
-            'page_title' => $get_page['page_title'], 'page_content' => $get_page['page_content'],
+        return new ViewModel(array('form' => $form, 'id' => $get_page->page_id,
+            'page_title' => $get_page->page_title, 'page_content' => $get_page->page_content,
         ));
     }
     
@@ -436,8 +436,8 @@ class AdminController extends AbstractActionController
                 // pass the form to data to the filter class via exchangeArray()
                 $page->exchangeArray($form->getData());
         
-                $p_id = !empty($this->getRequest()->getParam('id'))
-                ? $this->getRequest()->getParam('id') : null;
+                $p_id = !empty($this->params('id'))
+                ? $this->params('id') : null;
         
                 if ($this->getPagesService()->updatePage($page, $p_id) === true) {
                     // the updated page was inserted into the database successfully
@@ -466,7 +466,7 @@ class AdminController extends AbstractActionController
          
         $layout->setVariable('user1', $user->username);
         
-        $page_id = $this->getRequest()->getParam('id');
+        $page_id = $this->params()->fromPost('id');
         
         if (false !== $this->getPagesService()->deletePage($page_id)) {
             return $this->redirect()->toUrl('/admin/pages');
@@ -491,6 +491,9 @@ class AdminController extends AbstractActionController
         // set the form to be used in the save page view
         $form = new PagesForm();
         
+        $form->get('add_pages_submit')->setValue('Add New Page');
+        
+        
         // gets the form method request (usually post)
         $request = $this->getRequest();
         
@@ -498,7 +501,7 @@ class AdminController extends AbstractActionController
         if ($request->isPost()) {
             // good to go
             // filter the form values now
-            $pages  = new Pages();
+            $pages = new Pages();
         
             $form->setInputFilter($pages->getInputFilter());
         
@@ -513,8 +516,8 @@ class AdminController extends AbstractActionController
                 // pass the form to data to the filter class via exchangeArray()
                 $pages->exchangeArray($form->getData());
         
-                $p_id = !empty($this->getRequest()->getParam('id'))
-                ? $this->getRequest()->getParam('id') : null;
+                $p_id = !empty($this->params('id'))
+                ? $this->params('id') : null;
                 
                 if ($this->getPagesService()->savePage($pages) === true) {
                     // the page  was inserted into the database successfully
@@ -529,8 +532,12 @@ class AdminController extends AbstractActionController
             }
         }    
     }
+
     
-   
+    
+    ///////////////////////////////
+    // user actions
+    ///////////////////////////////
     public function usersAction()
     {
         if (!$user = $this->identity()) {

@@ -7,8 +7,10 @@
         <div class="mws-panel-body">
             <div class="mws-panel-toolbar top clearfix">
                 <ul>
-                   <li></li>
-                </ul>           
+                	<li><a class="mws-ic-16 ic-accept" href="<?php echo $this->url('admin', array('action' => 'add-page')); ?>" 
+                		title="Add">Add</a></li>
+                	<li><a class="mws-ic-16 ic-cross" title="Delete" id="delete_records">Delete</a></li>
+            	</ul>           
             </div>
                         
             <table class="mws-datatable-fn mws-table">
@@ -28,13 +30,13 @@
                            <td><?php echo $page['page_title']; ?></td>
                                        
                            <td class="center">
-                               <a href="/admin/pages/<?php echo $page['page_id']; ?>">
+                               <a href="/admin/edit-page/<?php echo $page['page_id']; ?>">
             					   <img src="<?php echo $this->basePath() ;?>/admin/css/icons/16/edit.png" border='0' />
             				   </a>
            				   </td> 
                                         
                            <td>
-                               <input type="checkbox" name="checkbox[]" id="checkbox[]" value="<?php echo $page['page_id']; ?>"  onClick="return check1();"/>
+                               <input type="checkbox" name="checkbox[]" id="checkbox[]" value="<?php echo $page['page_id']; ?>">
                            </td>
 	                    </tr>
 						<?php
@@ -47,37 +49,25 @@
 </form>
             
 <script type="text/javascript">
-function deleteRecord() { 
-    var pIds = '';
-    var userrows = new Array();
-    var cboxes = document.getElementsByName("checkbox[]");
-
-	for (i=0; i<cboxes.length; i++) { 
-		if(cboxes[i].checked == true) {
-			pIds += cboxes[i].value + ','; 
-	        userrows[i] = cboxes[i].value;
-	    }
-    }
-    
-	if (pIds == "") {
-		alert("Please select at least one record.");
-		return;
-	}
-
-
+$('#delete_records').click(function() {
 	if (confirm("Are you sure you want to delete these records?")) {
-		$.ajax({ 
-    		type: "POST", 
-    		url: "/admin/delete-page/" + pIds,
-    		data: { userId : pIds },
-    		cache: false, 
+		var checked_items = $('input:checkbox[name="checkbox[]"]:checked')
+		.map(function() { return $(this).val(); })
+		.get()
+		.join(",");
 
-    		success: function(data){
-   				window.location ="/admin/pages";		
-	        }
-   		}); 
-	}
-}
+		$.ajax({
+			type: "POST",
+			url: "/admin/delete-page",
+			data: "id=" + checked_items,
+			success: function() {
+				window.location = "/admin/pages";
+			}
+		});
+
+		return false;
+	} 
+});
 </script>
 
             

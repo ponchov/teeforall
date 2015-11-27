@@ -139,7 +139,7 @@ class EmailTemplatesModel
     
     public function deleteEmailTemplates($id)
     {
-        // delete the entrie(s) based on what is checked
+        // delete the entry(s) based on what is checked
         if (!empty($id)) {
             $arr_id = explode(",", $id);
         

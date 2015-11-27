@@ -52,7 +52,7 @@ class PagesModel
     public function getPage($id)
     {
         // gets one page based on the id passed
-        $get = $this->table_gateway->select(array('id' => $id));
+        $get = $this->table_gateway->select(array('page_id' => $id));
         
         $row = $get->current();
         
@@ -102,7 +102,7 @@ class PagesModel
                 'page_content' => $pages->page_content,
             );
         
-            $this->table_gateway->update($data, array('id' => (int)$id));
+            $this->table_gateway->update($data, array('page_id' => (int)$id));
             
             return true;
         } catch (\ErrorException $e) {
@@ -114,14 +114,13 @@ class PagesModel
     
     public function deletePage($id)
     {
-        try {
-            // remove the page from the database based on $id
-            $this->table_gateway->delete(array('id' => (int)$id));
-            
-            return true;
-        } catch (\ErrorException $e) {
-            // log the message to the error file
-            ErrorHandler::errorWriter($e->getMessage());
+        // delete the entry(s) based on what is checked
+        if (!empty($id)) {
+            $arr_id = explode(",", $id);
+        
+            foreach ($arr_id as $value) {
+                $this->table_gateway->delete(array('page_id' => $value));
+            }
         }
     }
    

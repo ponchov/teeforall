@@ -16,12 +16,14 @@ class Pages implements InputFilterAwareInterface
 {
     public $page_title;
     public $page_content;
+    public $page_id;
 
     protected $input_filter;
 
 
     public function exchangeArray($data)
     {
+        $this->page_id         = (!empty($data['page_id']))      ? $data['page_id']      : null;
         $this->page_title      = (!empty($data['page_title']))   ? $data['page_title']   : null;
         $this->page_content    = (!empty($data['page_content'])) ? $data['page_content'] : null;
     }
