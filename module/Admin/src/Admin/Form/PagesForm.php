@@ -41,11 +41,12 @@ class PagesForm extends Form
                 'class' => 'mws-textinput required',
                 'id'    => 'elrte',
                 'style' => 'width: 90%;',
+                'cols'  => 'auto',
             ),
         ));
         
         $this->add(array(
-            'name'  => 'submit',
+            'name'  => 'add_pages_submit',
             'type'  => 'Submit',
             
             'attributes' => array(

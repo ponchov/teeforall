@@ -23,5 +23,26 @@ class TShirtProductsModel
     }
     
     
+    public function saveTShirtProduct(TShirtProducts $tshirt, $id)
+    {
+        
+    }
     
+    
+    public function editTShirtProduct(TShirtProducts $tshirt)
+    {
+        
+    }
+    
+    
+    public function deleteTShirtProduct()
+    {
+        
+    }
+    
+    
+    public function changeTShirtProductStatus()
+    {
+        
+    }
 }

@@ -7,6 +7,9 @@
 namespace Admin\Model;
 
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\Sql\Sql;
+use Zend\Db\Sql\Select;
+
 
 use Error\ErrorHandler;
 
@@ -25,9 +28,24 @@ class PagesModel
     
     public function getPages()
     {
-        $get_all = $this->table_gateway->select();
+        // get all pages 
+        $this->sql = new Sql($this->table_gateway->getAdapter());
         
-        return $get_all;
+        $select = new Select('pages');
+        
+        $select->columns(array('page_id', 'page_title', 'page_content', 'page'));
+        
+        $adapter = $this->table_gateway->getAdapter();
+       
+        $query = $adapter->query($this->sql->buildSqlString($select), $adapter::QUERY_MODE_EXECUTE);
+        
+        $holder = array();
+        
+        foreach ($query as $key => $row) {
+            $holder[$key] = $row;
+        }
+        
+        return $holder;
     }
     
    

@@ -15,43 +15,51 @@ class EmailTemplateForm extends Form
     {
         parent::__construct('email_template');
         
-        // set the attributes of the form
-        $this->setAttribute('method', 'post')
-        ->setAttribute('id', 'myForm');
-        
-        // set the attributes of the email subject text field
         $this->add(array(
             'name' => 'email_subject',
             'type' => 'Text',
             
             'attributes' => array(
                 'class' => 'textInput',
-                'style' => 'width: 400px; padding: 3px;',
+                'id'    => 'email_subject',
+                'style' => 'width: 400x; padding: 3px;',
             ),
         ));
         
-        // set the attributes of the email body textarea field
         $this->add(array(
             'name' => 'email_body',
             'type' => 'Textarea',
             
             'attributes' => array(
                 'class' => 'textInput',
-                'style' => 'width: 90%; height: 400px;',
                 'id'    => 'elrte',
+                'style' => 'width: 90%; height: 400px;',
                 'cols'  => 'auto',
+             ),
+        ));
+        
+        
+        $this->add(array(
+            'name' => 'submit',
+            'type' => 'Submit',
+            
+            'attributes' => array(
+                'value' => 'Update Template',
+                'class' => 'mws-button red',
+                'id'    => 'submit',
             ),
         ));
-       
-        // set the attributes of the input field checkbox
+        
+        
         $this->add(array(
-           'name' => 'checkbox[]',
-           'type' => 'Checkbox',
+            'name' => 'add_template_submit',
+            'type' => 'Submit',
             
-           'attributes' => array(
-              'id'      => 'checkbox[]',
-              'onClick' => 'return check1();',
-           ),
+            'attributes' => array(
+                'value' => 'Add New Template',
+                'class' => 'mws-button red',
+                'id'    => 'add_template_submit',
+            ),
         ));
     }
 }

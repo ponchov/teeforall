@@ -7,7 +7,7 @@
     
     <div class="mws-panel-body">
        <form name="myform" id="mws-validate" 
-        action="<?php echo $this->url('admin', array('action' => 'updatetemplate', 'id' => $this->id)); ?>"  
+        action="<?php echo $this->url('admin', array('action' => 'update-templates', 'id' => $this->id)); ?>"  
         method="post" novalidate="novalidate" class="mws-form">
           <input type="hidden" name="save_or_send" id="save_or_send" value="1" />
             <div style="display:none;" class="mws-form-message error" id="mws-validate-error"></div>
@@ -24,7 +24,7 @@
                 <div class="mws-form-row">
                 	<label>Message Body</label>
                 	<div class="mws-form-item">
-                        <textarea id="elrte" class="textInput" style="width: 90%; height: 400px;" cols="auto">
+                        <textarea id="elrte" name="email_body" class="textInput" style="width: 90%; height: 400px;" cols="auto">
                         	<?php echo $this->body; ?>
                         </textarea>
                 	</div>
@@ -32,42 +32,9 @@
             </div>
                             
             <div class="mws-button-row">
-                 <input type="submit" value="Update Template" class="mws-button red">
+                 <?php echo $this->formSubmit($this->form->get('submit')); ?>
             </div>
 	  </form>
    </div>  
 </div>  	
 
-<script type="text/javascript">
-	function deleteRecord() { 
-		var eIds = '';
-		var userrows = new Array();
-		var cboxes = document.getElementsByName("checkbox[]");
-
-		for (i=0; i<cboxes.length; i++) { 
-			if (cboxes[i].checked == true) {
-				eIds += cboxes[i].value + ','; 
-				userrows[i] = cboxes[i].value;
-			}
-		}
-		
-		if (eIds == "") {
-			alert("Please select at least one record.");
-			return;
-		}
-
-
-		if (confirm("Are you sure to delete these records?")) {
-			$.ajax({ 
-    			type: "POST", 
-    			url: "/admin/delete-template/" + eIds,
-    			data: { eID : eIds },
-    			cache: false, 
-
-    			success: function(data){
-   					window.location = "/admin/email-template";		
-	   			}
-   			});
-		}
-	}
-</script>

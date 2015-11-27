@@ -5,7 +5,8 @@
         <span class="mws-i-24 i-check">Add New Pages</span>
     </div>
     <div class="mws-panel-body">
-        <form name="myform" id="mws-validate" action="<?php echo $this->url('admin', array('action' => 'savepage'), 'default', true)?>"
+        <form name="myform" id="mws-validate" 
+        action="<?php echo $this->url('admin', array('action' => 'save-page'))?>"
          method="post" novalidate="novalidate" class="mws-form">
             <div style="display:none;" class="mws-form-message error" id="mws-validate-error"></div>
             
@@ -25,7 +26,7 @@
             	</div>
             	
             	<div class="mws-button-row">
-                	<input type="submit" value="Submit" class="mws-button red" />
+                	<?php echo $this->formSubmit($this->form->get('add_pages_submit')); ?>
             	</div>
             </div>
         </form>

@@ -152,6 +152,66 @@ class AdminController extends AbstractActionController
     /////////////////////////////////////////////
     // email template actions
     /////////////////////////////////////////////
+    public function addtemplateAction()
+    {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
+        
+        $form = new EmailTemplateForm();
+        
+        return new ViewModel(array('form' => $form));
+    }
+ 
+    
+    public function savetemplateAction()
+    {
+        // set the form to be used in the update templates view
+        $form = new EmailTemplateForm();
+        
+        // gets the form method request (usually post)
+        $request = $this->getRequest();
+        
+        // check to see if the request was a POST form request
+        if ($request->isPost()) {
+            // good to go
+            // filter the form values now
+            $email = new EmailTemplates();
+        
+            $form->setInputFilter($email->getInputFilter());
+        
+            // set the form data to hold all the values supplied by the form
+            // via $request->getPost()
+            $form->setData($request->getPost());
+             
+            // now we will see if the form is valid
+            // we check if it is valid by the email form class we created
+            if ($form->isValid()) {
+                // it is valid
+                // pass the form to data to the filter class via exchangeArray()
+                $email->exchangeArray($form->getData());
+        
+                if ($this->getEmailTemplatesService()->saveEmailTemplate($email) === true) {
+                    // the updated email template was inserted into the database successfully
+                    // redirect to email template view
+                    return $this->redirect()->toUrl('/admin/email-templates');
+                } else {
+                    // error occured..
+                    // the error is logged automatically
+                    // redirect to email template view
+                    return $this->redirect()->toUrl('/admin/add-template');
+                }
+            }
+        }
+    }
+    
     
     public function emailtemplatesAction()
     {
@@ -184,13 +244,16 @@ class AdminController extends AbstractActionController
         // set the form to be used in the edit template view
         $form = new EmailTemplateForm();
     
-        $tpl_id = !empty($this->getRequest()->getParam('id')) 
-        ? $this->getRequest()->getParam('id') : null;
+        $tpl_id = !empty($this->params('id')) 
+        ? $this->params('id') : null;
         
         $get_tpl = $this->getEmailTemplatesService()->getEmailTemplate($tpl_id);
         
-        return new ViewModel(array('form' => $form, 'id' => $get_tpl['template_id'], 
-            'subject' => $get_tpl['email_subject'], 'body' => $get_tpl['email_body']));
+        //var_dump($get_tpl);
+        //exit;
+        
+        return new ViewModel(array('form' => $form, 'id' => $get_tpl->template_id, 
+            'subject' => $get_tpl->email_subject, 'body' => $get_tpl->email_body));
     }
 
     
@@ -231,20 +294,20 @@ class AdminController extends AbstractActionController
                 // pass the form to data to the filter class via exchangeArray()
                 $email->exchangeArray($form->getData());
         
-                $tpl_id = !empty($this->getRequest()->getParam('id'))
-                ? $this->getRequest()->getParam('id') : null;
+                $tpl_id = !empty($this->params('id'))
+                ? $this->params('id') : null;
                 
                 if ($this->getEmailTemplatesService()->modifyEmailTemplate($email, $tpl_id) === true) {
                     // the updated email template was inserted into the database successfully
                     // redirect to email template view
-                    return $this->redirect()->toUrl('/admin/email-template');
+                    return $this->redirect()->toUrl('/admin/email-templates');
                 } else {
                     // error occured..
                     // the error is logged automatically
                     // redirect to email template view
-                    return $this->redirect()->toUrl('/admin/email-template/' . $tpl_id);
+                    return $this->redirect()->toUrl('/admin/email-templates/' . $tpl_id);
                 }
-            }
+            } 
         } 
     }
 
@@ -260,17 +323,14 @@ class AdminController extends AbstractActionController
         $layout->setTemplate('admin/admin/layout');
          
         $layout->setVariable('user1', $user->username);
-        $id = $this->params('eId');
         
-        if (!empty($id)) {
-            // delete the template
-            $email = new EmailTemplates();
-            
-            if (false !== $this->getEmailTemplatesService()->deleteEmailTemplate($email, $id)) {
-                // don't do anything, ajax call will handle redirect 
-            }
-        }
+        // get the id passed by the ajax request
+        $id = $this->params()->fromPost('id');
+        
+        
+        $this->getEmailTemplatesService()->deleteEmailTemplates($id);
     }
+
     
     
     /////////////////////////////////////////////
@@ -303,6 +363,8 @@ class AdminController extends AbstractActionController
         $layout->setTemplate('admin/admin/layout');
          
         $layout->setVariable('user1', $user->username);
+        
+        // set the form to be used
         $form = new PagesForm();
         
         return new ViewModel(array('form' => $form));
@@ -659,6 +721,8 @@ class AdminController extends AbstractActionController
         $layout->setTemplate('admin/admin/layout');
          
         $layout->setVariable('user1', $user->username);
+        
+        
     }
     
     
