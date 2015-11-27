@@ -54,6 +54,9 @@ class Module implements AutoloaderProviderInterface
                 'Campaign\Form\Edit' => 'Campaign\Form\Service\EditFactory',
                 'Campaign\Form\Setgoal' => 'Campaign\Form\Service\SetgoalFactory',
                 'Campaign\Form\Buy' => 'Campaign\Form\Service\BuyFactory',
+                'Campaign\States' => function($sm) {
+                    return $sm->get('Campaign\Storage\State')->getOrderedByName();
+                },
                 'Campaign\Storage\Users' => function($sm) {
                     $factory = new App\Entity\Service\SimpleFactory(new Entity\User());
                     $proto = App\Storage\Table\TableSimpleSet(null, $factory);
@@ -65,6 +68,12 @@ class Module implements AutoloaderProviderInterface
                     $proto = App\Storage\Table\TableSimpleSet(null, $factory);
                     $tableGateway = new TableGateway('launchcampaign', $sm->get('db'), null, $proto);
                     return Table\Campaign($tableGateway);
+                },
+                'Campaign\Storage\State' => function($sm) {
+                    $factory = new App\Entity\Service\SimpleFactory(new Entity\State());
+                    $proto = App\Storage\Table\TableSimpleSet(null, $factory);
+                    $tableGateway = new TableGateway('state', $sm->get('db'), null, $proto);
+                    return Table\State($tableGateway);
                 },
             ),
         );

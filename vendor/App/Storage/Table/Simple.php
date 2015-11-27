@@ -140,6 +140,16 @@ class Simple
     }
 
     /**
+     * Return all Entities from storage
+     * 
+     * @return TableEntitySetInterface
+     */
+    public function getAll()
+    {
+        return $this->tableGateway->select();
+    }
+
+    /**
      * Saves the Entity into storage
      *
      * @param EntityInterface $object
