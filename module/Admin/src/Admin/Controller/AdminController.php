@@ -16,6 +16,8 @@ use Admin\Model\EmailTemplates;
 use Admin\Form\EmailTemplateForm;
 use Admin\Form\PagesForm;
 use Admin\Model\Pages;
+use Admin\Form\UsersForm;
+use Admin\Model\Users;
 
 
 
@@ -553,7 +555,7 @@ class AdminController extends AbstractActionController
         return new ViewModel(array('users' => $this->getUsersService()->getAllUsers()));
     }
     
-    
+    // come back to this
     public function changeuserstatusAction()
     {
         if (!$user = $this->identity()) {
@@ -566,12 +568,13 @@ class AdminController extends AbstractActionController
          
         $layout->setVariable('user1', $user->username);
         
-        $user_id = $this->getRequest()->getParam('id');
-        $status  = $this->getRequest()->getParam('status');
+        $user_id = $this->params()->fromPost('id');
+        $status  = $this->params()->fromPost('status');
         
-        if ($this->getUsersService()->updateUser(array('user_id' => $user_id, 'user_status' => $status))) {
+        if (false !== $this->getUsersService()->updateUserStatus(array('user_id' => $user_id, 'user_status' => $status))) {
             return $this->redirect()->toUrl('/admin/users');
-        } 
+        }
+     
     }
     
     
@@ -587,9 +590,73 @@ class AdminController extends AbstractActionController
          
         $layout->setVariable('user1', $user->username);
         
+        $id = $this->params()->fromPost('id');
+        
         if (!empty($_REQUEST['id'])) {
-            $this->getUsersService()->removeUser(array('user_id' => $_REQUEST['id'])); 
+            $this->getUsersService()->removeUser($_REQUEST['id']); 
         }
+    }
+    
+    
+    public function adduserAction()
+    {
+        if (!$user = $this->identity()) {
+            return $this->redirect()->toUrl('/login/log');
+        }
+         
+        $user = $this->identity();
+        $layout = $this->layout();
+        $layout->setTemplate('admin/admin/layout');
+         
+        $layout->setVariable('user1', $user->username);
+        
+        // set the form to be used
+        $form = new UsersForm();
+        
+        $form->get('add_user_submit')->setValue('Add New User');
+        
+        // gets the form method request (usually post)
+        $request = $this->getRequest();
+        
+        // check to see if the request was a POST form request
+        if ($request->isPost()) {
+            // good to go
+            // filter the form values now
+            $users = new Users();
+        
+            $form->setInputFilter($users->getInputFilter());
+        
+            // set the form data to hold all the values supplied by the form
+            // via $request->getPost()
+            $form->setData($request->getPost());
+             
+            // now we will see if the form is valid
+            // we check if it is valid by the email form class we created
+            if ($form->isValid()) {
+                // it is valid
+                // pass the form to data to the filter class via exchangeArray()
+                $users->exchangeArray($form->getData());
+        
+                if ($this->getUsersService()->addUser($users) === true) {
+                    // the user was inserted into the database successfully
+                    // redirect to users view
+                    return $this->redirect()->toUrl('/admin/users');
+                } else {
+                    // error occured..
+                    // the error is logged automatically
+                    // redirect to add users view
+                    return $this->redirect()->toUrl('/admin/add-user');
+                }
+            }
+        }
+        
+        return new ViewModel(array('form' => $form, 'countries' => $this->getUsersService()->listCountries()));
+    }
+    
+    
+    public function edituserAction()
+    {
+        
     }
     
     
@@ -661,6 +728,11 @@ class AdminController extends AbstractActionController
     }
     
     
+    
+    
+    ///////////////////////////////////
+    // tshirt actions
+    //////////////////////////////////
     public function tshirtsizeAction()
     {
         if (!$user = $this->identity()) {

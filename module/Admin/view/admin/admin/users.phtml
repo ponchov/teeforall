@@ -6,32 +6,38 @@
     <div class="mws-panel-body">
         <div class="mws-panel-toolbar top clearfix">
             <ul>
-                <li><a class="mws-ic-16 ic-cross" href="javascript:void(0)" title="Delete" onclick="deleteitem()">Delete</a></li>
+                <li><a class="mws-ic-16 ic-accept" href="<?php echo $this->url('admin', array('action' => 'add-user')); ?>" 
+                title="Add">Add User</a></li>
+                
+                <li><a class="mws-ic-16 ic-accept" href="<?php echo $this->url('admin', array('action' => 'edit-user')); ?>" 
+                title="Edit">Edit User</a></li>  
+                
+                <li><a class="mws-ic-16 ic-cross" id="delete_records" title="Delete">Delete User</a></li>      
             </ul>
         </div>
         
          <table class="mws-datatable-fn mws-table">
             <thead>
                 <tr>
-                    <th>S.No</th>
-                    <th><input type="checkbox" name="deletebcchk" id="deletebcchk" onclick="return checkall(this)" /></th>
-                  
-                     
+                    <th>Check All Rows <input type="checkbox" name="deletebcchk" id="deletebcchk"></th>
                     <th>Email Address</th>
-                    <th>User Status</th>
+                    <th>Name</th>
                 </tr>
             </thead>
             <tbody>
              <?php
                 $cClass = "gradeX odd";
 					
+                $i = 0;
+                
 					foreach ($this->users as $user) {
+					    $i++;
 					?>
                     
                 <?php
-                    if ($user->user_status == 1) { $image ='tick.png';   }
+                    //if ($user->user_status == 1) { $image = 'tick.png';   }
                     
-                    if ($user->user_status == 0) { $image ='cross.png';  }
+                    //if ($user->user_status == 0) { $image = 'cross.png';  }
                     
                     if ($cClass == "gradeX odd") {
                         $cClass = "gradeX even";
@@ -40,41 +46,16 @@
                     }	
                     ?>
                         <tr class="<?php echo $cClass; ?>">
-                            <?php for ($i=0; $i<count($this->users); $i++) { ?>
-                            <td><?php echo $i + 1; ?></td>
                             <td>
-                                <input name='check<?php echo $i;?>' id='check<?php echo $i + 1; ?>' 
-                                value='<?php $user->user_id; ?>' 
-                                    onchange='return check_check("bcdel","deletebcchk")' type='checkbox'>
-                                 <?php } ?>
-                                <script> 
-                                    $('#bcdel').html(''); document.getElementById('deletebcchk').checked = false;
-                                </script>
+                                <input name="checkbox[]" id="<?php echo $i; ?>"
+                                value="<?php echo $user->user_id; ?>" type="checkbox">
                             </td>
                             
           
                             <td><?php echo $user->username; ?></td>
                             
-                            <td>
-                       <a href="/admin/change-user-status/<?php echo $user->user_id; ?>"> 
-                                   <?php 
-		   				if ($this->users->user_status == 1) {
-			   			   $status = $user->user_status;
-						 ?>
-              				<img src="<?php echo $this->basePath(); ?>/admin/images/tick.gif" onClick="f1('<?php echo $user->user_id; ?>', '<?php echo $status; ?>');">
-			   			<?php
-						}
-							if ($user->user_status == 0) {
-								$status = $user->user_status;
-						 ?>
-						 
-                 		 	<img src="<?php echo $this->basePath(); ?>/admin/images/cross.png" onClick="f1('<?php echo $user->user_id; ?>', '<?php echo $status; ?>');">
-                 		<?php  
-		    			   } 
-						?>
-          				 </a>                 
-                            </td>
-                        </tr>
+                            <td><?php echo $user->first_name . " " . $user->last_name; ?>
+          			 	</tr>
                     <?php
                 }
                 ?>
@@ -82,64 +63,45 @@
         </table>
     </div>    	
 </div>
-<script type="text/javascript">
 
-function deleteitem() {
-	var r = "";
-	var s = "";
-	var selected = false;
-	
-	for (var i=1; document.getElementById('check' + i); i++) {
-		if (document.getElementById('check' + i).checked == true) {	
-			r += document.getElementById('check' + i).value + "|";
-			selected = true;
-		}
-	}	
-	
-	r += '0';
-	
-	if (selected) {
-		var confirmation = confirm("Are you sure want to delete?");
-		
-		if (confirmation != true) {
-			return false;
-		}	
-	
-		$.ajax({ 
-			url: "/admin/delete-user",
+
+<script type="text/javascript">
+$('#delete_records').click(function() {
+    if (confirm("Are you sure you wish to delete the selected rows?")) {
+    	var checked_items = $('input:checkbox[name="checkbox[]"]:checked')
+		.map(function() { return $(this).val(); })
+		.get()
+		.join(",");
+
+		$.ajax({
 			type: "POST",
-			data: { id : r },
-			success: function(data) {			
-			 	window.location.href = window.location.href; // ?????
+			url: "/admin/delete-user",
+			data: "id=" + checked_items,
+			success: function() {
+				window.location = "/admin/users";
 			}
 		});
-	} else {
-		alert('Please choose a record to delete.');
-	}
-}
+
+		return false;
+    }
+});
 
 
-function changestatus(id, status) {
-    $.ajax({ 
-		type: "POST", 
-		url: "/admin/change-user-status", 
-		data: { id : id, status : status},
-		cache: false, 
-		success: function(data) {				 
-			window.location.href = window.location.href; // ???
+$('#deletebcchk').click(function() {
+	$('input:checkbox[name="checkbox[]"]').attr("checked", "checked");
+});
+
+// stupid thing
+$('#change-user-status').click(function() {
+	var id = $('input:checkbox[name="checkbox[]"]:checked');
+	$.ajax({
+		type: "POST",
+		url: "/admin/change-user-status",
+		data: { id : id, status : status },
+		cache: false,
+		success: function(data) {
+			window.location.href = window.location.href;
 		}
 	});
-}
- 
-function checkall(thisid) {
-	for (var i=1; document.getElementById('check' + i); i++) {
-  		if (document.getElementById(thisid.id).checked == true) {
-  	  		document.getElementById('check' + i).checked = true;
-  	  	}
-  	  	
-  		if (document.getElementById(thisid.id).checked == false) {
-  	  		document.getElementById('check' + i).checked = false;
-  	  	}
-	}	
-}
+});
 </script>
