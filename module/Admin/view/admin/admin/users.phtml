@@ -9,7 +9,7 @@
                 <li><a class="mws-ic-16 ic-accept" href="<?php echo $this->url('admin', array('action' => 'add-user')); ?>" 
                 title="Add">Add User</a></li>
                 
-                <li><a class="mws-ic-16 ic-accept" href="<?php echo $this->url('admin', array('action' => 'edit-user')); ?>" 
+                <li><a class="mws-ic-16 ic-accept" id="edit-users" href="<?php echo $this->url('admin', array('action' => 'edit-user')); ?>" 
                 title="Edit">Edit User</a></li>  
                 
                 <li><a class="mws-ic-16 ic-cross" id="delete_records" title="Delete">Delete User</a></li>      
@@ -94,6 +94,7 @@ $('#deletebcchk').click(function() {
 // stupid thing
 $('#change-user-status').click(function() {
 	var id = $('input:checkbox[name="checkbox[]"]:checked');
+	
 	$.ajax({
 		type: "POST",
 		url: "/admin/change-user-status",
@@ -103,5 +104,22 @@ $('#change-user-status').click(function() {
 			window.location.href = window.location.href;
 		}
 	});
+});
+
+$('#edit-users').click(function(e) {
+	var id = $('input:checkbox[name="checkbox[]"]:checked')
+	.map(function() { return $(this).val(); } )
+	.get();
+
+	$.ajax({
+		type: "POST",
+		url: "/admin/edit-user",
+		data: "id=" + id,
+		success: function(data) {
+			window.location.href = "/admin/edit-user/" + id;
+		}
+	});
+
+	return false;
 });
 </script>

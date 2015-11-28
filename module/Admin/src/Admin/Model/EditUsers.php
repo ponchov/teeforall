@@ -1,9 +1,9 @@
 <?php
 /*
- * filter for the user related form
- *
- * @author Jimmy
- */
+ * filter for the editin user form
+*
+* @author Jimmy
+*/
 namespace Admin\Model;
 
 use Zend\InputFilter\Factory as InputFactory;
@@ -12,7 +12,7 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
 
-class Users implements InputFilterAwareInterface
+class EditUsers implements InputFilterAwareInterface
 {
     public $username;
     public $password;
@@ -24,16 +24,16 @@ class Users implements InputFilterAwareInterface
     public $state;
     public $zipcode;
     public $country;
-  
+
     public $user_id;
-    
+
     protected $input_filter;
 
 
     public function exchangeArray($data)
     {
         $this->user_id = (!empty($data['user_id'])) ? $data['user_id'] : null;
-        
+
         $this->username      = (!empty($data['username']))      ? $data['username']      : null;
         $this->password      = (!empty($data['password']))      ? $data['password']      : null;
         $this->first_name    = (!empty($data['first_name']))    ? $data['first_name']    : null;
@@ -45,15 +45,14 @@ class Users implements InputFilterAwareInterface
         $this->zipcode       = (!empty($data['zipcode']))       ? $data['zipcode']       : null;
         $this->country       = (!empty($data['country']))       ? $data['country']       : null;
     }
-    
-   
+
 
     public function setInputFilter(InputFilterInterface $input_filter)
     {
         throw new \ErrorException("Not used.");
     }
 
-    
+
     public function getInputFilter()
     {
         if (!$this->input_filter) {
@@ -61,7 +60,7 @@ class Users implements InputFilterAwareInterface
             $factory      = new InputFactory();
              
              
-            
+
             // first name validation
             $input_filter->add($factory->createInput(array(
                 'name'     => 'first_name',
@@ -79,18 +78,18 @@ class Users implements InputFilterAwareInterface
                             'min'      => 3,
                             'max'      => 30,
                         ),
-                        
+
                         'name' => 'Not Empty',
                         'options' => array(
                             'messages' => array(
-                                'isEmpty' => 'First Name is Required', 
-                            ), 
+                                'isEmpty' => 'First Name is Required',
+                            ),
                         ),
                     ),
                 ),
             )));
              
-            
+
             // last name validation
             $input_filter->add($factory->createInput(array(
                 'name'     => 'last_name',
@@ -107,7 +106,7 @@ class Users implements InputFilterAwareInterface
                             'min'      => 3,
                             'max'      => 75,
                         ),
-                        
+
                         'name' => 'NotEmpty',
                         'options' => array(
                             'messages' => array(
@@ -116,9 +115,9 @@ class Users implements InputFilterAwareInterface
                         ),
                     ),
                 ),
-            ))); 
-            
-            
+            )));
+
+
             // email address validation
             $input_filter->add($factory->createInput(array(
                 'name'     => 'username',
@@ -136,7 +135,7 @@ class Users implements InputFilterAwareInterface
                             'min'      => 10,
                             'max'      => 75,
                         ),
-                        
+
                         'name' => 'NotEmpty',
                         'options' => array(
                             'messages' => array(
@@ -146,33 +145,7 @@ class Users implements InputFilterAwareInterface
                     ),
                 ),
             )));
-            
-            /*
-            $input_filter->add($factory->createInput(array(
-                'name' => 'user_id',
-            ))); */
 
-            
-            
-            // user photo validation
-            /*$input_filter->add($factory->createInput(array(
-                'name'     => 'user_photo',
-                'required' => false,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                ),
-                 
-                'validators' => array(
-                    array(
-                        'name' => 'NotEmpty',
-                        'options' => array(
-                            'messages' => array(
-                                'isEmpty' => 'Please select a photo',
-                            ),
-                        ),
-                    ),
-                ),
-            ))); */
             
             // password
             $input_filter->add($factory->createInput(array(
@@ -189,9 +162,9 @@ class Users implements InputFilterAwareInterface
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min'      => 6,
-                            'max'      => 15,
+                            'max'      => 256,
                         ),
-            
+
                         'name' => 'NotEmpty',
                         'options' => array(
                             'messages' => array(
@@ -201,8 +174,8 @@ class Users implements InputFilterAwareInterface
                     ),
                 ),
             )));
-           
-            
+             
+
             // gender form field (male or female) validator
             $input_filter->add($factory->createInput(array(
                 'name'     => 'gender',
@@ -220,7 +193,7 @@ class Users implements InputFilterAwareInterface
                             'min'      => 4,
                             'max'      => 7,
                         ),
-                
+
                         'name' => 'NotEmpty',
                         'options' => array(
                             'messages' => array(
@@ -229,9 +202,9 @@ class Users implements InputFilterAwareInterface
                         ),
                     ),
                 ),
-            ))); 
-            
-            
+            )));
+
+
             // address filter
             $input_filter->add($factory->createInput(array(
                 'name'     => 'address',
@@ -239,7 +212,7 @@ class Users implements InputFilterAwareInterface
                 'filters' => array(
                     array('name' => 'StripTags'),
                 ),
-                
+
                 'validators' => array(
                     array(
                         'name' => 'StringLength',
@@ -248,7 +221,7 @@ class Users implements InputFilterAwareInterface
                             'min'      => 10,
                             'max'      => 150,
                         ),
-                        
+
                         'name' => 'NotEmpty',
                         'options' => array(
                             'messages' => array(
@@ -258,8 +231,8 @@ class Users implements InputFilterAwareInterface
                     ),
                 ),
             )));
-            
-            
+
+
             // city filter
             $input_filter->add($factory->createInput(array(
                 'name'     => 'city',
@@ -267,7 +240,7 @@ class Users implements InputFilterAwareInterface
                 'filters' => array(
                     array('name' => 'StripTags'),
                 ),
-            
+
                 'validators' => array(
                     array(
                         'name' => 'StringLength',
@@ -276,7 +249,7 @@ class Users implements InputFilterAwareInterface
                             'min'      => 5,
                             'max'      => 100,
                         ),
-            
+
                         'name' => 'NotEmpty',
                         'options' => array(
                             'messages' => array(
@@ -286,9 +259,9 @@ class Users implements InputFilterAwareInterface
                     ),
                 ),
             )));
-            
-            
-            
+
+
+
             // state filter
             $input_filter->add($factory->createInput(array(
                 'name'     => 'state',
@@ -298,7 +271,7 @@ class Users implements InputFilterAwareInterface
                     array('name' => 'StringTrim'),
                     array('name' => 'StringToUpper'),
                 ),
-            
+
                 'validators' => array(
                     array(
                         'name' => 'StringLength',
@@ -306,7 +279,7 @@ class Users implements InputFilterAwareInterface
                             'encoding' => 'UTF-8',
                             'max'      => 2,
                         ),
-            
+
                         'name' => 'NotEmpty',
                         'options' => array(
                             'messages' => array(
@@ -316,8 +289,8 @@ class Users implements InputFilterAwareInterface
                     ),
                 ),
             )));
-            
-            
+
+
             // zipcode form field validator
             $input_filter->add($factory->createInput(array(
                 'name'     => 'zipcode',
@@ -327,7 +300,7 @@ class Users implements InputFilterAwareInterface
                     array('name' => 'StringTrim'),
                     array('name' => 'Int'),
                 ),
-            
+
                 'validators' => array(
                     array(
                         'name' => 'Between',
@@ -336,7 +309,7 @@ class Users implements InputFilterAwareInterface
                             'min'      => 5,
                             'max'      => 9,
                         ),
-            
+
                         'name' => 'NotEmpty',
                         'options' => array(
                             'messages' => array(
@@ -346,13 +319,13 @@ class Users implements InputFilterAwareInterface
                     ),
                 ),
             )));
-            
-            
+
+
             // countries form field validator
             $input_filter->add($factory->createInput(array(
                 'name'     => 'country',
                 'required' => true,
-                
+
                 'validators' => array(
                     array(
                         'name' => 'StringLength',
@@ -361,7 +334,7 @@ class Users implements InputFilterAwareInterface
                             'min'      => 3,
                             'max'      => 50,
                         ),
-                        
+
                         'name' => 'NotEmpty',
                         'options' => array(
                             'messages' => array(
@@ -371,33 +344,12 @@ class Users implements InputFilterAwareInterface
                     ),
                 ),
             )));
-            
-            
-            // bio form field validator 
-            /*$input_filter->add($factory->createInput(array(
-                'name'     => 'bio',
-                'required' => false,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                ),
-                 
-                'validators' => array(
-                    array(
-                        'name' => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 15,
-                            'max'      => 500,
-                        ),
-                    ),
-                ),
-            ))); */
-            
+
              
             $this->input_filter = $input_filter;
         }
 
         return $this->input_filter;
     }
-    
+
 }
