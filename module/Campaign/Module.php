@@ -14,6 +14,8 @@ use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Db\TableGateway\TableGateway;
 
+use App;
+
 class Module implements AutoloaderProviderInterface
 {
     public function getAutoloaderConfig()
@@ -74,6 +76,36 @@ class Module implements AutoloaderProviderInterface
                     $proto = App\Storage\Table\TableSimpleSet(null, $factory);
                     $tableGateway = new TableGateway('state', $sm->get('db'), null, $proto);
                     return Table\State($tableGateway);
+                },
+                'Campaign\Storage\TShirt\Discount' => function($sm) {
+                    $factory = new App\Entity\Service\SimpleFactory(new Entity\TShirt\Discount());
+                    $proto = App\Storage\Table\TableSimpleSet(null, $factory);
+                    $tableGateway = new TableGateway('tshirt_discount', $sm->get('db'), null, $proto);
+                    return Table\TShirt\Discount($tableGateway);
+                },
+                'Campaign\Storage\TShirt\Icon' => function($sm) {
+                    $factory = new App\Entity\Service\SimpleFactory(new Entity\TShirt\Icon());
+                    $proto = App\Storage\Table\TableSimpleSet(null, $factory);
+                    $tableGateway = new TableGateway('tshirt_icons', $sm->get('db'), null, $proto);
+                    return Table\TShirt\Icon($tableGateway);
+                },
+                'Campaign\Storage\TShirt\Price' => function($sm) {
+                    $factory = new App\Entity\Service\SimpleFactory(new Entity\TShirt\Price());
+                    $proto = App\Storage\Table\TableSimpleSet(null, $factory);
+                    $tableGateway = new TableGateway('tshirt_price', $sm->get('db'), null, $proto);
+                    return Table\TShirt\Price($tableGateway);
+                },
+                'Campaign\Storage\TShirt\Product' => function($sm) {
+                    $factory = new App\Entity\Service\SimpleFactory(new Entity\TShirt\Product());
+                    $proto = App\Storage\Table\TableSimpleSet(null, $factory);
+                    $tableGateway = new TableGateway('tshirt_products', $sm->get('db'), null, $proto);
+                    return Table\TShirt\Product($tableGateway);
+                },
+                'Campaign\Storage\TShirt\Size' => function($sm) {
+                    $factory = new App\Entity\Service\SimpleFactory(new Entity\TShirt\Size());
+                    $proto = App\Storage\Table\TableSimpleSet(null, $factory);
+                    $tableGateway = new TableGateway('tshirt_size', $sm->get('db'), null, $proto);
+                    return Table\TShirt\Size($tableGateway);
                 },
             ),
         );

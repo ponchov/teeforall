@@ -17,7 +17,7 @@ class TableStoraged extends Simple implements StorageAwareInterface
     /**
      *
      * @param TableStorage $storage
-     * @return \Application\Entity\Storaged
+     * @return \Application\Entity\TableStoraged
      */
     public function setStorage($storage)
     {
@@ -33,7 +33,7 @@ class TableStoraged extends Simple implements StorageAwareInterface
     /**
      * 
      *
-     * @return \Application\Entity\Storaged
+     * @return \Application\Entity\TableStoraged
      */
     public function save()
     {
@@ -45,7 +45,7 @@ class TableStoraged extends Simple implements StorageAwareInterface
     /**
      * 
      *
-     * @return \Application\Entity\Storaged
+     * @return \Application\Entity\TableStoraged
      */
     public function delete()
     {
