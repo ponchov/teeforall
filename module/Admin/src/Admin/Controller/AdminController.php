@@ -460,7 +460,7 @@ class AdminController extends AbstractActionController
             }
         }
         
-        return new ViewModel(array('form' => $form, 'countries' => $this->getUsersService()->listCountries()));
+        return new ViewModel(array('form' => $form));
     }
     
     

@@ -202,7 +202,7 @@ class UsersForm extends Form
         $select_data = array();
         
         foreach ($data as $value) {
-            $select_data[$value->country_name] = $value->country_name;
+            $select_data[trim($value->country_name)] = $value->country_name;
         }
         
         return $select_data;

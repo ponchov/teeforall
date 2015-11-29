@@ -160,7 +160,7 @@ class UsersModel
                 'city'       => $users->city,
                 'state'      => $users->state,
                 'zipcode'    => $users->zipcode,
-                'country'    => $users->country,
+                'country'    => html_entity_decode($users->country),
             );
             
             $this->table_gateway->update($data, array('user_id' => $id));
