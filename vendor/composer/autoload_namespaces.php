@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'ZendXml' => array($vendorDir . '/zendframework/zendxml/library'),
+    'App' => array($vendorDir . '/App'),
 );

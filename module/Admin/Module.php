@@ -12,6 +12,7 @@ use Zend\Mvc\MvcEvent;
 
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Http;
 
 use Admin\Model\Configuration;
 use Admin\Model\ConfigurationModel;
@@ -67,6 +68,41 @@ class Module implements AutoloaderProviderInterface
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        $eventManager->attach(MvcEvent::EVENT_DISPATCH, array($this, 'configureLayout'));
+    }
+
+    public function configureLayout(MvcEvent $e)
+    {
+        $request = $e->getRequest();
+        if (!$request instanceof Http\Request || $request->isXmlHttpRequest()) {
+            return $e;
+        }
+
+        $matches = $e->getRouteMatch();
+        if (!$matches) {
+            return $e;
+        }
+
+        $app = $e->getParam('application');
+        $layout = $app->getMvcEvent()->getViewModel();
+
+        $controller = $matches->getParam('controller');
+        $module = strtolower(explode('\\', $controller)[0]);
+
+        if ('admin' === $module) {
+            $user = $app->getServiceManager()->get('teeforall_auth_service')->getIdentity();
+            if (!$user) {
+                $response = $e->getResponse();
+                $response->setStatusCode(302);
+                $response->getHeaders()->addHeaderLine('Location', '/login/log');
+
+                return $response;
+            }
+
+            $layout->user1 = $user->username;
+            $layout->setTemplate('admin/admin/layout');
+        }
     }
     
     public function getServiceConfig()
