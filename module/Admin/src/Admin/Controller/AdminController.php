@@ -18,7 +18,7 @@ use Admin\Form\PagesForm;
 use Admin\Model\Pages;
 use Admin\Form\UsersForm;
 use Admin\Model\Users;
-
+use Admin\Model\EditUsers;
 
 
 
@@ -465,7 +465,60 @@ class AdminController extends AbstractActionController
     
     public function edituserAction()
     {
-        
+        $id = $this->params('id');
+
+        $get_user = $this->getUserService()->getUser($id);
+
+        foreach ($get_user as $usr) {
+            $data[] = $usr;
+        }
+
+        print_r($data[]);
+        exit;
+
+        $form = new UsersForm();
+
+        $request = $this->getRequest();
+
+        // check to see if the request was a POST form request
+        if ($request->isPost()) {
+            // good to go
+            // filter the form values now
+            $users = new EditUsers();
+
+            $form->setInputFilter($users->getInputFilter());
+
+            // set the form data to hold all the values supplied by the form
+            // via $request->getPost()
+            $form->setData($request->getPost());
+
+            // now we will see if the form is valid
+            // we check if it is valid by the email form class we created
+            if ($form->isValid()) {
+                // it is valid
+                // pass the form to data to the filter class via exchangeArray()
+                $users->exchangeArray($form->getData());
+
+                if ($this->getUsersService()->editUser($users, $id) === true) {
+                    // the user was inserted into the database successfully
+                    // redirect to users view
+                    return $this->redirect()->toUrl('/admin/users');
+                } else {
+                    // error occured..
+                    // the error is logged automatically
+                    // redirect to add users view
+                    return $this->redirect()->toUrl('/admin/edit-user/' . $id);
+                }
+            }
+        }
+
+
+        return new ViewModel(array('form' => $form, 'id' => $id, 'username' => $get_user->username,
+            'password' => $get_user->password, 'first_name' => $get_user->first_name,
+            'last_name' => $get_user->last_name, 'gender' => $get_user->gender,
+            'address' => $get_user->address, 'city' => $get_user->city, 'state' => $get_user->state,
+            'zipcde' => $get_user->zipcode, 'country' => $get_user->country,
+        ));
     }
     
     
