@@ -84,9 +84,13 @@ class UsersForm extends Form
         
         $this->add(array(
             'name' => 'gender',
-            'type' => 'Text',
+            'type' => 'Select',
             'options' => array(
                 'label' => 'Gender',
+                'value_options' => array(
+                    'Male' => 'Male',
+                    'Female' => 'Female',
+                ),
             ),
         
             'attributes' => array(
@@ -152,23 +156,16 @@ class UsersForm extends Form
             ),
         ));
         
-        /*
+        
         $this->add(array(
             'name' => 'country',
             'type' => 'Select',
-            'options' => array(
-                'label' => 'Country',
-                'value_options' => array(
-                    '0' => 'Male',
-                    '1' => 'Female',
-                ),
-            ),
-        
+            
             'attributes' => array(
                 'class'       => 'mws-textinput required',
                 'id'          => 'country',
             ),
-        )); */
+        )); 
         
         
         $this->add(array(

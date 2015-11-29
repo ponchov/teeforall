@@ -40,6 +40,30 @@ class UsersModel
         return $get_all;
     }
     
+    
+    // gets a list of one user in user table based on id
+    public function getUser($id) 
+    {
+        $this->sql = new Sql($this->table_gateway->getAdapter());
+        
+        $select = new Select('users');
+        
+        $select->columns(array('username', 'password', 'first_name', 'last_name',
+            'gender', 'address', 'city', 'state', 'zipcode', 'country'
+        ))->where("user_id = '$id'");
+        
+        $adapter = $this->table_gateway->getAdapter();
+       
+        $query = $adapter->query($this->sql->buildSqlString($select), $adapter::QUERY_MODE_EXECUTE);
+        
+        $holder = array();
+        
+        foreach ($query as $key => $row) {
+            $holder[$key] = $row;
+        }
+        
+        return $holder;
+    }
       
     /*
      * forget this stupid method >:(
@@ -116,9 +140,33 @@ class UsersModel
     
     
     // edits a user info 
-    public function editUser(Users $users)
+    public function editUser(EditUsers $users, $id)
     {
+        // get the user information based on the id passed
+        $select = $this->table_gateway->select(array('user_id' => $id));
         
+        $row = $select->current();
+        
+        if (null !== $row) {
+            // record found
+            // update the info now
+            $data = array(
+                'username'   => $users->username,
+                'password'   => hash('sha512', $users->password),
+                'first_name' => $users->first_name,
+                'last_name'  => $users->last_name,
+                'gender'     => $users->gender,
+                'address'    => $users->address,
+                'city'       => $users->city,
+                'state'      => $users->state,
+                'zipcode'    => $users->zipcode,
+                'country'    => $users->country,
+            );
+            
+            $this->table_gateway->update($data, array('user_id' => $id));
+            
+            return true;
+        }
     }
     
     
