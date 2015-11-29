@@ -9,11 +9,16 @@ namespace Admin\Form;
 
 use Zend\Form\Form;
 
+use Admin\Model\UsersModel;
+
 
 class UsersForm extends Form
 {
-    public function __construct($name = null)
+    protected $table;
+    
+    public function __construct(UsersModel $model)
     {
+        $this->setTable($model);
         
         // set the name of the form
         parent::__construct('user_form');
@@ -91,6 +96,7 @@ class UsersForm extends Form
                     'Male' => 'Male',
                     'Female' => 'Female',
                 ),
+                'empty_option' => 'Please select a gender',
             ),
         
             'attributes' => array(
@@ -161,6 +167,12 @@ class UsersForm extends Form
             'name' => 'country',
             'type' => 'Select',
             
+            'options' => array(
+                'label' => 'Country', 
+                'value_options' => $this->getOptionsForCountry(),
+                'empty_option'  => 'Select a Country',
+            ),
+            
             'attributes' => array(
                 'class'       => 'mws-textinput required',
                 'id'          => 'country',
@@ -178,5 +190,35 @@ class UsersForm extends Form
                 'value' => 'Add User',
             ),
         ));
+    }
+    
+    
+    public function getOptionsForCountry()
+    {
+        $table = $this->getTable();
+        
+        $data = $table->listCountries();
+        
+        $select_data = array();
+        
+        foreach ($data as $value) {
+            $select_data[$value->country_name] = $value->country_name;
+        }
+        
+        return $select_data;
+    }
+    
+    public function setTable($table)
+    {
+        $this->table = $table;
+        
+        
+        return $this;
+    }
+    
+    
+    public function getTable()
+    {
+        return $this->table;
     }
 }

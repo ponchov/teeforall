@@ -421,7 +421,7 @@ class AdminController extends AbstractActionController
     public function adduserAction()
     {
         // set the form to be used
-        $form = new UsersForm();
+        $form = new UsersForm($this->getServiceLocator()->get('Admin\Model\UsersModel'));
         
         $form->get('add_user_submit')->setValue('Add New User');
         
@@ -474,8 +474,10 @@ class AdminController extends AbstractActionController
             $data = $usr;
         }
 
+        //var_dump($data['country']);
+        //exit;
 
-        $form = new UsersForm();
+        $form = new UsersForm($this->getServiceLocator()->get('Admin\Model\UsersModel'));
         
         // set the form fields with the values in the users table
         // based on the user id fetched
@@ -488,7 +490,8 @@ class AdminController extends AbstractActionController
         $form->get('city')->setValue($data['city']);
         $form->get('state')->setValue($data['state']);
         $form->get('zipcode')->setValue($data['zipcode']);
-        $form->get('country')->setValue($data['country']); // hmm
+        $form->get('country')->setValue($data['country']);
+        $form->get('add_user_submit')->setValue('Edit User');
 
         $request = $this->getRequest();
 

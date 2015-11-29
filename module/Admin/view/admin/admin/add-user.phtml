@@ -47,6 +47,7 @@
          
          <div class="mws-form-row">
               <div class="mws-form-item large">
+                  <label for="gender">Gender</label>
                   <?php 
                       echo $this->formSelect($this->form->get('gender'));
                   ?>            
@@ -88,13 +89,9 @@
          <div class="mws-form-row">
              <div class="mws-form-item large">
                  <label for="country">Country:</label>
-                  <select name="country" id="country">
-                  	  <?php 
-                  	        foreach ($this->countries as $values) {
-                  	            echo "<option value=\"" . $values->country_name . "\">" . $values->country_name . "</option>";
-                  	        }
-                  	  ?>
-                  </select>               
+                 <?php 
+                       echo $this->formSelect($this->form->get('country'));
+                 ?>              
              </div>
          </div>
          

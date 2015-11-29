@@ -140,7 +140,7 @@ class UsersModel
     
     
     // edits a user info 
-    public function editUser(EditUsers $users, $id)
+    public function editUser(Users $users, $id)
     {
         // get the user information based on the id passed
         $select = $this->table_gateway->select(array('user_id' => $id));
