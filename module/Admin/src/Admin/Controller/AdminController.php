@@ -41,6 +41,7 @@ class AdminController extends AbstractActionController
     
     public function indexAction()
     {
+        
     }
 
     /////////////////////////////////////////////
@@ -467,16 +468,27 @@ class AdminController extends AbstractActionController
     {
         $id = $this->params('id');
 
-        $get_user = $this->getUserService()->getUser($id);
+        $get_user = $this->getUsersService()->getUser($id);
 
         foreach ($get_user as $usr) {
-            $data[] = $usr;
+            $data = $usr;
         }
 
-        print_r($data[]);
-        exit;
 
         $form = new UsersForm();
+        
+        // set the form fields with the values in the users table
+        // based on the user id fetched
+        $form->get('username')->setValue($data['username']);
+        $form->get('password')->setValue($data['password']);
+        $form->get('first_name')->setValue($data['first_name']);
+        $form->get('last_name')->setValue($data['last_name']);
+        $form->get('gender')->setValue($data['gender']);
+        $form->get('address')->setValue($data['address']);
+        $form->get('city')->setValue($data['city']);
+        $form->get('state')->setValue($data['state']);
+        $form->get('zipcode')->setValue($data['zipcode']);
+        $form->get('country')->setValue($data['country']); // hmm
 
         $request = $this->getRequest();
 
@@ -484,7 +496,7 @@ class AdminController extends AbstractActionController
         if ($request->isPost()) {
             // good to go
             // filter the form values now
-            $users = new EditUsers();
+            $users = new Users();
 
             $form->setInputFilter($users->getInputFilter());
 
@@ -513,12 +525,7 @@ class AdminController extends AbstractActionController
         }
 
 
-        return new ViewModel(array('form' => $form, 'id' => $id, 'username' => $get_user->username,
-            'password' => $get_user->password, 'first_name' => $get_user->first_name,
-            'last_name' => $get_user->last_name, 'gender' => $get_user->gender,
-            'address' => $get_user->address, 'city' => $get_user->city, 'state' => $get_user->state,
-            'zipcde' => $get_user->zipcode, 'country' => $get_user->country,
-        ));
+        return new ViewModel(array('form' => $form, 'id' => $id));
     }
     
     
