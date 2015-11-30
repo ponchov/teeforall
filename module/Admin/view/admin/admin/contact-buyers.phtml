@@ -24,17 +24,17 @@
 	
     <div class="mws-panel-body">
 	 <form name="myform" id="myform" class="mws-form" 
-	 action="<?php echo $this->url('admin', array('action'=>'csendmail')); ?>"
+	 action="<?php echo $this->url('admin', array('action' => 'buyer-send-mail')); ?>"
 	 method="post" onsubmit="return validformdata();">
 
         <section>
     		<div>
        		<select id="leftValues" size="15" multiple>
 				 <?php foreach ($this->contact_buyers as $buyers) {	?>
-					<option value="<?php echo $buyers[2]; ?>
-					::<?php echo $buyers[1]; ?>
-					::<?php echo $buyers[3]; ?>" style="margin:2px 0px">
-					<?php echo $buyers[2]; ?></option>
+					<option value="<?php echo $buyers['email']; ?>
+					::<?php echo $buyers['user_id']; ?>
+					::<?php echo $buyers['name']; ?>" style="margin:2px 0px">
+					<?php echo $buyers['email']; ?></option>
 				<?php } ?>
 
 			</select>

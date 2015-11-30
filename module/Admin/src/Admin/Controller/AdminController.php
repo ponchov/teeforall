@@ -546,133 +546,163 @@ class AdminController extends AbstractActionController
     
     public function userssendmailAction()
     {
-        $this->getUsersService()->sendMailtoUsers(array('allusers' => $_REQUEST['allusers'],
-            'rightValues' => $_REQUEST['rightValues']
+        $this->getUsersService()->sendMailtoUsers(array('allusers' => $this->params()->fromPost('allusers'),
+            'rightValues' => $this->params()->fromPost('rightValues')
         ));
+        
+        return $this->redirect()->toUrl('/admin/contact-users');
     }
     
     
     public function buyersendmailAction()
     {
-        $this->getUsersService()->sendMailToBuyers(array('allusers' => $_REQUEST['allusers'],
-            'rightValues' => $_REQUEST['rightValues']
+        $this->getUsersService()->sendMailToBuyers(array('allusers' => $this->params()->fromPost('allusers'),
+            'rightValues' => $this->params()->fromPost('rightValues')
         ));
+        
+        return $this->redirect()->toUrl('/admin/contact-buyers');
     }
 
+    
+    
+    
     ///////////////////////////////////
     // tshirt actions
     //////////////////////////////////
     public function tshirtsizeAction()
     {
+        
     }
     
     
     public function iconsAction()
     {
+        
     }
     
     
     public function productsAction()
     {
+        
     }
     
     
     public function addnewiconAction()
     {
+        
     }
     
     
     public function tshirtproductAction()
     {
+        
     }
     
     public function saveproductAction()
     {
+        
     }
     
     
     public function deletenewproductAction()
     {
+        
     }
     
     
     public function changeproductstatusAction()
     {
+        
     }
     
     
     public function editiconsAction()
     {
+        
     }
     
     
     public function updateiconAction()
     {
+        
     }
     
     
     public function deleteiconAction()
     {
+        
     }
     
     
     public function changeiconstatusAction()
     {
+        
     }
     
     
     public function saveiconAction()
     {
+        
     }
     
     
     public function editsizeAction()
     {
+        
     }
     
     
     public function updatesizeAction()
     {
+        
     }
     
     
     public function deletesizeAction()
     {
+        
     }
     
     
     public function priceAction()
     {
+        
     }
     
     
     public function discountAction()
     {
+        
     }
     
     
     public function editpriceAction()
     {
+        
     }
     
     
     public function updatepriceAction()
     {
+        
     }
     
     
     public function editdiscountAction()
     {
+        
     }
     
     
     public function updatediscountAction()
     {
+        
     }
     
     
     public function updaterecordslistingsAction()
     {
+        
     }
     
     

@@ -213,7 +213,7 @@ class UsersModel
     {
         $select = new Select('buyers');
         
-        $select->columns(array('id, user_id, email, name'));
+        $select->columns(array('user_id', 'email', 'name'));
         
         $string = $this->sql->buildSqlString($select);
         
@@ -221,15 +221,14 @@ class UsersModel
          
         $rowset = $adapter->query($string, $adapter::QUERY_MODE_EXECUTE);
         
-        if (count($rowset) > 0) {
-            $holder = array();
+        
+        $holder = array();
             
-            foreach ($rowset as $rows) {
-                $holder = array_merge($rows->id, $rows->user_id, $rows->email, $rows->name);
-            }
-            
-            return $holder;
+        foreach ($rowset as $key => $rows) {
+            $holder[$key] = $rows;
         }
+            
+        return $holder;
     }
     
     // sends the email to the users selected
@@ -326,7 +325,7 @@ class UsersModel
             // get all users to email
             $select = new Select('buyers');
         
-            $select->columns(array('id, user_id, email, name'));
+            $select->columns(array('user_id', 'email', 'name'));
             
             $string = $this->sql->buildSqlString($select);
             
