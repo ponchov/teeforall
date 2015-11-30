@@ -190,6 +190,26 @@ class UsersModel
     }
     
     
+    public function listStates()
+    {
+        $select = new Select('state');
+        
+        $select->columns(array('state_id', 'state_name'));
+        
+        $adapter = $this->table_gateway->getAdapter();
+        
+        $query = $adapter->query($this->sql->buildSqlString($select), $adapter::QUERY_MODE_EXECUTE);
+        
+        $holder = array();
+        
+        foreach ($query as $key => $value) {
+            $holder[$key] = $value;
+        }
+        
+        return $holder;
+    }
+    
+    
     // gets a list of users to contact
     public function getUsersToContact()
     {

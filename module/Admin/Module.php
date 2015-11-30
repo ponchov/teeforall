@@ -223,7 +223,7 @@ class Module implements AutoloaderProviderInterface
                     $db_adapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $result_set_prototype = new ResultSet();
                     $result_set_prototype->setArrayObjectPrototype(new TShirtSize());
-                    return new TableGateway('tshirt_sizes', $db_adapter, null, $result_set_prototype);
+                    return new TableGateway('tshirt_size', $db_adapter, null, $result_set_prototype);
                 },
             )
         );

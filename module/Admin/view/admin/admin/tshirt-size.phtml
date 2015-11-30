@@ -6,11 +6,11 @@
          </div>
                     
          <div class="mws-panel-body">
-             <div class="mws-panel-toolbar top clearfix ">
+             <div class="mws-panel-toolbar top clearfix">
                  <ul>
                     <li>
-                    <li><a class="mws-ic-16 ic-accept" href="<?php echo $this->url('admin', array('action' => 'editsize')); ?>" title="Add">Add</a></li>
-                    <li><a class="mws-ic-16 ic-cross" href="javascript:void(0)" title="Delete" onclick="deleteitem()">Delete</a></li>
+                    <li><a class="mws-ic-16 ic-accept" href="<?php echo $this->url('admin', array('action' => 'add-tshirt-size')); ?>" title="Add">Add</a></li>
+                    <li><a class="mws-ic-16 ic-cross" title="Delete" id="delete_records">Delete</a></li>
                  </ul>
              </div>
                         
@@ -18,7 +18,7 @@
                  <thead>
                     <tr>
                        <th width="5%">No.</th>
-                       <th><input type="checkbox" name="deletebcchk" id="deletebcchk" onclick="return checkall(this)" /></th>
+                       <th><input type="checkbox" name="deletebcchk" id="deletebcchk"></th>
                        <th width="45%">Size</th>
                        <th width="45%">In Inches</th>
                        <th width="5%" class="">Edit</th>
@@ -27,27 +27,27 @@
                             
                  <tbody>
                     <?php
-						 for ($i=0; $i<count($this->sql); $i++) {
+                    
+                    $i = 0;
+                    
+						 foreach ($this->tshirt_sizes as $sizes) {
+						     $i++;
 					?>
 						<tr class="gradeX">
-                           <td><?=$i+1;?></td>
+                           <td><?php echo $i; ?></td>
                            
                            <td>
-                               <input name='check<?=$i;?>' id='check<?=$i+1;?>' value='<?=$this->sql[$i]['sizeid'];?>'
-                                    onchange='return check_check("bcdel","deletebcchk")' type='checkbox'>
-                                            
-                               <script>
-                                   $('#bcdel').html(''); document.getElementById('deletebcchk').checked = false;
-                               </script>
+                               <input name="checkbox[]" id="check<?php echo $i; ?>"
+                                value="<?php echo $sizes->size_id; ?>" type="checkbox">
                            </td>
-                           
-                           <td><?=$this->sql[$i]['size']?></td>
+                          
+                           <td><?php echo $sizes->size; ?></td>
                                        
-                           <td><?=$this->sql[$i]['size_inch']?></td>
+                           <td><?php echo $sizes->size_inch; ?></td>
                                          
                            <td class="center">
-                               <a href="<?=APPLICATION_URL_ADMIN?>tshirt/editsize/sno/<?=$this->sql[$i]['sizeid']?>">
-            						<img src="<?echo $this->basePath(); ?>/admin/css/icons/16/edit.png" border='0' />
+                               <a href="/admin/edit-tshirt-size/<?php echo $sizes->size_id; ?>">
+            						<img src="<?php echo $this->basePath(); ?>/admin/css/icons/16/edit.png" border='0'>
                                </a>
            				   </td> 
                         </tr>
@@ -61,37 +61,33 @@
 </form>
 
 <script type="text/javascript">
-function deleteItem() {
-	var totInput = document.getElementsByTagName('input');
-    var r = "";
-    
-    for(var i=0; i<totInput.length; i++) {
-        if (totInput[i].type == "checkbox") {
-            if (totInput[i].checked == true && totInput[i].name != 'deletebcchk') {
-                r += totInput[i].value + "|";
-            }
-        }
-    }
+$('#delete_records').click(function() {
+    if (confirm("Are you sure you wish to delete the selected rows?")) {
+    	var checked_items = $('input:checkbox[name="checkbox[]"]:checked')
+		.map(function() { return $(this).val(); })
+		.get()
+		.join(",");
 
-    if (r == "") {
-        alert('Please choose a record to delete.');
-    } else {
-        var confirmation = confirm("Are you sure want to delete?");
-        if(confirmation != true) {
-            return false;
-        }
-        
-        $.ajax({ 
-            url: "/admin/delete-tshirt-size",
-            type: "POST",
-            data: { ids : r },
-            success: function(data) {
-            	window.location.href=window.location.href;
-        	}
-    	});
+		$.ajax({
+			type: "POST",
+			url: "/admin/delete-tshirt-size",
+			data: "id=" + checked_items,
+			success: function() {
+				window.location.href = "/admin/tshirt-size";
+			}
+		});
+
+		return false;
     }
-}
+});
+
+$('#deletebcchk').click(function() {
+	$('input:checkbox[name="checkbox[]"]').attr("checked", "checked");
+});
 </script>
+
+
+
 
             
             
