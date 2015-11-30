@@ -15,9 +15,16 @@
     <div class="mws-form-inline">
          <div class="mws-form-row">
               <div class="mws-form-item large">
-                   <?php 
-                       echo $this->formRow($this->form->get('size'));
-                   ?>
+                  <label for="size">TShirt sizes must be in the following format: "S", "M", "L", "XL", "XXL", or "XXL" only.</label>
+                  <input type="text" name="size" id="size" class="mws-textinput required" placeholder="T-Shirt Size">
+             
+             	  <script type="text/javascript">
+             	      $('#size').blur(function() {
+						   var items = new Array("S", "M", "L", "XL", "XXL", "XXXL");
+
+						   
+             	      });
+             	  </script>
               </div>
          </div>
                                 
