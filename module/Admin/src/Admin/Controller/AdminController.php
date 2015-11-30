@@ -715,6 +715,7 @@ class AdminController extends AbstractActionController
     {
         
     }
+  
     
     public function saveproductAction()
     {
@@ -781,6 +782,152 @@ class AdminController extends AbstractActionController
     
     // update record listings action
     public function updaterecordslistingsAction()
+    {
+        
+    }
+    
+    
+    
+    /////////////////////////
+    // campaign actions
+    ////////////////////////
+    public function campaignAction()
+    {
+        
+    }
+    
+    
+    public function campaignliveAction()
+    {
+        
+    }
+    
+    
+    public function campaignsuccessAction()
+    {
+        
+    }
+    
+    
+    public function campaignprofitAction()
+    {
+        
+    }
+    
+    
+    public function campaignsaveprofitAction()
+    {
+        
+    }
+    
+    
+    public function campaignunsuccessfulAction()
+    {
+        
+    }
+    
+    
+    public function campaignxlsAction()
+    {
+        
+    }
+    
+    
+    public function campaignemailfriendsAction()
+    {
+        
+    }
+    
+    
+    public function campaignsendmailAction()
+    {
+        
+    }
+    
+    
+    public function campaigndeleteAction()
+    {
+        
+    }
+    
+    
+    public function campaignviewAction()
+    {
+        
+    }
+    
+    
+    public function campaignorderrecordsAction()
+    {
+        
+    }
+    
+    
+    public function campaignchangestatusAction()
+    {
+        
+    }
+    
+    
+    public function campaignsliderstatusAction()
+    {
+        
+    }
+    
+    
+    public function campaignslidstatusAction()
+    {
+        
+    }
+    
+    
+    public function campaignprocessorderAction()
+    {
+        
+    }
+    
+    
+    public function campaigninstructionsAction()
+    {
+        
+    }
+    
+    
+    public function campaignaddinstructionsAction()
+    {
+        
+    }
+    
+    
+    
+    /////////////////////////////
+    // payment actions
+    ////////////////////////////
+    public function paymentAction()
+    {
+        
+    }
+    
+    
+    public function paymentexpireAction()
+    {
+        
+    }
+    
+    
+    public function paymentactiveAction()
+    {
+        
+    }
+    
+    
+    public function paymentchargedAction()
+    {
+        
+    }
+    
+    
+    public function paymentcaptureAction()
     {
         
     }
