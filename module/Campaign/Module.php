@@ -13,6 +13,7 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Http;
 
 use App;
 
@@ -45,6 +46,42 @@ class Module implements AutoloaderProviderInterface
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        $eventManager->attach(MvcEvent::EVENT_DISPATCH, array($this, 'configureLayout'));
+    }
+
+    public function configureLayout(MvcEvent $e)
+    {
+        $request = $e->getRequest();
+        if (!$request instanceof Http\Request || $request->isXmlHttpRequest()) {
+            return $e;
+        }
+
+        $matches = $e->getRouteMatch();
+        if (!$matches) {
+            return $e;
+        }
+
+        $controller = $matches->getParam('controller');
+        $action = $matches->getParam('action');
+        $module = strtolower(explode('\\', $controller)[0]);
+
+        if ('campaign' === $module) {
+            $app = $e->getParam('application');
+            $layout = $app->getMvcEvent()->getViewModel();
+
+            $layout->controller = $controller;
+            $layout->action = $action;
+            $layout->loggedId = false;
+
+            switch ($action) {
+                case 'recreation':
+                    break;
+                default:
+                    $layout->setTemplate('campaign/campaign/myaccount');
+                    break;
+            }
+        }
     }
     
     public function getServiceConfig()
@@ -59,53 +96,47 @@ class Module implements AutoloaderProviderInterface
                 'Campaign\States' => function($sm) {
                     return $sm->get('Campaign\Storage\State')->getOrderedByName();
                 },
-                'Campaign\Storage\Users' => function($sm) {
-                    $factory = new App\Entity\Service\SimpleFactory(new Entity\User());
-                    $proto = App\Storage\Table\TableSimpleSet(null, $factory);
-                    $tableGateway = new TableGateway('users', $sm->get('db'), null, $proto);
-                    return Table\User($tableGateway);
-                },
                 'Campaign\Storage\Campaign' => function($sm) {
                     $factory = new App\Entity\Service\SimpleFactory(new Entity\Campaign());
-                    $proto = App\Storage\Table\TableSimpleSet(null, $factory);
+                    $proto = new App\Storage\Table\TableSimpleSet(null, $factory);
                     $tableGateway = new TableGateway('launchcampaign', $sm->get('db'), null, $proto);
-                    return Table\Campaign($tableGateway);
+                    return new Table\Campaign($tableGateway);
                 },
                 'Campaign\Storage\State' => function($sm) {
                     $factory = new App\Entity\Service\SimpleFactory(new Entity\State());
-                    $proto = App\Storage\Table\TableSimpleSet(null, $factory);
+                    $proto = new App\Storage\Table\TableSimpleSet(null, $factory);
                     $tableGateway = new TableGateway('state', $sm->get('db'), null, $proto);
-                    return Table\State($tableGateway);
+                    return new Table\State($tableGateway);
                 },
                 'Campaign\Storage\TShirt\Discount' => function($sm) {
                     $factory = new App\Entity\Service\SimpleFactory(new Entity\TShirt\Discount());
-                    $proto = App\Storage\Table\TableSimpleSet(null, $factory);
+                    $proto = new App\Storage\Table\TableSimpleSet(null, $factory);
                     $tableGateway = new TableGateway('tshirt_discount', $sm->get('db'), null, $proto);
-                    return Table\TShirt\Discount($tableGateway);
+                    return new Table\TShirt\Discount($tableGateway);
                 },
                 'Campaign\Storage\TShirt\Icon' => function($sm) {
                     $factory = new App\Entity\Service\SimpleFactory(new Entity\TShirt\Icon());
-                    $proto = App\Storage\Table\TableSimpleSet(null, $factory);
+                    $proto = new App\Storage\Table\TableSimpleSet(null, $factory);
                     $tableGateway = new TableGateway('tshirt_icons', $sm->get('db'), null, $proto);
-                    return Table\TShirt\Icon($tableGateway);
+                    return new Table\TShirt\Icon($tableGateway);
                 },
                 'Campaign\Storage\TShirt\Price' => function($sm) {
                     $factory = new App\Entity\Service\SimpleFactory(new Entity\TShirt\Price());
-                    $proto = App\Storage\Table\TableSimpleSet(null, $factory);
+                    $proto = new App\Storage\Table\TableSimpleSet(null, $factory);
                     $tableGateway = new TableGateway('tshirt_price', $sm->get('db'), null, $proto);
-                    return Table\TShirt\Price($tableGateway);
+                    return new Table\TShirt\Price($tableGateway);
                 },
                 'Campaign\Storage\TShirt\Product' => function($sm) {
                     $factory = new App\Entity\Service\SimpleFactory(new Entity\TShirt\Product());
-                    $proto = App\Storage\Table\TableSimpleSet(null, $factory);
+                    $proto = new App\Storage\Table\TableSimpleSet(null, $factory);
                     $tableGateway = new TableGateway('tshirt_products', $sm->get('db'), null, $proto);
-                    return Table\TShirt\Product($tableGateway);
+                    return new Table\TShirt\Product($tableGateway);
                 },
                 'Campaign\Storage\TShirt\Size' => function($sm) {
                     $factory = new App\Entity\Service\SimpleFactory(new Entity\TShirt\Size());
-                    $proto = App\Storage\Table\TableSimpleSet(null, $factory);
+                    $proto = new App\Storage\Table\TableSimpleSet(null, $factory);
                     $tableGateway = new TableGateway('tshirt_size', $sm->get('db'), null, $proto);
-                    return Table\TShirt\Size($tableGateway);
+                    return new Table\TShirt\Size($tableGateway);
                 },
             ),
         );

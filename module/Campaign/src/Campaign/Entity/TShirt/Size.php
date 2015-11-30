@@ -2,10 +2,13 @@
 
 namespace Campaign\Entity\TShirt;
 
-use Campaign\Entity\TableStoraged;
+use App\Storage\StorageAwareInterface;
+use App\Entity\TableStoraged;
 
-class Size extends TableStoraged
+class Size implements StorageAwareInterface
 {
+    use TableStoraged;
+
     /**
      *
      * {@inheritdoc}

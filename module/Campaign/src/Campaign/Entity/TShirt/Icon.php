@@ -2,9 +2,10 @@
 
 namespace Campaign\Entity\TShirt;
 
-use Campaign\Entity\TableStoraged;
+use App\Storage\StorageAwareInterface;
+use App\Entity\TableStoraged;
 
-class Icon extends TableStoraged
+class Icon implements StorageAwareInterface
 {
-
+    use TableStoraged;
 }

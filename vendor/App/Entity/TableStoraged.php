@@ -1,12 +1,10 @@
 <?php
 
-namespace Campaign\Entity;
+namespace App\Entity;
 
-use App\Entity\Simple;
-use App\Storage\StorageAwareInterface;
 use App\Storage\Table\Simple as TableStorage;
 
-class TableStoraged extends Simple implements StorageAwareInterface
+trait TableStoraged
 {
     /**
      *
@@ -17,7 +15,7 @@ class TableStoraged extends Simple implements StorageAwareInterface
     /**
      *
      * @param TableStorage $storage
-     * @return \Application\Entity\TableStoraged
+     * @return mixed
      */
     public function setStorage($storage)
     {
@@ -33,7 +31,7 @@ class TableStoraged extends Simple implements StorageAwareInterface
     /**
      * 
      *
-     * @return \Application\Entity\TableStoraged
+     * @return mixed
      */
     public function save()
     {
@@ -45,7 +43,7 @@ class TableStoraged extends Simple implements StorageAwareInterface
     /**
      * 
      *
-     * @return \Application\Entity\TableStoraged
+     * @return mixed
      */
     public function delete()
     {
