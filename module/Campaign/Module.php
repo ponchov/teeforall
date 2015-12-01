@@ -87,7 +87,7 @@ class Module implements AutoloaderProviderInterface
                 case 'recreation':
                     break;
                 default:
-                    $layout->setTemplate('campaign/campaign/myaccount');
+                    $layout->setTemplate('campaign/layout/myaccount');
                     break;
             }
         }

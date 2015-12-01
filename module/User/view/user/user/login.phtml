@@ -3,13 +3,16 @@
 <?php } else {    ?>
 <div id="loginas" class="work_section_two  mainprofile" style="display:none">
 <?php } ?>
+<?php
+    $formLogin = $this->formLogin;
+    $formLogin->prepare(); ?>
 <form method="post" name="login" action="<?=$this->url('user', array('action'=>'login', 'l' => $this->l))?>">
     <div class="top10pxmargin " style="margin-top:0px;">
         <label class="myaccsubtitles">Email Address</label>
     </div>
 
     <div class="top5pxmargin ">
-        <?php echo $this->form->email; ?>
+        <?php echo $this->formElement($formLogin->get('username')); ?>
     </div>
 
     <div class="top10pxmargin " >
@@ -17,7 +20,7 @@
     </div>
 
     <div class="top5pxmargin ">
-        <?php echo $this->myform->password; ?>
+        <?php echo $this->formElement($formLogin->get('password')); ?>
     </div>
 
     <div class="top10pxmargin " >
@@ -36,33 +39,36 @@
 <?php } else { ?>
 <div id="signupas" style="display:none" class="work_section_two  mainprofile">
 <?php } ?>
-<form method="post" name="signup" action="<?php echo $this->url('user', array('action'=>'signuped','l' => $this->l))?>">
+<?php
+    $formSignup = $this->formSignup;
+    $formSignup->prepare(); ?>
+<form method="post" name="signup" action="<?php echo $this->url('user', array('action'=>'signup','l' => $this->l))?>">
     <div class="top10pxmargin " style="margin-top:0px;">
         <label class="myaccsubtitles">Public Name</label>
     </div>
     <div class="top5pxmargin ">
-        <?=$this->myformsignup->publicname?>
+        <?php echo $this->formElement($formSignup->get('public_name')); ?>
     </div>
 
     <div class="top10pxmargin ">
         <label class="myaccsubtitles">Email Address</label>
     </div>
     <div class="top5pxmargin ">
-        <?=$this->myformsignup->signupemailid?>
+        <?php echo $this->formElement($formSignup->get('username')); ?>
     </div>
 
     <div class="top10pxmargin ">
         <label class="myaccsubtitles">Password</label>
     </div>
     <div class="top5pxmargin ">
-        <?=$this->myformsignup->signuppass?>
+        <?php echo $this->formElement($formSignup->get('password')); ?>
     </div>
 
     <div class="top10pxmargin ">
         <label class="myaccsubtitles">Confirm Password</label>
     </div>
     <div class="top5pxmargin ">
-        <?=$this->myformsignup->signupcnfrmpass?>
+        <?php echo $this->formElement($formSignup->get('configmpassword')); ?>
     </div>
 
     <div class="top10pxmargin ">

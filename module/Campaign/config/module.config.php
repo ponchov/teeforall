@@ -4,6 +4,7 @@ return array(
         'invokables' => array(
             'Campaign\Controller\Campaign' => 'Campaign\Controller\CampaignController',
             'Campaign\Controller\Info' => 'Campaign\Controller\InfoController',
+            'Campaign\Controller\Account' => 'Campaign\Controller\AccountController',
         ),
     ),
     'router' => array(
@@ -32,6 +33,20 @@ return array(
                     ),
                     'constraints' => array(
                         'action'     => 'privacypolicy|termsofservice|shippingrates|contactus',
+                    ),
+                ),
+            ),
+            'myaccount' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/myaccount[/:action]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Campaign\Controller',
+                        'controller'    => 'Account',
+                        'action'        => 'index',
+                    ),
+                    'constraints' => array(
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                 ),
             ),

@@ -34,6 +34,10 @@ return array(
             // 'Navigation'              => 'Zend\Navigation\Service\DefaultNavigationFactory',
         ),
     ),
+
+    'mailer'    =>  array(
+        'from' => 'some@some.com',
+    ),
     
     'session' => array(
         'config' => array(

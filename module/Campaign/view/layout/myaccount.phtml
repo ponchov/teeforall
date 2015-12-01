@@ -133,6 +133,7 @@ $myActionName=$this->action;
 </head>
 <body id="page1">
     <input type="hidden" id="frontDataValK" value="" />
+    <?php echo $this->flashMessenger()->render(); ?>
     <?php echo $this->render('campaign/layout/header_1'); ?>
 
     <?php if($myControllerName!="launchcampaign" && $myControllerName!="trackorder" && $myControllerName!="shippingrates") { ?>
@@ -157,20 +158,18 @@ $myActionName=$this->action;
                     } elseif($myActionName=='referfriends') {
                         echo 'Refer Friends';
                     }
-                } elseif($myControllerName=='login') {
-                    if($myActionName=='index') {
+                } elseif($myControllerName=='user') {
+                    if($myActionName=='login') {
                         echo 'Login';
                     } elseif($myActionName=='forgotpassword') {
                         echo 'Recover your Password';
                     } elseif($myActionName=='reset') {
                         echo 'Reset your Password';
-
                     }
                 } elseif($myControllerName=="payment" && $myActionName=='index') {
                     echo 'Enter yout card details';
-
                 } else {
-                    echo $this->sql[0]['page_title'];
+                    echo $this->pageTitle;
                 } ?>
               </div>
               <div class="info_right" id="how_in_right_2">

@@ -10,7 +10,7 @@ use Zend\Form\Factory;
 class LoginFactory implements FactoryInterface
 {
     /**
-     * Создает форму для входа пользователя
+     * Makes the form of user login
      *
      * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
      * @return \Zend\Form\Form
@@ -58,7 +58,7 @@ class LoginFactory implements FactoryInterface
                     ),
                 ),
                 'input_filter' => array(
-                    'email' => array(
+                    'username' => array(
                         'required' => true,
                         'filters'  => array(
                             array('name' => 'Zend\Filter\StringTrim'),

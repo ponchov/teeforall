@@ -40,6 +40,20 @@ class Module
         $eventManager->attach(MvcEvent::EVENT_DISPATCH, array($this, 'configureLayout'));
     }
 
+    public function getValidatorConfig()
+    {
+        return array(
+            'factories' => array(
+                'EmailNotInUse' => function($sm) {
+                    return new Validator\EmailNotInUse(
+                        $sm->getServiceLocator()->get('User\Storage\User'),
+                        $sm->getServiceLocator()->get('User\AuthService')
+                    );
+                },
+            ),
+        );
+    }
+
     public function configureLayout(MvcEvent $e)
     {
         $request = $e->getRequest();
@@ -68,7 +82,7 @@ class Module
                 case 'recreation':
                     break;
                 default:
-                    $layout->setTemplate('campaign/layout/myaccount.phtml');
+                    $layout->setTemplate('campaign/layout/myaccount');
                     break;
             }
         }
@@ -79,11 +93,25 @@ class Module
         return array(
             'factories' => array(
                 'User\Form\Login' => 'User\Form\Service\LoginFactory',
+                'User\Form\Signup' => 'User\Form\Service\SignupFactory',
                 'User\Storage\User' => function($sm) {
                     $factory = new App\Entity\Service\SimpleFactory(new Entity\User());
                     $proto = new App\Storage\Table\TableSimpleSet(null, $factory);
                     $tableGateway = new TableGateway('users', $sm->get('Zend\Db\Adapter\Adapter'), null, $proto);
                     return new Table\User($tableGateway);
+                },
+                'User\Storage\MailTemplate' => function($sm) {
+                    $factory = new App\Entity\Service\SimpleFactory(new Entity\MailTemplate());
+                    $proto = new App\Storage\Table\TableSimpleSet(null, $factory);
+                    $tableGateway = new TableGateway('email_templates', $sm->get('Zend\Db\Adapter\Adapter'), null, $proto);
+                    return new Table\MailTemplate($tableGateway);
+                },
+                'User\Service\Mail' => function($sm) {
+                    $config = $sm->get('config');
+                    return new Service\Mail(
+                        $sm->get('User\Storage\MailTemplate'),
+                        $config['mailer']['from']
+                    );
                 },
                 'User\AuthService' => function($sm) {
                     $service = new Authentication\AuthenticationService();

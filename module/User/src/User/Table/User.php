@@ -2,6 +2,8 @@
 
 namespace User\Table;
 
+use Zend\Db\Sql;
+
 use App\Storage\Table\Simple;
 
 class User extends Simple
@@ -28,9 +30,10 @@ class User extends Simple
     );
 
     /**
+     * Returns user that has the email
      *
      * @param string $email
-     * @return boolean
+     * @return User\Entity\User|false
      */
     public function getByEmail($email)
     {
@@ -49,11 +52,38 @@ class User extends Simple
 
     /**
      *
+     * @param string $hash
+     * @return User\Entity\User|false
+     */
+    public function getByIdHash($hash)
+    {
+        $set = $this->tableGateway->select(
+            array(
+                new Sql\Predicate\Expression('md5(user_id) = ?', $hash)
+            )
+        );
+        $user = $set->current();
+        if (!$user) {
+            return false;
+        }
+
+        return $user;
+    }
+
+    /**
+     * Creates new user and initialize it with params $data
+     *
      * @param array $data
      * @return User\Entity\User
      */
     public function create(array $data)
     {
+        $data['user_status'] = '0';
+        $data['active_status'] = '0';
+        if (isset($data['password'])) {
+            $data['password'] = md5($data['password']);
+        }
+
         return $this->createItemSet()->add($data)->current();
     }
 }
