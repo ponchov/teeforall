@@ -30,6 +30,9 @@ class Service extends AbstractHelper implements ServiceLocatorAwareInterface
     }
 
     /**
+     * Returns service determined by its name $serviceName
+     * from application ServiceManager
+     *
      * @param string $serviceName
      * @return mixed
      */
