@@ -24,7 +24,8 @@ use Admin\Model\Users;
 
 use Admin\Form\TShirtSizeForm;
 use Admin\Model\TShirtSize;
-use Admin\Form\TShirtForm;
+
+use Admin\Model\Campaign;
 
 
 class AdminController extends AbstractActionController
@@ -42,6 +43,8 @@ class AdminController extends AbstractActionController
     protected $tshirt_price_service;
     protected $tshirt_products_service;
     protected $tshirt_size_service;
+    
+    protected $campaign_service;
     
     
     public function indexAction()
@@ -1061,5 +1064,17 @@ class AdminController extends AbstractActionController
         }
         
         return $this->tshirt_size_service;
+    }
+    
+    
+    public function getCampaignService()
+    {
+        if (!$this->campaign_service) {
+            $sm = $this->getServiceLocator();
+            
+            $this->campaign_service = $sm->get('Admin\Model\CampaignModel');
+        }
+        
+        return $this->campaign_service;
     }
 }
