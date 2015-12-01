@@ -796,7 +796,7 @@ class AdminController extends AbstractActionController
     ////////////////////////
     public function campaignAction()
     {
-        
+        return new ViewModel(array('campaigns' => $this->getCampaignService()->getCampaigns()));
     }
     
     

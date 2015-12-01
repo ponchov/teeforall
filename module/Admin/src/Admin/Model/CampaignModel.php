@@ -100,9 +100,27 @@ class CampaignModel
     }
     
     
-    public function saveProfit($id)
+    public function saveProfit(Campaign $campaign, $id)
     {
+        // save the user supplied profit information
+        if (!empty($campaign->profit)) {
+            // profit was not empty
+            // check if it is a float type
+            // it should be but to put my mind at ease just check
+            if (is_float($campaign->profit)) {
+                $data = array(
+                    'profit' => $campaign->profit,  
+                );
+                
+                $this->table_gateway->update($data, array('campaign_id' => $id));
+                
+                return true;
+            } else {
+                return false;
+            }
+        }
         
+        return false;
     }
     
     

@@ -23,7 +23,7 @@ class Campaign implements InputFilterAwareInterface
     public $friends_email_address;
     public $subject;
     public $content;
-    
+    public $profit;
     
     protected $input_filter;
     
@@ -36,6 +36,7 @@ class Campaign implements InputFilterAwareInterface
         $this->friends_email_address = (!empty($data['friends_email_address'])) ? $data['friends_email_address'] : null;
         $this->subject               = (!empty($data['subject']))               ? $data['subject']               : null;
         $this->content               = (!empty($data['content']))               ? $data['content']               : null;
+        $this->profit                = (!empty($data['profit']))                ? $data['profit']                : null;
     }
     
     
@@ -165,6 +166,34 @@ class Campaign implements InputFilterAwareInterface
                     ),
                 ),
             )));
+            
+            // profit filter
+            $input_filter->add($factory->createInput(array(
+                'name'     => 'profit',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                 
+                'validators' => array(
+                    array(
+                        'name' => 'Not Empty',
+                        'options' => array(
+                            'messages' => array(
+                                'isEmpty' => 'Profit is Required',
+                            ),
+                        ),
+                        
+                        'name' => 'Float',
+                        'options' => array(
+                            'min' => 0,  
+                            'locale' => 'en',
+                        ),
+                    ),
+                ),
+            )));
+            
             
             
             $this->input_filter = $input_filter;
