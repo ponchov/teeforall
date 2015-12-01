@@ -13,6 +13,7 @@ function exception_error_handler($severity, $message, $file, $line)
 
 set_error_handler("exception_error_handler");
 
+setlocale(LC_ALL, "US"); // set the locale to us english (language, money, etc)
 
 return array(
     'db' => array(
