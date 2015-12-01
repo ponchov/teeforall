@@ -50,6 +50,15 @@ class Module implements AutoloaderProviderInterface
         $eventManager->attach(MvcEvent::EVENT_DISPATCH, array($this, 'configureLayout'));
     }
 
+    public function getViewHelperConfig()
+    {
+        return array(
+            'invokables' => array(
+                'service' => 'Campaign\View\Helper\Service',
+            ),
+        );
+    }
+
     public function configureLayout(MvcEvent $e)
     {
         $request = $e->getRequest();
@@ -99,43 +108,49 @@ class Module implements AutoloaderProviderInterface
                 'Campaign\Storage\Campaign' => function($sm) {
                     $factory = new App\Entity\Service\SimpleFactory(new Entity\Campaign());
                     $proto = new App\Storage\Table\TableSimpleSet(null, $factory);
-                    $tableGateway = new TableGateway('launchcampaign', $sm->get('db'), null, $proto);
+                    $tableGateway = new TableGateway('launchcampaign', $sm->get('Zend\Db\Adapter\Adapter'), null, $proto);
                     return new Table\Campaign($tableGateway);
+                },
+                'Campaign\Storage\Draft' => function($sm) {
+                    $factory = new App\Entity\Service\SimpleFactory(new Entity\Draft());
+                    $proto = new App\Storage\Table\TableSimpleSet(null, $factory);
+                    $tableGateway = new TableGateway('drafts', $sm->get('Zend\Db\Adapter\Adapter'), null, $proto);
+                    return new Table\Draft($tableGateway);
                 },
                 'Campaign\Storage\State' => function($sm) {
                     $factory = new App\Entity\Service\SimpleFactory(new Entity\State());
                     $proto = new App\Storage\Table\TableSimpleSet(null, $factory);
-                    $tableGateway = new TableGateway('state', $sm->get('db'), null, $proto);
+                    $tableGateway = new TableGateway('state', $sm->get('Zend\Db\Adapter\Adapter'), null, $proto);
                     return new Table\State($tableGateway);
                 },
                 'Campaign\Storage\TShirt\Discount' => function($sm) {
                     $factory = new App\Entity\Service\SimpleFactory(new Entity\TShirt\Discount());
                     $proto = new App\Storage\Table\TableSimpleSet(null, $factory);
-                    $tableGateway = new TableGateway('tshirt_discount', $sm->get('db'), null, $proto);
+                    $tableGateway = new TableGateway('tshirt_discount', $sm->get('Zend\Db\Adapter\Adapter'), null, $proto);
                     return new Table\TShirt\Discount($tableGateway);
                 },
                 'Campaign\Storage\TShirt\Icon' => function($sm) {
                     $factory = new App\Entity\Service\SimpleFactory(new Entity\TShirt\Icon());
                     $proto = new App\Storage\Table\TableSimpleSet(null, $factory);
-                    $tableGateway = new TableGateway('tshirt_icons', $sm->get('db'), null, $proto);
+                    $tableGateway = new TableGateway('tshirt_icons', $sm->get('Zend\Db\Adapter\Adapter'), null, $proto);
                     return new Table\TShirt\Icon($tableGateway);
                 },
                 'Campaign\Storage\TShirt\Price' => function($sm) {
                     $factory = new App\Entity\Service\SimpleFactory(new Entity\TShirt\Price());
                     $proto = new App\Storage\Table\TableSimpleSet(null, $factory);
-                    $tableGateway = new TableGateway('tshirt_price', $sm->get('db'), null, $proto);
+                    $tableGateway = new TableGateway('tshirt_price', $sm->get('Zend\Db\Adapter\Adapter'), null, $proto);
                     return new Table\TShirt\Price($tableGateway);
                 },
                 'Campaign\Storage\TShirt\Product' => function($sm) {
                     $factory = new App\Entity\Service\SimpleFactory(new Entity\TShirt\Product());
                     $proto = new App\Storage\Table\TableSimpleSet(null, $factory);
-                    $tableGateway = new TableGateway('tshirt_products', $sm->get('db'), null, $proto);
+                    $tableGateway = new TableGateway('tshirt_products', $sm->get('Zend\Db\Adapter\Adapter'), null, $proto);
                     return new Table\TShirt\Product($tableGateway);
                 },
                 'Campaign\Storage\TShirt\Size' => function($sm) {
                     $factory = new App\Entity\Service\SimpleFactory(new Entity\TShirt\Size());
                     $proto = new App\Storage\Table\TableSimpleSet(null, $factory);
-                    $tableGateway = new TableGateway('tshirt_size', $sm->get('db'), null, $proto);
+                    $tableGateway = new TableGateway('tshirt_size', $sm->get('Zend\Db\Adapter\Adapter'), null, $proto);
                     return new Table\TShirt\Size($tableGateway);
                 },
             ),

@@ -2,7 +2,10 @@
 
 namespace Campaign\Table;
 
+use Zend\Db\Sql;
+
 use App\Storage\Table\Simple;
+use App\Storage\Table\TableEntitySetInterface;
 
 class Campaign extends Simple
 {
@@ -43,4 +46,35 @@ class Campaign extends Simple
         'selling_share',
         'campaign_identifire',
     );
+
+    /**
+     * Returns count of campaigns launched for $userId
+     * and that are active(if $campaignStatus = 1) or not ($campaignStatus = 0)
+     *
+     * @param integer $userId
+     * @param integer $campaignStatus
+     * @return integer
+     */
+    public function getCountForUser($userId, $campaignStatus)
+    {
+        $sql = new Sql\Sql($this->getAdapter());
+        $select = $sql->select();
+
+        $select->from($this->tableGateway->getTable());
+        $select->columns(array('mycount' => new Sql\Expression('count(*)')));
+        $select->where(
+            array(
+                'user_id = ?' => $userId,
+                'campaign_status = ?' => $campaignStatus,
+                'draft_status = ?' => 1,
+            )
+        );
+
+        $result = $this->tableGateway->selectWith($select)->current();
+        if (!$result) {
+            return 0;
+        }
+
+        return $result->mycount;
+    }
 }

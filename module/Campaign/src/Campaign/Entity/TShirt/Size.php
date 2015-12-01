@@ -4,8 +4,9 @@ namespace Campaign\Entity\TShirt;
 
 use App\Storage\StorageAwareInterface;
 use App\Entity\TableStoraged;
+use App\Entity\Simple;
 
-class Size implements StorageAwareInterface
+class Size extends Simple implements StorageAwareInterface
 {
     use TableStoraged;
 

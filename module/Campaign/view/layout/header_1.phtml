@@ -1,0 +1,58 @@
+<?php
+$myControllerName=$this->controller;
+$myActionName=$this->action;
+?>
+<!--------------Header--------------->
+<!--<header>
+    <div id="logo"><a href="<?php echo $this->serverUrl(); ?>"><img src="<?php echo $this->basePath('/images/logo.png'); ?>" alt="TeeForAll"/></a></div>
+</header>-->
+
+<!--------------Navigation--------------->
+<div id="nav_bg">
+    <nav class="navbar navbar-default navbar-fixed-top">
+
+        <div class="navbar-header">
+              <a class="navbar-brand" href="<?php echo $this->serverUrl(); ?>">
+            <img src="<?php echo $this->basePath('/images/logo.png'); ?>" alt="TeeForAll"/>
+              </a>
+        </div>
+
+            <ul class="nav-navbar navbar-right">
+
+            <li><a href="<?php echo $this->url('campaign', array('action' => 'trackorder')); ?>">Track your order</a></li>
+            <?php if(($this->loggedId!="")): ?>
+                        <li><a href="<?php echo $this->url('myaccount', array('action' => 'profile'));?>">My Account</a></li>
+            <li><a href="<?php echo $this->url('user', array('action' => 'logout')); ?>">Logout</a></li>
+            <?php endif; ?>
+            <?php  if((($myControllerName=="login" || $myControllerName=="error") ||  ($myControllerName=="launchcampaign" && $myActionName=="index") || ($myControllerName=="trackorder") || ($myControllerName=="launchcampaign") || ($myControllerName=="about") || ($myControllerName=="index" && $myActionName=="index")  || ($myControllerName=="index" && $myActionName=="support") || ($myControllerName=="index" && $myActionName=="funded")) && ($this->loggedId == ""))      { ?>
+            <li><a href="<?php echo $this->url('user', array('action' => 'login')) ;?>">login</a></li>
+            <?php } ?>
+        </ul>
+
+
+        <div class="minimenu">
+            <div>MENU</div>
+            <select>
+                <!-- <option>LAUNCH A CAMPAIGN</option>
+                <option>HOW IT WORKS</option> -->
+                <option>TRACK YOUR ORDER</option>
+                <?php if(($this->loggedId != "")): ?>
+                    <option>MY ACCOUNT</option>
+                    <option>LOGOUT</option>
+                <?php endif; ?>
+                <?php if((($myControllerName=="login") ||  ($myControllerName=="launchcampaign" && $myActionName=="index") || ($myControllerName=="launchcampaign") || ($myControllerName=="about") || ($myControllerName=="index" && $myActionName=="index")  || ($myControllerName=="index" && $myActionName=="support") || ($myControllerName=="index" && $myActionName=="funded")) && ($this->loggedId==""))      { ?>
+                    <option>LOGIN</option>
+                <?php } ?>
+
+            </select>
+        </div>
+    </nav>
+
+    <div class="mobile_logo">
+        <a href="<?php echo $this->serverUrl(); ?>">
+            <div class="logo_main">
+                <img src="<?php echo $this->basePath('/images/mobile_logo.png'); ?>" alt="Tee For All"/>
+            </div>
+        </a>
+    </div>
+</div>

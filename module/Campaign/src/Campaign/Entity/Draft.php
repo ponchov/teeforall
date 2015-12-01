@@ -1,12 +1,12 @@
 <?php
 
-namespace Campaign\Entity\TShirt;
+namespace Campaign\Entity;
 
 use App\Storage\StorageAwareInterface;
 use App\Entity\TableStoraged;
 use App\Entity\Simple;
 
-class Discount extends Simple implements StorageAwareInterface
+class Draft extends Simple implements StorageAwareInterface
 {
     use TableStoraged;
 
@@ -14,5 +14,5 @@ class Discount extends Simple implements StorageAwareInterface
      *
      * {@inheritdoc}
      */
-    protected $keyName = 'sno';
+    protected $keyName = 'draft_id';
 }
