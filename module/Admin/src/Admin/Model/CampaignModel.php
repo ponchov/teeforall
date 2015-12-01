@@ -75,4 +75,7 @@ class CampaignModel
         
         return $query;
     }
+    
+    
+    
 }
