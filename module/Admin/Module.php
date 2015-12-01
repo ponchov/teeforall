@@ -37,6 +37,8 @@ use Admin\Model\TShirtProductsModel;
 use Admin\Model\TShirtProducts;
 use Admin\Model\TShirtSizeModel;
 use Admin\Model\TShirtSize;
+use Admin\Model\CampaignModel;
+use Admin\Model\Campaign;
 
 
 class Module implements AutoloaderProviderInterface
@@ -223,7 +225,20 @@ class Module implements AutoloaderProviderInterface
                     $db_adapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $result_set_prototype = new ResultSet();
                     $result_set_prototype->setArrayObjectPrototype(new TShirtSize());
-                    return new TableGateway('tshirt_sizes', $db_adapter, null, $result_set_prototype);
+                    return new TableGateway('tshirt_size', $db_adapter, null, $result_set_prototype);
+                },
+                
+                'Admin\Model\CampaignModel' => function($sm) {
+                    $table_gateway = $sm->get('CampaignService');
+                    $table = new CampaignModel($table_gateway);
+                    return $table;
+                },
+                
+                'CampaignService' => function($sm) {
+                    $db_adapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $result_set_prototype = new ResultSet();
+                    $result_set_prototype->setArrayObjectPrototype(new Campaign());
+                    return new TableGateway('launchcampaign', $db_adapter, null, $result_set_prototype);
                 },
             )
         );

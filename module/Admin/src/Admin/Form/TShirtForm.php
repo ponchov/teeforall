@@ -53,7 +53,7 @@ class TShirtForm extends Form
         ));
         
         $this->add(array(
-            'name' => 'front_height',
+            'name' => 'front-height',
             'type' => 'Zend\Form\Element\File',
             
             'attributes' => array(

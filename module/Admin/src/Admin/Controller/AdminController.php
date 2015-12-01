@@ -12,14 +12,20 @@ use Zend\View\Model\ViewModel;
 
 use Admin\Form\ConfigurationForm;
 use Admin\Model\Configuration;
+
 use Admin\Model\EmailTemplates;
 use Admin\Form\EmailTemplateForm;
+
 use Admin\Form\PagesForm;
 use Admin\Model\Pages;
+
 use Admin\Form\UsersForm;
 use Admin\Model\Users;
-use Admin\Model\EditUsers;
 
+use Admin\Form\TShirtSizeForm;
+use Admin\Model\TShirtSize;
+
+use Admin\Model\Campaign;
 
 
 class AdminController extends AbstractActionController
@@ -37,6 +43,8 @@ class AdminController extends AbstractActionController
     protected $tshirt_price_service;
     protected $tshirt_products_service;
     protected $tshirt_size_service;
+    
+    protected $campaign_service;
     
     
     public function indexAction()
@@ -395,7 +403,7 @@ class AdminController extends AbstractActionController
         return new ViewModel(array('users' => $this->getUsersService()->getAllUsers()));
     }
     
-    // come back to this
+    
     public function changeuserstatusAction()
     {
         $user_id = $this->params()->fromPost('id');
@@ -410,8 +418,6 @@ class AdminController extends AbstractActionController
     
     public function deleteuserAction()
     {
-        $id = $this->params()->fromPost('id');
-        
         if (!empty($_REQUEST['id'])) {
             $this->getUsersService()->removeUser($_REQUEST['id']); 
         }
@@ -567,36 +573,152 @@ class AdminController extends AbstractActionController
     
     
     ///////////////////////////////////
-    // tshirt actions
+    // tshirt size actions
     //////////////////////////////////
     public function tshirtsizeAction()
     {
         
+        return new ViewModel(array('tshirt_sizes' => $this->getTShirtSizeService()->listTShirtSizes()));
     }
     
     
-    public function iconsAction()
+    public function deletetshirtsizeAction()
     {
-        
+        if (!empty($_REQUEST['id'])) {
+            $this->getTShirtSizeService()->deleteTShirtSize($_REQUEST['id']);
+        }
     }
     
     
+    public function edittshirtsizeAction()
+    {
+        $id = $this->params('id');
+        
+        $get_user = $this->getTShirtSizeService()->getOneTShirtSize($id);
+        
+        foreach ($get_user as $usr) {
+            $data = $usr;
+        }
+        
+        $form = new TShirtSizeForm($this->serviceLocator->get('Admin\Model\TShirtSizeModel'));
+        
+        $form->get('size')->setValue($data['size']);
+        $form->get('size_inch')->setValue($data['size_inch']);
+        
+        $form->get('submit')->setValue('Edit Size');
+        
+        return new ViewModel(array('form' => $form, 'id' => $id));
+    }
+    
+    
+    public function updatesizeAction()
+    {
+        // set the form to be used in the pages view
+        $form = new TShirtSizeForm($this->serviceLocator->get('Admin\Model\TShirtSizeModel'));
+        
+        // gets the form method request (usually post)
+        $request = $this->getRequest();
+        
+        // check to see if the request was a POST form request
+        if ($request->isPost()) {
+            // good to go
+            // filter the form values now
+            $tshirt = new TShirtSize();
+        
+            $form->setInputFilter($tshirt->getInputFilter());
+        
+            // set the form data to hold all the values supplied by the form
+            // via $request->getPost()
+            $form->setData($request->getPost());
+             
+            // now we will see if the form is valid
+            // we check if it is valid by the email form class we created
+            if ($form->isValid()) {
+                // it is valid
+                // pass the form to data to the filter class via exchangeArray()
+                $tshirt->exchangeArray($form->getData());
+        
+                $p_id = !empty($this->params('id'))
+                ? $this->params('id') : null;
+        
+                if ($this->getTShirtSizeService()->editTShirtSize($tshirt, $p_id) === true) {
+                    // the updated page was inserted into the database successfully
+                    // redirect to page view
+                    return $this->redirect()->toUrl('/admin/tshirt-size');
+                } else {
+                    // error occured..
+                    // the error is logged automatically
+                    // redirect to tshirt size view
+                    return $this->redirect()->toUrl('/admin/tshirt-size');
+                }
+            }
+        }
+    }
+    
+    
+    public function addtshirtsizeAction()
+    {
+        // set the form to be used
+        $form = new TShirtSizeForm($this->getServiceLocator()->get('Admin\Model\TShirtSizeModel'));
+        
+        $form->get('submit')->setValue('Add New T-Shirt Size');
+        
+        // gets the form method request (usually post)
+        $request = $this->getRequest();
+        
+        // check to see if the request was a POST form request
+        if ($request->isPost()) {
+            // good to go
+            // filter the form values now
+            $tshirt = new TShirtSize();
+        
+            $form->setInputFilter($tshirt->getInputFilter());
+        
+            // set the form data to hold all the values supplied by the form
+            // via $request->getPost()
+            $form->setData($request->getPost());
+             
+            // now we will see if the form is valid
+            // we check if it is valid by the tshirt form class we created
+            if ($form->isValid()) {
+                // it is valid
+                // pass the form to data to the filter class via exchangeArray()
+                $tshirt->exchangeArray($form->getData());
+        
+                if ($this->getTShirtSizeService()->addTShirtSize($tshirt) === true) {
+                    // the user was inserted into the database successfully
+                    // redirect to users view
+                    return $this->redirect()->toUrl('/admin/tshirt-size');
+                } else {
+                    // error occured..
+                    // the error is logged automatically
+                    // redirect to tshirt size view
+                    return $this->redirect()->toUrl('/admin/tshirt-size');
+                }
+            }
+        }
+        
+        return new ViewModel(array('form' => $form));
+    }
+    
+    
+    
+    
+   
+    //////////////////////////////////
+    // tshirt products actions
+    //////////////////////////////////
     public function productsAction()
     {
         
     }
     
-    
-    public function addnewiconAction()
-    {
-        
-    }
-    
-    
+  
     public function tshirtproductAction()
     {
         
     }
+  
     
     public function saveproductAction()
     {
@@ -616,61 +738,12 @@ class AdminController extends AbstractActionController
     }
     
     
-    public function editiconsAction()
-    {
-        
-    }
+   
     
-    
-    public function updateiconAction()
-    {
-        
-    }
-    
-    
-    public function deleteiconAction()
-    {
-        
-    }
-    
-    
-    public function changeiconstatusAction()
-    {
-        
-    }
-    
-    
-    public function saveiconAction()
-    {
-        
-    }
-    
-    
-    public function editsizeAction()
-    {
-        
-    }
-    
-    
-    public function updatesizeAction()
-    {
-        
-    }
-    
-    
-    public function deletesizeAction()
-    {
-        
-    }
-    
-    
+    ////////////////////////
+    // price actions
+    ///////////////////////
     public function priceAction()
-    {
-        
-    }
-    
-    
-    public function discountAction()
     {
         
     }
@@ -678,11 +751,21 @@ class AdminController extends AbstractActionController
     
     public function editpriceAction()
     {
-        
+    
     }
     
     
     public function updatepriceAction()
+    {
+    
+    }
+    
+    
+    
+    ////////////////////////
+    // discount actions
+    ////////////////////////
+    public function discountAction()
     {
         
     }
@@ -700,12 +783,163 @@ class AdminController extends AbstractActionController
     }
     
     
+    // update record listings action
     public function updaterecordslistingsAction()
     {
         
     }
     
     
+    
+    /////////////////////////
+    // campaign actions
+    ////////////////////////
+    public function campaignAction()
+    {
+        
+    }
+    
+    
+    public function campaignliveAction()
+    {
+        
+    }
+    
+    
+    public function campaignsuccessAction()
+    {
+        
+    }
+    
+    
+    public function campaignprofitAction()
+    {
+        
+    }
+    
+    
+    public function campaignsaveprofitAction()
+    {
+        
+    }
+    
+    
+    public function campaignunsuccessfulAction()
+    {
+        
+    }
+    
+    
+    public function campaignxlsAction()
+    {
+        
+    }
+    
+    
+    public function campaignemailfriendsAction()
+    {
+        
+    }
+    
+    
+    public function campaignsendmailAction()
+    {
+        
+    }
+    
+    
+    public function campaigndeleteAction()
+    {
+        
+    }
+    
+    
+    public function campaignviewAction()
+    {
+        
+    }
+    
+    
+    public function campaignorderrecordsAction()
+    {
+        
+    }
+    
+    
+    public function campaignchangestatusAction()
+    {
+        
+    }
+    
+    
+    public function campaignsliderstatusAction()
+    {
+        
+    }
+    
+    
+    public function campaignslidstatusAction()
+    {
+        
+    }
+    
+    
+    public function campaignprocessorderAction()
+    {
+        
+    }
+    
+    
+    public function campaigninstructionsAction()
+    {
+        
+    }
+    
+    
+    public function campaignaddinstructionsAction()
+    {
+        
+    }
+    
+    
+    
+    /////////////////////////////
+    // payment actions
+    ////////////////////////////
+    public function paymentAction()
+    {
+        
+    }
+    
+    
+    public function paymentexpireAction()
+    {
+        
+    }
+    
+    
+    public function paymentactiveAction()
+    {
+        
+    }
+    
+    
+    public function paymentchargedAction()
+    {
+        
+    }
+    
+    
+    public function paymentcaptureAction()
+    {
+        
+    }
+    
+    
+    
+    ////////////////////////////
+    // export to cvs actions  
+    ////////////////////////////
     public function exportAction()
     {
         
@@ -716,6 +950,10 @@ class AdminController extends AbstractActionController
     {
         
     }
+    
+    
+    
+    
     
     
     
@@ -822,9 +1060,21 @@ class AdminController extends AbstractActionController
         if (!$this->tshirt_size_service) {
             $sm = $this->getServiceLocator();
             
-            $this->tshirt_size_service = $sm->get('Admin\Modeel\TShirtSizeModel');
+            $this->tshirt_size_service = $sm->get('Admin\Model\TShirtSizeModel');
         }
         
         return $this->tshirt_size_service;
+    }
+    
+    
+    public function getCampaignService()
+    {
+        if (!$this->campaign_service) {
+            $sm = $this->getServiceLocator();
+            
+            $this->campaign_service = $sm->get('Admin\Model\CampaignModel');
+        }
+        
+        return $this->campaign_service;
     }
 }

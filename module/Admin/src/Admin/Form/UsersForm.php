@@ -26,8 +26,7 @@ class UsersForm extends Form
         // set the attributes of the form
         $this->setAttribute('method', 'post')
         ->setAttribute('class', 'mws-form')
-        ->setAttribute('id', 'mws-validate')
-        ->setAttribute('novalidate', 'no validate');
+        ->setAttribute('id', 'mws-validate');
         
         // input fields
         $this->add(array(
@@ -136,9 +135,11 @@ class UsersForm extends Form
         
         $this->add(array(
             'name' => 'state',
-            'type' => 'Text',
+            'type' => 'Select',
             'options' => array(
                 'label' => 'State',
+                'value_options' => $this->getOptionsforState(),
+                'empty_option'  => "Please select a state",
             ),
         
             'attributes' => array(
@@ -192,6 +193,21 @@ class UsersForm extends Form
         ));
     }
     
+    
+    public function getOptionsforState()
+    {
+        $table = $this->getTable();
+        
+        $data = $table->listStates();
+        
+        $select_data = array();
+        
+        foreach ($data as $value) {
+            $select_data[trim($value->state_name)] = $value->state_name;
+        }
+        
+        return $select_data;
+    }
     
     public function getOptionsForCountry()
     {

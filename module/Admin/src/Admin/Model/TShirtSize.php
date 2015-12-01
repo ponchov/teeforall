@@ -15,20 +15,19 @@ use Zend\InputFilter\InputFilterInterface;
 
 class TShirtSize implements InputFilterAwareInterface
 {
-    public $site_title;
-    public $site_description;
-    public $site_keywords;
-    public $admin_email;
+    public $size;
+    public $size_inch;
 
+    public $size_id;
+    
     protected $input_filter;
 
 
     public function exchangeArray($data)
     {
-        $this->site_title       = (!empty($data['site_title']))       ? $data['site_title']       : null;
-        $this->site_description = (!empty($data['site_description'])) ? $data['site_description'] : null;
-        $this->site_keywords    = (!empty($data['site_keywords']))    ? $data['site_keywords']    : null;
-        $this->admin_email      = (!empty($data['admin_email']))      ? $data['admin_email']      : null;
+        $this->size_id          = (!empty($data['size_id']))          ? $data['size_id']          : null;
+        $this->size             = (!empty($data['size']))             ? $data['size']             : null;
+        $this->size_inch        = (!empty($data['size_inch']))        ? $data['size_inch']        : null;
     }
 
 
@@ -44,84 +43,18 @@ class TShirtSize implements InputFilterAwareInterface
             $input_filter = new InputFilter();
             $factory      = new InputFactory();
              
-             
+          
             $input_filter->add($factory->createInput(array(
-                'name'     => 'site_title',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                ),
-                 
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 6,
-                            'max'      => 30,
-                        ),
-                    ),
-                ),
-            )));
-             
-             
-            $input_filter->add($factory->createInput(array(
-                'name'     => 'site_description',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                ),
-                 
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 6,
-                            'max'      => 75,
-                        ),
-                    ),
-                ),
+                'name'     => 'size',
+                'required' => true
             )));
 
             $input_filter->add($factory->createInput(array(
-                'name'     => 'site_keywords',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                ),
-                 
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 6,
-                            'max'      => 50,
-                        ),
-                    ),
-                ),
+                'name'     => 'size_inch',
+                'required' => true
             )));
 
-            $input_filter->add($factory->createInput(array(
-                'name'     => 'admin_email',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                 
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 6,
-                            'max'      => 75,
-                        ),
-                    ),
-                ),
-            )));
+          
              
             $this->input_filter = $input_filter;
         }

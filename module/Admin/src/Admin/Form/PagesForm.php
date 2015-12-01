@@ -19,7 +19,6 @@ class PagesForm extends Form
         // add the form attributes
         $this->setAttribute('method', 'post')
         ->setAttribute('id', 'mws-validate')
-        ->setAttribute('novalidate', 'novalidate')
         ->setAttribute('class', 'mws-form');
         
         // add the form fields
