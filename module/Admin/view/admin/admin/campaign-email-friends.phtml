@@ -1,0 +1,53 @@
+<div class="mws-panel grid_8">
+    <div class="mws-panel-header">
+        <span class="mws-i-24 i-check"><?=$this->pageHeading?></span>
+    </div>
+    <div class="mws-panel-body">
+        <form name="myform" id="mws-validate" action="<?php echo $this->url(array('controller'=>'campaign', 'action'=>'emailit'), 'default', true)?>" method="post" novalidate class="mws-form">
+            <div style="display:none;" class="mws-form-message error" id="mws-validate-error"></div>
+            <div class="mws-form-inline">
+                
+                <div class="mws-form-row">
+                    <label>From (Your Email ID)</label>
+                    <div class="mws-form-item large">
+                         <?=$this->myform->emailid?>
+                    </div>
+                </div>
+                
+                
+                  <div style="margin-top:5px;">
+                     	<?=$this->myform->friendsemailid?>
+                   </div>
+                
+             <div class="mws-form-row">
+                <label>Subject</label>
+               <div class="mws-form-item large">
+                   <?=$this->myform->subject?>
+                </div>
+             </div>
+                
+                 <div class="mws-form-row">
+                <label>Content</label>
+                <div class="mws-form-item">
+                  	<?=$this->myform->content?>
+                </div>
+                </div>
+                
+            </div>
+            
+             <div style="margin-top:20px;" class="mws-button-row">
+                 	<input type="submit" name="submit" id="submit" value="Send Email" class="mws-button red">
+      <a href="<?=APPLICATION_URL_ADMIN?>campaign/live" style="text-decoration:none;">
+       <input type="button" name="cancel" id="cancel" value="Cancel" class="mws-button red">
+        </a>
+                 </div>
+                 
+           <!-- <div class="mws-button-row">
+                <input type="submit" value="Submit" class="mws-button red" />
+            </div>-->
+        </form>
+    </div>    	
+</div> 
+
+
+

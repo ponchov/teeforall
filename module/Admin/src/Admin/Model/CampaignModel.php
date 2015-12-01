@@ -9,6 +9,9 @@ namespace Admin\Model;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Sql;
 
+use Zend\Mail;
+use Zend\Mime;
+
 
 class CampaignModel
 {
@@ -77,5 +80,56 @@ class CampaignModel
     }
     
     
+    public function getProfitDetails($id)
+    {
+        // get the title for the launched campaign
+        // to enter the profit for it
+        $select = $this->table_gateway->select(array('campaign_id' => $id));
+        
+        $row = $select->current();
+        
+        if (!$row) {
+            $holder = array();
+            
+            foreach ($row as $value) {
+                $holder = $value;
+            }
+            
+            return $holder->title;
+        }
+    }
     
+    
+    public function saveProfit($id)
+    {
+        
+    }
+    
+    
+    public function emailFriends(Campaign $campaign)
+    {
+        // this method gets all the friends email addresses tied to a campaign
+        // and sends out an email to each one
+        $friends_email_address = explode(",", $campaign->friends_email_address);
+        
+        $mime = new Mime\Part($campaign->content);
+        $mime->type = "text/html";
+        
+        $mime_msg = new Mime\Message();
+        $mime_msg->setParts(array($mime));
+        
+        $mail = new Mail\Message();
+        
+        $send = new Mail\Transport\Sendmail();
+        
+        for ($i=0; $i<count($friends_email_address); $i++) {
+            $mail->addTo($friends_email_address[$i])
+            ->setSubject($campaign->subject)
+            ->setBody($campaign->content);
+            
+            $send->send($mail);
+        }
+        
+        return true;
+    }
 }
