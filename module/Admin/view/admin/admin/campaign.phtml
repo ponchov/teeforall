@@ -24,15 +24,22 @@
             
             <tbody>
              <?php
+                    $cClass = "gradeX odd";
                     $i = 0;
                     
 					foreach ($this->campaigns as $campaign) {
+					    $i++;
 					    
+					    if ($cClass == "gradeX odd") {
+					        $cClass = "gradeX even";
+					    } else {
+					        $cClass = "gradeX odd";
+					    }
 			 ?>
-                   <tr class="gradeX">
-                       <td><?php echo $i + 1; ?></td>
+                   <tr class="<?php echo $cClass; ?>">
+                       <td><?php echo $i; ?></td>
                        <td>
-                           <input name='check<?php echo $i; ?>' id='check<?php echo $i + 1; ?>' 
+                           <input name='check<?php echo $i; ?>' id='check<?php echo $i; ?>' 
                                 value='<?php echo $campaign->campaign_id; ?>' 
                                 onchange='return check_check("bcdel","deletebcchk")' type='checkbox'>
                            <script type="text/javascript"> 

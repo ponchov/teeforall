@@ -8,6 +8,7 @@ namespace Admin\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Sql;
+use Zend\Db\Sql\Select;
 
 use Zend\Mail;
 use Zend\Mime;
@@ -36,9 +37,22 @@ class CampaignModel
     {
         // display in an array all the campaigns 
         // with a draft status of 1
-        $select = $this->table_gateway->select(array('draft_status' => 1));
+        $select = new Select('launchcampaign');
         
-        return $select;
+        $select->columns(array('campaign_id', 'title', 'campaign_status'))
+        ->where("draft_status = '1'");
+        
+        $adapter = $this->table_gateway->getAdapter();
+         
+        $query = $adapter->query($this->sql->buildSqlString($select), $adapter::QUERY_MODE_EXECUTE);
+        
+        $holder = array();
+        
+        foreach ($query as $key => $row) {
+            $holder[$key] = $row;
+        }
+        
+        return $holder;
     }
     
     
