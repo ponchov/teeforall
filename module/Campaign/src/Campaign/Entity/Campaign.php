@@ -2,8 +2,14 @@
 
 namespace Campaign\Entity;
 
-class Campaign extends TableStoraged
+use App\Storage\StorageAwareInterface;
+use App\Entity\TableStoraged;
+use App\Entity\Simple;
+
+class Campaign extends Simple implements StorageAwareInterface
 {
+    use TableStoraged;
+
     /**
      *
      * {@inheritdoc}

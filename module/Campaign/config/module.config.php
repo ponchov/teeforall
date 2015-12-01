@@ -3,46 +3,62 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Campaign\Controller\Campaign' => 'Campaign\Controller\CampaignController',
+            'Campaign\Controller\Info' => 'Campaign\Controller\InfoController',
+            'Campaign\Controller\Account' => 'Campaign\Controller\AccountController',
         ),
     ),
     'router' => array(
         'routes' => array(
             'campaign' => array(
-                'type'    => 'Literal',
+                'type'    => 'Segment',
                 'options' => array(
-                    // Change this to something specific to your module
-                    'route'    => '/campaign',
+                    'route'    => '/campaign[/:action]',
                     'defaults' => array(
-                        // Change this value to reflect the namespace in which
-                        // the controllers for your module are found
                         '__NAMESPACE__' => 'Campaign\Controller',
                         'controller'    => 'Campaign',
                         'action'        => 'index',
                     ),
+                    'constraints' => array(
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
                 ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    // This route is a sane default when developing a module;
-                    // as you solidify the routes for your module, however,
-                    // you may want to remove it and replace it with more
-                    // specific routes.
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:controller[/:action]]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
+            ),
+            'info' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/:action',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Campaign\Controller',
+                        'controller'    => 'Info',
+                    ),
+                    'constraints' => array(
+                        'action'     => 'privacypolicy|termsofservice|shippingrates|contactus',
+                    ),
+                ),
+            ),
+            'myaccount' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/myaccount[/:action]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Campaign\Controller',
+                        'controller'    => 'Account',
+                        'action'        => 'index',
+                    ),
+                    'constraints' => array(
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                 ),
             ),
         ),
     ),
     'view_manager' => array(
+        'template_map' => array(
+            'campaign/layout/myaccount' => __DIR__ . '/../view/layout/myaccount.phtml',
+            'campaign/layout/header_1' => __DIR__ . '/../view/layout/header_1.phtml',
+            'campaign/layout/footer_1' => __DIR__ . '/../view/layout/footer_1.phtml',
+            'campaign/layout/left' => __DIR__ . '/../view/layout/left.phtml',
+        ),
         'template_path_stack' => array(
             'Campaign' => __DIR__ . '/../view',
         ),
