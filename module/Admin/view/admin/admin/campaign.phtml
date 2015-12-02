@@ -5,7 +5,9 @@
     <div class="mws-panel-body">
         <div class="mws-panel-toolbar top clearfix ">
             <ul>
-                <li><a class="mws-ic-16 ic-cross" href="javascript:void(0)" title="Delete" onclick="deleteItem()">Delete</a></li>
+            	<li><a class="mws-ic-16 ic-accept" href="<?php echo $this->url('admin', array('action' => 'add-campaign')); ?>" 
+                title="Add">Add Campaign</a></li>
+                <li><a class="mws-ic-16 ic-cross" href="javascript:void(0)" title="Delete" onclick="deleteItem()">Delete Campaign</a></li>
             </ul>
         </div>
         
@@ -15,7 +17,7 @@
                     <th>S.No</th>
                     <th><input type="checkbox" name="deletebcchk" id="deletebcchk" onclick="return checkall(this)" /></th>
                     <th>Campaign Title</th>
-                    <th>Campaign Status(1 = Active / 0 = Ended)</th>
+                    <th>Campaign Status (1 = Active / 0 = Ended)</th>
                     <th>View</th>
                     <th>Status</th>     <!-- For Enablr disable -->
                     <th>Slider View</th>    
