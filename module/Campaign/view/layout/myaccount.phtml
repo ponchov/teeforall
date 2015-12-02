@@ -144,33 +144,7 @@ $myActionName=$this->action;
           <div id="align_both">
             <div class="top_info">
               <div class="info_left" id="how_in_right">
-                <?php if($myControllerName=='myaccount') {
-                    if($myActionName=='activecampaign') {
-                        echo 'Active Campaigns';
-                    } elseif($myActionName=='endedcampaign') {
-                        echo 'Ended Campaigns';
-                    } elseif($myActionName=='drafts') {
-                        echo 'Saved Drafts';
-                    } elseif($myActionName=='profile') {
-                        echo 'Profile';
-                    } elseif($myActionName=='changepassword') {
-                        echo 'Change Password';
-                    } elseif($myActionName=='referfriends') {
-                        echo 'Refer Friends';
-                    }
-                } elseif($myControllerName=='user') {
-                    if($myActionName=='login') {
-                        echo 'Login';
-                    } elseif($myActionName=='forgotpassword') {
-                        echo 'Recover your Password';
-                    } elseif($myActionName=='reset') {
-                        echo 'Reset your Password';
-                    }
-                } elseif($myControllerName=="payment" && $myActionName=='index') {
-                    echo 'Enter yout card details';
-                } else {
-                    echo $this->pageTitle;
-                } ?>
+                <?php echo $this->pageTitle; ?>
               </div>
               <div class="info_right" id="how_in_right_2">
               </div>
@@ -206,16 +180,11 @@ $myActionName=$this->action;
               <div id="align_both">
                 <div class="top_info">
                   <div class="info_left" id="launch_campaign">
-                    <?php if($this->action == 'trackorder') {
-                    echo 'Track an Order';
-                    } else {
-                    echo 'Launch your Campaign';
-                    }
-                    ?>
+                    <?php echo $this->pageTitle; ?>
                 </div>
                   <div class="info_right" id="launch_campaign_rgt">
                     <?php if($this->action == 'index' ) { ?>
-                    <div id="KM-Price-Ctr" class="base_price_info" style="display:none;">Base Price:<span id="KM-Price">$<?=$this->sql[0]['base_price']?></span></div>
+                    <div id="KM-Price-Ctr" class="base_price_info" style="display:none;">Base Price:<span id="KM-Price">$ </span></div>
                     <?php } ?>
                   </div>
                 </div>
@@ -235,16 +204,11 @@ $myActionName=$this->action;
               <div id="align_both">
                 <div class="top_info">
                   <div class="info_left" id="launch_campaign">
-                    <?php if($myControllerName=='trackorder') {
-                        echo 'Track an Order';
-                    }elseif($myControllerName=='shippingrates'){
-                        echo 'Shipping Rates';
-                    }
-                    ?>
+                    <?php echo $this->pageTitle; ?>
                 </div>
                   <div class="info_right" id="launch_campaign_rgt">
                     <?php if($myActionName=='index' ) { ?>
-                    <div id="KM-Price-Ctr" class="base_price_info" style="display:none;">Base Price:<span id="KM-Price">$<?=$this->sql[0]['base_price']?></span></div>
+                    <div id="KM-Price-Ctr" class="base_price_info" style="display:none;">Base Price:<span id="KM-Price">$ </span></div>
                     <?php } ?>
                   </div>
                 </div>
@@ -276,5 +240,6 @@ $myActionName=$this->action;
     ?>
 
     <?php echo $this->render('campaign/layout/footer_1'); ?>
+    <?php echo $this->inlineScript() ?>
 </body>
 </html> 

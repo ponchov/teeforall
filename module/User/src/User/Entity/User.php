@@ -39,10 +39,34 @@ class User extends Simple implements StorageAwareInterface
     /**
      * Returns the hash that identificates the user while activation
      *
+     * @todo need some salt
      * @return string
      */
     public function getActivateHash()
     {
         return md5($this->id);
+    }
+
+    /**
+     * Returns the hash that indicates user that requested password reset process
+     *
+     * @todo need some salt
+     * @return string
+     */
+    public function getResetPasswordHash()
+    {
+        return substr(md5($this->id), rand(0, 20), 11);
+    }
+
+    /**
+     * Generates the password from given string
+     *
+     * @todo need some salt
+     * @param string $value
+     * @return string
+     */
+    public function getPasswordHash($value)
+    {
+        return md5($value);
     }
 }

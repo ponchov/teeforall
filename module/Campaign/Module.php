@@ -81,7 +81,6 @@ class Module implements AutoloaderProviderInterface
 
             $layout->controller = $controller;
             $layout->action = $action;
-            $layout->loggedId = false;
 
             switch ($action) {
                 case 'recreation':

@@ -7,10 +7,10 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Validator;
 use Zend\Form\Factory;
 
-class SignupFactory implements FactoryInterface
+class ResetPasswordFactory implements FactoryInterface
 {
     /**
-     * Makes the form of user registration
+     * Creates the form of password reset
      *
      * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
      * @return \Zend\Form\Form
@@ -22,30 +22,6 @@ class SignupFactory implements FactoryInterface
         $form = $formFactory->createForm(
             array(
                 'elements' => array(
-                    array(
-                        'spec' => array(
-                            'type' => 'Zend\Form\Element\Text',
-                            'name' => 'public_name',
-                            'attributes' => array(
-                                'class' => 'logintextbox',
-                            ),
-                            'options' => array(
-                                'label' => 'Public name',
-                            ),
-                        ),
-                    ),
-                    array(
-                        'spec' => array(
-                            'type' => 'Zend\Form\Element\Email',
-                            'name' => 'username',
-                            'attributes' => array(
-                                'class' => 'logintextbox',
-                            ),
-                            'options' => array(
-                                'label' => 'Email Id',
-                            ),
-                        ),
-                    ),
                     array(
                         'spec' => array(
                             'type' => 'Zend\Form\Element\Password',
@@ -70,53 +46,8 @@ class SignupFactory implements FactoryInterface
                             )
                         ),
                     ),
-                    array(
-                        'spec' => array(
-                            'name' => 'send',
-                            'attributes' => array(
-                                'type'  => 'submit',
-                                'class' => 'accbutton',
-                                'value' => 'Sign In Now',
-                            ),
-                        ),
-                    ),
                 ),
                 'input_filter' => array(
-                    'public_name' => array(
-                        'required' => true,
-                        'filters'  => array(
-                            array('name' => 'Zend\Filter\StringTrim'),
-                        ),
-                        'validators' => array(
-                            array(
-                                'name' => 'NotEmpty',
-                                'options' => array(
-                                    'messages' => array(
-                                        'isEmpty' => 'Public name is required',
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
-                    'username' => array(
-                        'required' => true,
-                        'filters'  => array(
-                            array('name' => 'Zend\Filter\StringTrim'),
-                        ),
-                        'validators' => array(
-                            array(
-                                'name' => 'NotEmpty',
-                                'break_chain_on_failure' => true,
-                                'options' => array(
-                                    'messages' => array(
-                                        'isEmpty' => 'Email Id is required',
-                                    ),
-                                ),
-                            ),
-                            new Validator\EmailAddress(),
-                            $serviceLocator->get('ValidatorManager')->get('EmailNotInUse'),
-                        ),
-                    ),
                     'password' => array(
                         'required' => true,
                         'validators' => array(

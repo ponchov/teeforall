@@ -71,6 +71,26 @@ class User extends Simple
     }
 
     /**
+     *
+     * @param string $hash
+     * @return User\Entity\User|false
+     */
+    public function getByPassReset($hash)
+    {
+        $set = $this->tableGateway->select(
+            array(
+                'pass_reset = ?' => $hash,
+            )
+        );
+        $user = $set->current();
+        if (!$user) {
+            return false;
+        }
+
+        return $user;
+    }
+
+    /**
      * Creates new user and initialize it with params $data
      *
      * @param array $data
@@ -80,10 +100,11 @@ class User extends Simple
     {
         $data['user_status'] = '0';
         $data['active_status'] = '0';
+        $user = $this->createItemSet()->add($data)->current();
         if (isset($data['password'])) {
-            $data['password'] = md5($data['password']);
+            $user->password = $user->getPasswordHash($data['password']);
         }
 
-        return $this->createItemSet()->add($data)->current();
+        return $user;
     }
 }

@@ -78,9 +78,21 @@ class Module
             $layout->action = $action;
             $layout->loggedId = $app->getServiceManager()->get('User\AuthService')->getIdentity();
 
+            /**
+             * @todo set pagetitle in view of action
+             */
             switch ($action) {
-                case 'recreation':
+                case 'login':
+                    $title = 'Login';
                     break;
+                default:
+                    $title = '';
+                    break;
+            }
+
+            $layout->pageTitle = $title;
+
+            switch ($action) {
                 default:
                     $layout->setTemplate('campaign/layout/myaccount');
                     break;
@@ -94,6 +106,8 @@ class Module
             'factories' => array(
                 'User\Form\Login' => 'User\Form\Service\LoginFactory',
                 'User\Form\Signup' => 'User\Form\Service\SignupFactory',
+                'User\Form\ForgotPassword' => 'User\Form\Service\ForgotPasswordFactory',
+                'User\Form\ResetPassword' => 'User\Form\Service\ResetPasswordFactory',
                 'User\Storage\User' => function($sm) {
                     $factory = new App\Entity\Service\SimpleFactory(new Entity\User());
                     $proto = new App\Storage\Table\TableSimpleSet(null, $factory);

@@ -93,7 +93,7 @@ class Mail implements ServiceManagerAwareInterface
     }
 
     /**
-     * Send the mail to user with info about successfull registration
+     * Sends the mail to user with info about successfull registration
      *
      * @param \User\Entity\User $user
      * @param string $password
@@ -119,6 +119,35 @@ class Mail implements ServiceManagerAwareInterface
                 $user->username,
                 $password,
                 $serverUrl(),
+                sprintf('<a href="%s">%s</a>', $actUrl, $actUrl)
+            ),
+            $template->emailBody
+        );
+
+        return $this->send($user->username, $template->emailSubject, $body);
+    }
+
+    /**
+     * Sends the email to user with info how to reset his password
+     *
+     * @param UserEntity $user
+     * @param string $siteName
+     * @param string $actUrl
+     * @return boolean
+     */
+    public function noticeOfForgotPassword(UserEntity $user, $siteName, $actUrl = null)
+    {
+        $template = $this->storage->getByKey(3);
+
+        $body = str_replace(
+            array(
+                "[NAME]",
+                "[SITENAME]",
+                "[PASSWORDRESETURL]",
+            ),
+            array(
+                $user->username,
+                $siteName,
                 sprintf('<a href="%s">%s</a>', $actUrl, $actUrl)
             ),
             $template->emailBody

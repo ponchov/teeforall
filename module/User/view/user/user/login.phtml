@@ -1,4 +1,4 @@
-<?php if ($this->testing == "") { ?>
+<?php if (!$this->register) { ?>
 <div id="loginas" class="work_section_two  mainprofile" style="display:block">
 <?php } else {    ?>
 <div id="loginas" class="work_section_two  mainprofile" style="display:none">
@@ -13,6 +13,9 @@
 
     <div class="top5pxmargin ">
         <?php echo $this->formElement($formLogin->get('username')); ?>
+        <div class="errmsg">
+            <?php echo $this->formElementErrors($formLogin->get('username')) ?>
+        </div>
     </div>
 
     <div class="top10pxmargin " >
@@ -21,6 +24,9 @@
 
     <div class="top5pxmargin ">
         <?php echo $this->formElement($formLogin->get('password')); ?>
+        <div class="errmsg">
+            <?php echo $this->formElementErrors($formLogin->get('password')) ?>
+        </div>
     </div>
 
     <div class="top10pxmargin " >
@@ -34,7 +40,7 @@
     </div>
 </form>
 </div>
-<?php if ($this->testing != "") { ?>
+<?php if ($this->register) { ?>
 <div id="signupas" class="work_section_two  mainprofile" style="display:block">
 <?php } else { ?>
 <div id="signupas" style="display:none" class="work_section_two  mainprofile">
@@ -48,6 +54,9 @@
     </div>
     <div class="top5pxmargin ">
         <?php echo $this->formElement($formSignup->get('public_name')); ?>
+        <div class="errmsg">
+            <?php echo $this->formElementErrors($formSignup->get('public_name')) ?>
+        </div>
     </div>
 
     <div class="top10pxmargin ">
@@ -55,6 +64,9 @@
     </div>
     <div class="top5pxmargin ">
         <?php echo $this->formElement($formSignup->get('username')); ?>
+        <div class="errmsg">
+            <?php echo $this->formElementErrors($formSignup->get('username')) ?>
+        </div>
     </div>
 
     <div class="top10pxmargin ">
@@ -62,6 +74,9 @@
     </div>
     <div class="top5pxmargin ">
         <?php echo $this->formElement($formSignup->get('password')); ?>
+        <div class="errmsg">
+            <?php echo $this->formElementErrors($formSignup->get('password')) ?>
+        </div>
     </div>
 
     <div class="top10pxmargin ">
@@ -69,6 +84,9 @@
     </div>
     <div class="top5pxmargin ">
         <?php echo $this->formElement($formSignup->get('configmpassword')); ?>
+        <div class="errmsg">
+            <?php echo $this->formElementErrors($formSignup->get('configmpassword')) ?>
+        </div>
     </div>
 
     <div class="top10pxmargin ">
