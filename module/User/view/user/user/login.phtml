@@ -6,7 +6,7 @@
 <?php
     $formLogin = $this->formLogin;
     $formLogin->prepare(); ?>
-<form method="post" name="login" action="<?=$this->url('user', array('action'=>'login', 'l' => $this->l))?>">
+<?php echo $this->form()->openTag($formLogin); ?>
     <div class="top10pxmargin " style="margin-top:0px;">
         <label class="myaccsubtitles">Email Address</label>
     </div>

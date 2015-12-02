@@ -69,14 +69,14 @@ class Module
         $controller = $matches->getParam('controller');
         $action = $matches->getParam('action');
         $module = strtolower(explode('\\', $controller)[0]);
+        
+        $app = $e->getParam('application');
+        $layout = $app->getMvcEvent()->getViewModel();
+        $layout->loggedId = $app->getServiceManager()->get('User\AuthService')->getIdentity();
 
         if ('user' === $module) {
-            $app = $e->getParam('application');
-            $layout = $app->getMvcEvent()->getViewModel();
-
             $layout->controller = $controller;
             $layout->action = $action;
-            $layout->loggedId = $app->getServiceManager()->get('User\AuthService')->getIdentity();
 
             /**
              * @todo set pagetitle in view of action

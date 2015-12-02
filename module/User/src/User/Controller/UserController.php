@@ -14,23 +14,44 @@ class UserController extends AbstractActionController
     public function loginAction()
     {
         $formLogin = $this->getServiceLocator()->get('User\Form\Login');
+        /**
+         * everytime set action of login form to current uri because
+         * maybe some arguments were set
+         */
+        $formLogin->setAttribute('action', $this->getRequest()->getUriString());
+
         $formSignup = $this->getServiceLocator()->get('User\Form\Signup');
         if ($this->getRequest()->isPost()) {
             $formLogin->setData($this->getRequest()->getPost());
             if ($formLogin->isValid()) {
+                /**
+                 * url to redirect to after successfuly login
+                 */
                 $rurl = $this->params()->fromQuery('rurl', null);
                 $authService = $this->getServiceLocator()->get('User\AuthService');
                 $values = $formLogin->getData();
                 $result = $authService->authentificate($values['username'], $values['password'], true);
+                /**
+                 * if user is valid user
+                 */
                 if ($result->getCode() == \Zend\Authentication\Result::SUCCESS) {
                     if (null === $rurl) {
+                        /**
+                         * redirect to profile after login
+                         */
                         return $this->redirect()->toRoute('myaccount', array('action' => 'profile'));
                     } else {
+                        /**
+                         * if redirect url was set, redirect to it
+                         */
                         return $this->redirect()->toUrl(urldecode($rurl));
                     }
                 } else {
                     $storage = $this->getServiceLocator()->get('User\Storage\User');
                     $user = $storage->getByEmail($values['username']);
+                    /**
+                     * maybe user is banned or is not activated?
+                     */
                     if ($user) {
                         if (!$user->activeStatus) {
                             $this->flashMessenger()->addMessage('Activate your account by clicking on the link sent to your mail');
@@ -38,6 +59,9 @@ class UserController extends AbstractActionController
                             $this->flashMessenger()->addMessage('Your Account is inactivated by admin');
                         }
                     } else {
+                        /**
+                         * user with that credentials was not found
+                         */
                         $this->flashMessenger()->addMessage('Invalid Email Address & Password');
                     }
                 }

@@ -74,7 +74,12 @@ class LoginFactory implements FactoryInterface
             )
         );
 
+        $form->setAttribute(
+            'action',
+            $serviceLocator->get('Router')->assemble(array('action' => 'login'), array('name' => 'user'))
+        );
         $form->setAttribute('method', 'post');
+        $form->setAttribute('name', 'login');
 
         return $form;
     }

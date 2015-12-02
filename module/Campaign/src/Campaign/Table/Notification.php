@@ -50,7 +50,7 @@ class Notification extends Simple
 
         $select->where(
             new Sql\Expression(
-                sprintf("FIND_IN_SET(%d, n_user_id)", $userId)
+                sprintf("FIND_IN_SET(%d, n_user_id)", intval($userId))
             )
         );
 

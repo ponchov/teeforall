@@ -151,7 +151,7 @@ class AuthService
 
         if ($this->sessionContainer->userEntity) {
             if (null === $this->authentificatedUser) {
-                $this->authentificatedUser = $this->userService->create($this->sessionContainer->userEntity);
+                $this->authentificatedUser = $this->userTable->create($this->sessionContainer->userEntity);
             }
 
             return $this->authentificatedUser;

@@ -48,6 +48,38 @@ class Campaign extends Simple
     );
 
     /**
+     * Returns set of campaigns for user
+     * also can be customized by campaign status and draft status
+     *
+     * @param integer $userId
+     * @param integer $status
+     * @param integer|null $draftStatus
+     * @return TableEntitySetInterface
+     */
+    public function getForUser($userId, $status = null, $draftStatus = null)
+    {
+        $sql = new Sql\Sql($this->getAdapter());
+        $select = $sql->select();
+
+        $select->from($this->tableGateway->getTable());
+        $where = array(
+            'user_id = ?' => $userId,
+        );
+
+        if (null !== $status) {
+            $where['campaign_status'] = $status;
+        }
+
+        if (null !== $draftStatus) {
+            $where['draft_status'] = $draftStatus;
+        }
+
+        $select->where($where);
+
+        return $this->tableGateway->selectWith($select);
+    }
+
+    /**
      * Returns count of campaigns launched for $userId
      * and that are active(if $campaignStatus = 1) or not ($campaignStatus = 0)
      *

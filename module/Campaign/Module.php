@@ -59,6 +59,19 @@ class Module implements AutoloaderProviderInterface
         );
     }
 
+    public function getControllerConfig()
+    {
+        return array(
+            'factories' => array(
+                'Campaign\Controller\Account' => function($sm) {
+                    return new Controller\AccountController(
+                        $sm->getServiceLocator()->get('User\AuthService')->getAuthentificatedUserEntity()
+                    );
+                }
+            )
+        );
+    }
+
     public function configureLayout(MvcEvent $e)
     {
         $request = $e->getRequest();
@@ -77,6 +90,29 @@ class Module implements AutoloaderProviderInterface
 
         if ('campaign' === $module) {
             $app = $e->getParam('application');
+
+            /**
+             * Access to Account controller for only registered users
+             */
+            if ($controller === 'Campaign\Controller\Account') {
+                if (!$app->getServiceManager()->get('User\AuthService')->isLoggedIn()) {
+                    $uri = $e->getRouter()->assemble(
+                        array('action' => 'login'),
+                        array(
+                            'name' => 'user',
+                            'query' => array(
+                                'rurl' => $request->getUriString()
+                            ),
+                        )
+                    );
+
+                    $response = $e->getResponse();
+                    $response->setStatusCode(302);
+                    $response->getHeaders()->addHeaderLine('Location', $uri);
+                    return $response;
+                }
+            }
+
             $layout = $app->getMvcEvent()->getViewModel();
 
             $layout->controller = $controller;

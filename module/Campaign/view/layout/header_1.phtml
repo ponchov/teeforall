@@ -21,7 +21,7 @@ $myActionName=$this->action;
 
             <li><a href="<?php echo $this->url('campaign', array('action' => 'trackorder')); ?>">Track your order</a></li>
             <?php if(($this->loggedId!="")): ?>
-                        <li><a href="<?php echo $this->url('myaccount', array('action' => 'profile'));?>">My Account</a></li>
+                        <li><a href="<?php echo $this->url('account', array('action' => 'profile'));?>">My Account</a></li>
             <li><a href="<?php echo $this->url('user', array('action' => 'logout')); ?>">Logout</a></li>
             <?php endif; ?>
             <?php  if((($myControllerName=="login" || $myControllerName=="error") ||  ($myControllerName=="launchcampaign" && $myActionName=="index") || ($myControllerName=="trackorder") || ($myControllerName=="launchcampaign") || ($myControllerName=="about") || ($myControllerName=="index" && $myActionName=="index")  || ($myControllerName=="index" && $myActionName=="support") || ($myControllerName=="index" && $myActionName=="funded")) && ($this->loggedId == ""))      { ?>

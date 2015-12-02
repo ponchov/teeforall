@@ -4,7 +4,6 @@ return array(
         'invokables' => array(
             'Campaign\Controller\Campaign' => 'Campaign\Controller\CampaignController',
             'Campaign\Controller\Info' => 'Campaign\Controller\InfoController',
-            'Campaign\Controller\Account' => 'Campaign\Controller\AccountController',
         ),
     ),
     'router' => array(
@@ -12,7 +11,7 @@ return array(
             'campaign' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/campaign[/:action]',
+                    'route'    => '/campaign[/:action][/:data]',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Campaign\Controller',
                         'controller'    => 'Campaign',
@@ -36,10 +35,10 @@ return array(
                     ),
                 ),
             ),
-            'myaccount' => array(
+            'account' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/myaccount[/:action]',
+                    'route'    => '/account[/:action][/:data]',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Campaign\Controller',
                         'controller'    => 'Account',

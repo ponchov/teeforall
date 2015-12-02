@@ -7,7 +7,7 @@ $draftct = $this->service('Campaign\Storage\Draft')->getCountForUser($userid);
 $active = $this->service('Campaign\Storage\Campaign')->getCountForUser($userid, 1);
 $end = $this->service('Campaign\Storage\Campaign')->getCountForUser($userid, 0);
 
-if($myControllerName=="about" || $myControllerName=="myaccount" || $myControllerName=="shippingrates" || $myControllerName=="privacypolicy" || $myControllerName=="termsofservice" || $myControllerName=="contactus") {?>
+if($myControllerName=="about" || $myControllerName=="account" || $myControllerName=="shippingrates" || $myControllerName=="privacypolicy" || $myControllerName=="termsofservice" || $myControllerName=="contactus") {?>
     <!--------------start rsponsive left menu--------------->
     <div class="work_left_responsive">
         <?php if($myControllerName=="about" || $myControllerName=="shippingrates" || $myControllerName=="privacypolicy" || $myControllerName=="termsofservice" || $myControllerName=="contactus") { ?>
@@ -31,25 +31,25 @@ if($myControllerName=="about" || $myControllerName=="myaccount" || $myController
             <?php if($myControllerName !== "about" && $myControllerName!=="shippingrates"  && $myControllerName!=="privacypolicy" && $myControllerName!=="termsofservice" && $myControllerName!=="contactus"): ?>
             <div class="heading_menu_how_responsive">
                 <h3>My Account</h3>
-                <li><a href="<?php echo $this->url('myaccount', array('action' => 'activecampaign')); ?>">Active
+                <li><a href="<?php echo $this->url('account', array('action' => 'activecampaign')); ?>">Active
                             <?php if($active>0)    { ?>
                             <span class="badge badge-info badge-small"><?=$active?> </span>
                             <?php    }  ?>
                 </a><li>
-                <li><a href="<?php echo $this->url('myaccount', array('action' => 'endedcampaign')); ?>">Ended
+                <li><a href="<?php echo $this->url('account', array('action' => 'endedcampaign')); ?>">Ended
                             <?php if($end>0){ ?>
                             <span class="badge badge-info badge-small"> <?=$end?> </span>
                             <?php }  ?>
                 </a></li>
 
-                <li><a href="<?php echo $this->url('myaccount', array('action' => 'drafts')); ?>">Drafts
+                <li><a href="<?php echo $this->url('account', array('action' => 'drafts')); ?>">Drafts
                             <?php if($draftct>0) {     ?>
                             <span class="badge badge-info badge-small"><?=$draftct?></span>
                             <?php } ?>
                 </a></li>
-                <li><a href="<?php echo $this->url('myaccount', array('action' => 'profile')); ?>">Profile</a></li>
-                <li><a href="<?php echo $this->url('myaccount', array('action' => 'changepassword')); ?>">Change Password</a></li>
-                <li><a href="<?php echo $this->url('myaccount', array('action' => 'referfriends')); ?>">Refer a Friend</a></li>
+                <li><a href="<?php echo $this->url('account', array('action' => 'profile')); ?>">Profile</a></li>
+                <li><a href="<?php echo $this->url('account', array('action' => 'changepassword')); ?>">Change Password</a></li>
+                <li><a href="<?php echo $this->url('account', array('action' => 'referfriends')); ?>">Refer a Friend</a></li>
             </div>
             <?php endif; ?>
         </div>
@@ -78,25 +78,25 @@ if($myControllerName=="about" || $myControllerName=="myaccount" || $myController
                 <?php if($myControllerName !== "about"): ?>
                 <div class="heading_menu_how">
                     <h3>My Account</h3>
-                    <li><a href="<?php echo $this->url('myaccount', array('action' => 'activecampaign')); ?>">Active
+                    <li><a href="<?php echo $this->url('account', array('action' => 'activecampaign')); ?>">Active
                             <?php if($active>0)    { ?>
                             <span class="badge badge-info badge-small"><?=$active?> </span>
                             <?php    }  ?>
                 </a><li>
-                <li><a href="<?php echo $this->url('myaccount', array('action' => 'endedcampaign')); ?>">Ended
+                <li><a href="<?php echo $this->url('account', array('action' => 'endedcampaign')); ?>">Ended
                             <?php if($end>0){ ?>
                             <span class="badge badge-info badge-small"> <?=$end?> </span>
                             <?php }  ?>
                 </a></li>
 
-                <li><a href="<?php echo $this->url('myaccount', array('action' => 'drafts')); ?>">Drafts
+                <li><a href="<?php echo $this->url('account', array('action' => 'drafts')); ?>">Drafts
                             <?php if($draftct>0) {     ?>
                             <span class="badge badge-info badge-small"><?=$draftct?></span>
                             <?php } ?>
                 </a></li>
-                    <li><a href="<?php echo $this->url('myaccount', array('action' => 'profile')); ?>">Profile</a></li>
-                <li><a href="<?php echo $this->url('myaccount', array('action' => 'changepassword')); ?>">Change Password</a></li>
-                <li><a href="<?php echo $this->url('myaccount', array('action' => 'referfriends')); ?>">Refer a Friend</a></li>
+                    <li><a href="<?php echo $this->url('account', array('action' => 'profile')); ?>">Profile</a></li>
+                <li><a href="<?php echo $this->url('account', array('action' => 'changepassword')); ?>">Change Password</a></li>
+                <li><a href="<?php echo $this->url('account', array('action' => 'referfriends')); ?>">Refer a Friend</a></li>
                 </div>
                 <?php endif; ?>
             </div>

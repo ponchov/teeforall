@@ -1,0 +1,53 @@
+<div class="work_section_two mainendedcampaign"> 
+    <?php  if(!count($this->campaigns)) {     ?>
+        <label class="endcampaignlabel">You Don't Have any Ended campaigns.</label>
+    <?php  }
+    foreach($this->campaigns as $campaign):
+        $endTime = strtotime($campaign->launchDate) + $campaign->campaignLength*60*60*24;
+        $endDate = date('Y/m/d', $endTime);
+        $w = $campaign->goal ? ($campaign->sold/$campaign->goal)*100 : 100;  ?>
+    <div class="rowendcampaign" >
+        <div class="col1" >
+            <a href="<?php $this->serverUrl($campaign->url); ?>">
+                <div class="teediv" >
+                <?php if($campaign->tee_image!="" and  file_exists('./public/images/usersdesign/'.$value['tee_image'])) { ?>
+                <div id="Tees0">
+                    <img src="<?php echo $this->basePath('/images/usersdesign/' . $campaign->tee_image); ?>"  width="70" height="70" border="0" />
+                </div>
+                <?php } else { ?>
+                    <img src="<?php echo $this->basePath('/images/designtee.png'); ?>" width="70" height="70" border="0" />
+                <?php } ?>
+                </div>
+            </a>
+            <div class="detailsdiv">
+                <a href="<?php $this->serverUrl($campaign->url); ?>">
+                    <div class="col1" >
+                        <b> <?php echo $campaign->title; ?></b>
+                    </div>
+                </a>
+                <?php if($w<100) { ?>
+                <div class="col2">
+                    <div align="center" style="height:8px; width:<?=@$w?>%; border-radius:8px;border:0px solid #393 ; background-color:#339933"></div>
+                </div>
+                <?php } else { ?>
+                <div class="col2">
+                    <div align="center" style="height:8px; width:100%; border-radius:8px;border:0px solid #393 ; background-color:#339933">
+                    </div>
+                </div>
+                <?php } ?>
+                <div class="col3">
+                    <a href="<?php echo $this->url('campaign', array('action' => 'setgoal', 'data' => $campaign->campaign_id));?>">
+                        relaunch campaign
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col2" >
+            <?php  echo $campaign->sold; ?>&nbsp; Of &nbsp;<?php echo $campaign->goal; ?>&nbsp; Sold
+        </div>
+        <div class="col3" >
+            Ended On &nbsp; <?php echo $endDate ?>
+        </div>
+    </div>
+<?php endforeach; ?>
+</div>

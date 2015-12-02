@@ -1,0 +1,49 @@
+<div class="work_section_two maindraftcampaign">
+    <?php if(!count($this->campaigns)): ?>
+        <label class="draftcampaignlabel">You Don't Have any saved drafts.</label>
+    <?php endif;
+    foreach($this->campaigns as $campaign): ?>
+    <div class="rowdraftcampaign" >
+        <div class="col1" >
+            <a href="<?php echo $this->url('campaign', array('action' => 'adddescription', 'data' => $campaign->campaign_id)); ?>">
+                <div class="teediv" >
+                    <?php if($campaign->tee_image!="" and  file_exists('./public/images/usersdesign/'.$campaign->tee_image)){ ?>
+                    <div id="Tees0">
+                    <img src="<?php echo $this->basePath('/images/usersdesign/' . $campaign->tee_image); ?>"  width="70" height="70" border="0" />
+                    </div>
+                    <?php } else { ?>
+                    <img src="<?php echo $this->basePath('/images/designtee.png'); ?>" width="70" height="70" border="0" />
+                    <?php } ?>
+                </div>
+            </a>
+            <div class="detailsdiv">
+                <?php   if($campaign->title!=""){?>
+                <div class="col1" >
+                    <b> <?php echo $campaign->title; ?> </b>
+                </div>
+                <?php  } else  { ?>
+                <a href="<?php echo $this->url('campaign', array('action' => 'adddescription', 'data' => $campaign->campaign_id)); ?>">
+                <div class="col1" >
+                    No Title choosen
+                </div>
+                </a>
+                <?php  }  ?>
+                <div class="col2">
+                    <a href="<?php echo $this->url('campaign', array('action' => 'adddescription', 'data' => $campaign->campaign_id)); ?>">
+                    resume
+                    </a>
+                    <a href="<?php echo $this->url('account', array('action' => 'delete', 'data' => $campaign->campaign_id)); ?>">
+                        &nbsp;| delete &nbsp;
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            Details
+        </div>
+        <div class="col3">
+            <?php  echo $campaign->draft_date; ?>
+        </div>
+    </div>
+<?php endforeach; ?>
+</div>

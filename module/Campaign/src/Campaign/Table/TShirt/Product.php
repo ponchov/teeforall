@@ -2,6 +2,8 @@
 
 namespace Campaign\Table\TShirt;
 
+use Zend\Db\Sql;
+
 use App\Storage\Table\Simple;
 use App\Storage\Table\TableEntitySetInterface;
 
@@ -34,7 +36,7 @@ class Product extends Simple
      */
     public function getLive()
     {
-        $sql = new Sql($this->getAdapter());
+        $sql = new Sql\Sql($this->getAdapter());
         $select = $sql->select();
 
         $select->from($this->tableGateway->getTable());
