@@ -1,0 +1,54 @@
+<div class="mws-panel grid_8">
+     <div class="mws-panel-header">
+             <span class="mws-i-24 i-check"><?=$this->pageHeading?></span>
+      </div>
+            <div class="mws-panel-body">
+					<form name="myform" id="myform" class="mws-form" action="<?php echo $this->url(array('controller'=>'campaign', 'action'=>'add-instructions'), 'default', true)?>" method="post" enctype="multipart/form-data">
+                    	 <table align="center" cellpadding="5" cellspacing="5" border="0" style="margin-left:30px;">
+							<div style="display:none;" class="mws-form-message error" id="mws-validate-error"></div>
+                            <div class="mws-form-inline">
+                                <div class="mws-form-row">
+                                	<label>Instruction Title  <span class="error2">*</span></label>
+                                    <div class="mws-form-item large">
+		                               	<dt id="title-label">&nbsp;</dt>
+										<dd id="title-element">
+											<input type="text" name="inst_title" class="mws-textinput required" /> 
+										</dd>
+									</div>
+                                </div>
+                                <div class="mws-form-row">
+                                	<label>Instruction Description  <span class="error2">*</span></label>
+                                	<div class="mws-form-item large" style="width:300px;">
+                                    </div>
+                                    <div class="mws-form-item large">
+		                               	<dt id="title-label">&nbsp;</dt>
+										<dd id="title-element">
+											<textarea class="mws-textinput required" name="inst_description" cols="30" rows="4"></textarea>    
+										</dd>
+									</div>
+                                </div>
+                                
+                                <div class="mws-button-row">                            
+                        			<input type="submit" name="Add" id="Add Icon" value="Add" class="mws-button red">
+                        		</div>                      
+                          </div>
+                    </table>
+                        </form>
+      </div>    	
+</div>
+
+<script>
+function checknummspK(e)
+{ 
+
+	evt=e || window.event;
+	var keypressed=evt.which || evt.keyCode;
+		if(keypressed=="35")
+	{ 
+ 		return false;
+	}
+ 
+ 	
+	
+}
+</script>

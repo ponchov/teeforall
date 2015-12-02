@@ -8,6 +8,10 @@ namespace Admin\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Sql;
+use Zend\Db\Sql\Select;
+
+use Zend\Mail;
+use Zend\Mime;
 
 
 class CampaignModel
@@ -33,9 +37,22 @@ class CampaignModel
     {
         // display in an array all the campaigns 
         // with a draft status of 1
-        $select = $this->table_gateway->select(array('draft_status' => 1));
+        $select = new Select('launchcampaign');
         
-        return $select;
+        $select->columns(array('campaign_id', 'title', 'campaign_status'))
+        ->where("draft_status = '1'");
+        
+        $adapter = $this->table_gateway->getAdapter();
+         
+        $query = $adapter->query($this->sql->buildSqlString($select), $adapter::QUERY_MODE_EXECUTE);
+        
+        $holder = array();
+        
+        foreach ($query as $key => $row) {
+            $holder[$key] = $row;
+        }
+        
+        return $holder;
     }
     
     
@@ -74,5 +91,77 @@ class CampaignModel
             AND launchcampaign.goal <> 0");
         
         return $query;
+    }
+    
+    
+    public function getProfitDetails($id)
+    {
+        // get the title for the launched campaign
+        // to enter the profit for it
+        $select = $this->table_gateway->select(array('campaign_id' => $id));
+        
+        $row = $select->current();
+        
+        if (!$row) {
+            $holder = array();
+            
+            foreach ($row as $value) {
+                $holder = $value;
+            }
+            
+            return $holder->title;
+        }
+    }
+    
+    
+    public function saveProfit(Campaign $campaign, $id)
+    {
+        // save the user supplied profit information
+        if (!empty($campaign->profit)) {
+            // profit was not empty
+            // check if it is a float type
+            // it should be but to put my mind at ease just check
+            if (is_float($campaign->profit)) {
+                $data = array(
+                    'profit' => $campaign->profit,  
+                );
+                
+                $this->table_gateway->update($data, array('campaign_id' => $id));
+                
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        return false;
+    }
+    
+    
+    public function emailFriends(Campaign $campaign)
+    {
+        // this method gets all the friends email addresses tied to a campaign
+        // and sends out an email to each one
+        $friends_email_address = explode(",", $campaign->friends_email_address);
+        
+        $mime = new Mime\Part($campaign->content);
+        $mime->type = "text/html";
+        
+        $mime_msg = new Mime\Message();
+        $mime_msg->setParts(array($mime));
+        
+        $mail = new Mail\Message();
+        
+        $send = new Mail\Transport\Sendmail();
+        
+        for ($i=0; $i<count($friends_email_address); $i++) {
+            $mail->addTo($friends_email_address[$i])
+            ->setSubject($campaign->subject)
+            ->setBody($campaign->content);
+            
+            $send->send($mail);
+        }
+        
+        return true;
     }
 }

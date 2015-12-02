@@ -1,0 +1,136 @@
+<div class="mws-panel grid_10">
+    <div class="mws-panel-header">
+        <span class="mws-i-24 i-table-1">Manage Campaign</span>
+    </div>
+    <div class="mws-panel-body">
+        <div class="mws-panel-toolbar top clearfix ">
+            <ul>
+                <li><a class="mws-ic-16 ic-cross" href="javascript:void(0)" title="Delete" onclick="deleteItem()">Delete</a></li>
+            </ul>
+        </div>
+        
+        <table class="mws-datatable-fn mws-table">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th><input type="checkbox" name="deletebcchk" id="deletebcchk" onclick="return checkall(this)" /></th>
+                    <th>Campaign Title</th>
+                    <th>Campaign Status(1 = Active / 0 = Ended)</th>
+                    <th>View</th>
+                    <th>Status</th>     <!-- For Enablr disable -->
+                    <th>Slider View</th>    
+                </tr>
+            </thead>
+            
+            <tbody>
+             <?php
+                    $cClass = "gradeX odd";
+                    $i = 0;
+                    
+					foreach ($this->campaigns as $campaign) {
+					    $i++;
+					    
+					    if ($cClass == "gradeX odd") {
+					        $cClass = "gradeX even";
+					    } else {
+					        $cClass = "gradeX odd";
+					    }
+			 ?>
+                   <tr class="<?php echo $cClass; ?>">
+                       <td><?php echo $i; ?></td>
+                       <td>
+                           <input name='check<?php echo $i; ?>' id='check<?php echo $i; ?>' 
+                                value='<?php echo $campaign->campaign_id; ?>' 
+                                onchange='return check_check("bcdel","deletebcchk")' type='checkbox'>
+                           <script type="text/javascript"> 
+                                $('#bcdel').html(''); document.getElementById('deletebcchk').checked = false;
+                           </script>
+                       </td>
+                            
+          			   <td><?php echo $campaign->title; ?></td>
+                       <td><?php echo $campaign->campaign_status; ?></td>
+                          
+                       <td>
+                           <a href="/admin/campaign-view/<?php echo $campaign->campaign_id; ?>">
+          					 <img src="<?php echo $this->basePath(); ?>/admin/images/previewicon.png" width="20" height="10">
+            			   </a> 
+                       </td>
+           
+                            
+                       <td>
+                       	   <a href="/admin/campaign-change-status/<?php echo $campaign->campaign_id; ?>"> 
+                       		 <img src="<?php echo $this->basePath(); ?>/admin/images/tick.gif">
+                           </a>       
+                       </td>
+                            
+                       <td>
+                       	   <a href="/admin/campaign-slider-status/<?php echo $campaign->campaign_id; ?>"> 
+                       		 <img src="<?php echo $this->basePath(); ?>/admin/images/tick.gif">
+                           </a>                 
+                       </td>
+                    </tr>
+                    
+                   <?php
+                        }
+                   ?>
+            </tbody>
+        </table>
+    </div>    	
+</div>
+
+<script type="text/javascript">
+function deleteItem() {
+	var r = "";
+	var s =" ";
+	var selected = false;
+	
+	for (var i=1; document.getElementById('check' + i); i++) {
+		if (document.getElementById('check' + i).checked == true) {	
+			r += document.getElementById('check' + i).value + "|";
+			selected = true;
+		}
+	}	
+	
+	r += '0';
+	
+	if (selected) {
+		var confirmation = confirm("Are you sure want to delete these records?");
+		
+		if (confirmation != true) {
+			return false;
+		}	
+	
+		$.ajax({ 
+			url: "/admin/campaign-delete",
+			type: "POST",
+			data: ({Id:r}),
+			success: function(data) {	
+				window.location.href = window.location.href;
+			}
+		});
+	} else {
+		alert('Please choose a record to delete.');
+	}
+}
+
+function changeStatus(Id,Status) {
+    $.ajax({ 
+		type: "POST", 
+		url: "/admin/campaign-change-status", 
+		data: ({Id:Id,Status:Status}),
+		cache: false, 
+		success: function(data) {				 
+			window.location.href = window.location.href;
+		}
+	});
+}
+ 
+function checkall(thisid)
+{
+  for(var i=1;document.getElementById('check'+i);i++)
+  	{
+  		if(document.getElementById(thisid.id).checked==true){document.getElementById('check'+i).checked = true;}
+  		if(document.getElementById(thisid.id).checked==false){document.getElementById('check'+i).checked = false;}
+	}	
+}
+</script>
